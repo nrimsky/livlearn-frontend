@@ -4,7 +4,7 @@ enum MediaType {
     AudioBook = "Audiobook",
     Blog = "Blog",
     Article = "Article",
-    OnlineCourse = "Online course",
+    OnlineCourse = "Course",
     FreeVideo = "Video",
     Other = "Other"
 }

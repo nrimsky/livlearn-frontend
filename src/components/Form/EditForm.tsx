@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ItemData from "../../types/ItemData";
 import Input from "./Input";
+import TypePicker from "./TypePicker";
+import MediaType from "../../types/MediaType";
 
 export default function EditForm(props: {
   onClose: () => void;
@@ -21,6 +23,19 @@ export default function EditForm(props: {
   return (
     <div className="w-full">
       <form className="my-6">
+        <div className="mb-4">
+          <label className="block">
+            <span className="text-gray-700 text-sm font-semibold mb-2 block">
+              Type
+            </span>
+            <TypePicker
+              mType={item.type}
+              onChange={(mType: MediaType) => {
+                setItem({ ...item, type: mType });
+              }}
+            />
+          </label>
+        </div>
         <Input
           name="Title"
           placeholder="What is the resource name"

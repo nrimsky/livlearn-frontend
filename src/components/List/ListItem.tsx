@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Icon from "../Icon/Icon";
 import { LinkIcon } from "@heroicons/react/outline";
-import ItemData, { Keyed } from "../../types/ItemData";
+import ItemData from "../../types/ItemData";
 import BasePopup from "../../components/Popup/BasePopup";
 import EditForm from "../../components/Form/EditForm";
 

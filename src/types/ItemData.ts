@@ -7,6 +7,6 @@ type ItemData = {
   url: string;
 };
 
-export type Keyed<T> = T & { key: number; };
+// export type Keyed<T> = T & { key: number; };
 
 export default ItemData;

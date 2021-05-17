@@ -3,8 +3,9 @@ import ItemData from "../../types/ItemData";
 import MediaType from "../../types/MediaType";
 import { AppContext } from "../../App";
 import Input from "./Input";
+import TypePicker from "./TypePicker";
 
-export default function AddForm(props: {onClose: () => void}) {
+export default function AddForm(props: { onClose: () => void }) {
   const { dispatch } = useContext(AppContext);
 
   const [item, setItem] = useState<ItemData>({
@@ -26,6 +27,12 @@ export default function AddForm(props: {onClose: () => void}) {
   return (
     <div className="w-full">
       <form className="my-6">
+        <div className="mb-4">
+          <label className="block">
+            <span className="text-gray-700 text-sm font-semibold mb-2 block">Type</span>
+            <TypePicker mType={item.type} onChange={(mType: MediaType) => {setItem({...item, type: mType})}}/>
+          </label>
+        </div>
         <Input
           name="Title"
           placeholder="What is the resource name"

@@ -1,5 +1,4 @@
 import React, { useReducer, createContext, useState } from "react";
-import ListItem from "./components/List/ListItem";
 import List from "./components/List/List";
 import AddButton from "./components/Button/AddButton";
 import ItemData from "./types/ItemData";
@@ -61,18 +60,10 @@ export default function App() {
       <BasePopup 
         isOpen={addOpen}
         onClickClose={closeAddDialog}
-        title={"Add an item"}>
+        title={"Add"}>
         <AddForm onClose={() => closeAddDialog()}/>
       </BasePopup>
-      <List title={state.title}>
-        {state.data.map((item, index) => (
-          <ListItem
-            data={item}
-            key={index}
-            onItemChange={(newData: ItemData) => {dispatch({type: "EDIT", index: index, newData: newData})}}
-          />
-        ))}
-      </List>
+      <List />
       <AddButton
         className="fixed bottom-6 right-6"
         onClick={() => {
