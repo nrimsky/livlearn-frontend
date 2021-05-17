@@ -1,0 +1,63 @@
+import React, { useContext, useState } from "react";
+import ItemData from "../../types/ItemData";
+import MediaType from "../../types/MediaType";
+import { AppContext } from "../../App";
+import Input from "./Input";
+
+export default function AddForm(props: {onClose: () => void}) {
+  const { dispatch } = useContext(AppContext);
+
+  const [item, setItem] = useState<ItemData>({
+    url: "",
+    title: "",
+    detail: "",
+    type: MediaType.Other,
+  });
+
+  const onAdd = () => {
+    dispatch({ type: "ADD", newItem: item });
+    props.onClose();
+  };
+
+  const onChange = (i: ItemData) => {
+    setItem(i);
+  };
+
+  return (
+    <div className="w-full">
+      <form className="my-6">
+        <Input
+          name="Title"
+          placeholder="What is the resource name"
+          onChange={(newValue: string) =>
+            onChange({ ...item, title: newValue })
+          }
+          value={item.title}
+        />
+        <Input
+          name="Detail"
+          placeholder="Any additional detail"
+          onChange={(newValue: string) =>
+            onChange({ ...item, detail: newValue })
+          }
+          value={item.detail}
+        />
+        <Input
+          name="URL"
+          placeholder="Paste in the URL"
+          onChange={(newValue: string) => onChange({ ...item, url: newValue })}
+          value={item.url}
+        />
+      </form>
+      <div className="mt-4">
+        <button
+          type="button"
+          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
+          onClick={onAdd}
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  );
+}
