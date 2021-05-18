@@ -14,7 +14,7 @@ export default function List() {
         value={state.title}
         className="text-2xl mb-4 py-2 px-3 rounded border-0 outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          dispatch({ type: "RENAME", title: event.target.value });
+          dispatch({ type: "RENAME", newTitle: event.target.value });
         }}
       />
       <ul className="border border-gray-200 rounded divide-y divide-gray-200">
