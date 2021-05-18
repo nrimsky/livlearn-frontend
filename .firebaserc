@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "resourceee-e2166"
+  },
+  "targets": {
+    "resourceee-e2166": {
+      "hosting": {
+        "resourceee": [
+          "resourceee"
+        ]
+      }
+    }
   }
 }
