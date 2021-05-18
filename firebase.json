@@ -4,18 +4,11 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "site": "resourceee",
     "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
