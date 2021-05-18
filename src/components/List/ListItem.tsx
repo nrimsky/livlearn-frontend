@@ -27,7 +27,7 @@ export default function ListItem(props: {data: ItemData, onItemChange: (newItem:
           <p className="md:ml-4 flex-1 mt-2 md:mt-0 md:flex-grow">
             {props.data.detail}
           </p>
-          <div className="inline-flex md:ml-4 flex-1 mt-2 md:mt-0 underline text-green-600 hover:text-green-800 md:flex-grow">
+          <div className="inline-flex md:ml-4 flex-1 mt-2 md:mt-0 underline text-green-500 hover:text-green-600 md:flex-grow">
             <LinkIcon className="h-5 w-4" />
             <a href={props.data.url} className="flex-1 ml-2">
               {props.data.url}

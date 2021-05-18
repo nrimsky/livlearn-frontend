@@ -69,10 +69,15 @@ export const AppContext = createContext<{
 
 export default function App() {
   const [addOpen, setAddOpen] = useState(false);
+  const [saveOpen, setSaveOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function closeAddDialog() {
     setAddOpen(false);
+  }
+
+  function closeSaveDialog() {
+    setSaveOpen(false);
   }
 
   return (
@@ -84,6 +89,16 @@ export default function App() {
       >
         <AddForm onClose={() => closeAddDialog()} />
       </BasePopup>
+      <BasePopup
+        isOpen={saveOpen}
+        onClickClose={closeSaveDialog}
+        title={"Save this list"}
+      >
+        <div>
+        <p>Now it's time to deploy your list! Get a unique link to access and share your list of learning resources.</p>
+
+        </div>
+      </BasePopup>
       <List />
       <AddButton
         className="fixed bottom-6 right-6"
@@ -91,8 +106,8 @@ export default function App() {
           setAddOpen(!addOpen);
         }}
       />
-      <button className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded p-2 text-green-500 font-medium text-small border border-green-500">
-        🚀<span className="hover:underline ml-2">I'm done!</span>
+      <button className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded p-2 text-green-500 font-medium text-small border border-green-500" onClick={() => {setSaveOpen(!saveOpen)}}>
+        🚀<span className="ml-2">I'm done!</span>
       </button>
     </AppContext.Provider>
   );
