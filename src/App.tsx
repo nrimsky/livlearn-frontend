@@ -5,9 +5,7 @@ import ItemData from "./types/ItemData";
 import MediaType from "./types/MediaType";
 import BasePopup from "./components/Popup/BasePopup";
 import AddForm from "./components/Form/AddForm";
-
-import firebase from "firebase/app";
-import "firebase/firestore";
+import DeployForm from "./components/Form/DeployForm";
 
 const default1: ItemData = {
   title: "This is an example link",
@@ -75,27 +73,12 @@ export default function App() {
   const [saveOpen, setSaveOpen] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  var db = firebase.firestore();
-
   function closeAddDialog() {
     setAddOpen(false);
   }
 
   function closeSaveDialog() {
     setSaveOpen(false);
-  }
-
-  function saveList() {
-    db.collection("lists")
-      .add({
-        ...state
-      })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
   }
 
   return (
@@ -112,13 +95,7 @@ export default function App() {
         onClickClose={closeSaveDialog}
         title={"Save this list"}
       >
-        <div>
-          <p>
-            Now it's time to deploy your list! Get a unique link to access and
-            share your list of learning resources.
-          </p>
-          <button onClick={saveList}>Go</button>
-        </div>
+        <DeployForm onClose={closeSaveDialog}/>
       </BasePopup>
       <List />
       <AddButton
