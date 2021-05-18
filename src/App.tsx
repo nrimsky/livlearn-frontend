@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, useState } from "react";
+import React, { useReducer, createContext, useState, useEffect } from "react";
 import List from "./components/List/List";
 import AddButton from "./components/Button/AddButton";
 import ItemData from "./types/ItemData";
@@ -6,6 +6,10 @@ import MediaType from "./types/MediaType";
 import BasePopup from "./components/Popup/BasePopup";
 import AddForm from "./components/Form/AddForm";
 import DeployForm from "./components/Form/DeployForm";
+import { useLocation } from "react-router-dom";
+
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 const default1: ItemData = {
   title: "This is an example link",
@@ -30,7 +34,20 @@ type Action =
   | { type: "RENAME"; newTitle: string }
   | { type: "EDIT"; index: number; newData: ItemData }
   | { type: "DELETE"; index: number }
+  | { type: "LOAD"; newState: State }
   | { type: "ADD"; newItem: ItemData };
+
+const initialState = { title: "", data: [default1, default2] };
+
+async function getDataFromFirebase(id: string): Promise<State> {
+  const docRef = firebase.firestore().collection("lists").doc(id);
+  const docSnapShot = await docRef.get();
+  if (docSnapShot.exists) {
+    return docSnapShot.data() as State;
+  } else {
+    throw Error("No such document");
+  }
+}
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -55,10 +72,10 @@ function reducer(state: State, action: Action): State {
       return { ...state, title: action.newTitle };
     case "ADD":
       return { ...state, data: [...state.data, action.newItem] };
+    case "LOAD":
+      return { ...action.newState };
   }
 }
-
-const initialState = { title: "", data: [default1, default2] };
 
 export const AppContext = createContext<{
   state: State;
@@ -69,8 +86,28 @@ export const AppContext = createContext<{
 });
 
 export default function App() {
+  let location = useLocation();
+
+  async function getDataWithId(searchedId: string) {
+    try {
+      const newState = await getDataFromFirebase(searchedId);
+      dispatch({ type: "LOAD", newState: newState });
+      setId(searchedId);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    const searchedId = new URLSearchParams(location.search).get("id");
+    if (searchedId) {
+      getDataWithId(searchedId);
+    }
+  }, [location]);
+
   const [addOpen, setAddOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
+  const [id, setId] = useState<string | null>(null);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function closeAddDialog() {
@@ -93,9 +130,9 @@ export default function App() {
       <BasePopup
         isOpen={saveOpen}
         onClickClose={closeSaveDialog}
-        title={"Save this list"}
+        title={id ? "Update this list" : "Save this list"}
       >
-        <DeployForm onClose={closeSaveDialog}/>
+        <DeployForm id={id} onClose={() => closeSaveDialog()}/>
       </BasePopup>
       <List />
       <AddButton
