@@ -4,6 +4,8 @@ import MediaType from "../../types/MediaType";
 import { AppContext } from "../../App";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
+import Button from "../Button/Button";
+import Textarea from "./Textarea";
 
 export default function AddForm(props: { onClose: () => void }) {
   const { dispatch } = useContext(AppContext);
@@ -41,7 +43,7 @@ export default function AddForm(props: { onClose: () => void }) {
           }
           value={item.title}
         />
-        <Input
+        <Textarea
           name="Detail"
           placeholder="Any additional detail"
           onChange={(newValue: string) =>
@@ -57,13 +59,7 @@ export default function AddForm(props: { onClose: () => void }) {
         />
       </form>
       <div className="mt-4">
-        <button
-          type="button"
-          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-green-900 bg-green-100 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
-          onClick={onAdd}
-        >
-          Add
-        </button>
+        <Button color="green" onClick={onAdd} text="Add"/>
       </div>
     </div>
   );

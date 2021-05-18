@@ -6,14 +6,18 @@ import MediaType from "./types/MediaType";
 import BasePopup from "./components/Popup/BasePopup";
 import AddForm from "./components/Form/AddForm";
 
-const lipsum =
-  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.";
+const default1: ItemData = {
+  title: "This is an example link",
+  type: MediaType.Blog,
+  detail: "Articles and news about Swift development",
+  url: "https://www.swiftbysundell.com/",
+};
 
-const defaultData: ItemData = {
-  title: "This is a test title hi lemming",
+const default2: ItemData = {
+  title: "This is another example link",
   type: MediaType.OnlineCourse,
-  detail: lipsum,
-  url: "www.google.com",
+  detail: "Mobile development courses",
+  url: "https://www.raywenderlich.com/",
 };
 
 export type State = {
@@ -24,12 +28,28 @@ export type State = {
 type Action =
   | { type: "RENAME"; newTitle: string }
   | { type: "EDIT"; index: number; newData: ItemData }
+  | { type: "DELETE"; index: number }
   | { type: "ADD"; newItem: ItemData };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "EDIT":
-      return { ...state, data: [...state.data.slice(0, action.index), action.newData, ...state.data.slice(action.index + 1)]};
+      return {
+        ...state,
+        data: [
+          ...state.data.slice(0, action.index),
+          action.newData,
+          ...state.data.slice(action.index + 1),
+        ],
+      };
+    case "DELETE":
+      return {
+        ...state,
+        data: [
+          ...state.data.slice(0, action.index),
+          ...state.data.slice(action.index + 1),
+        ],
+      };
     case "RENAME":
       return { ...state, title: action.newTitle };
     case "ADD":
@@ -37,7 +57,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-const initialState = { title: "Untitled", data: [defaultData] };
+const initialState = { title: "", data: [default1, default2] };
 
 export const AppContext = createContext<{
   state: State;
@@ -57,11 +77,12 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <BasePopup 
+      <BasePopup
         isOpen={addOpen}
         onClickClose={closeAddDialog}
-        title={"Add"}>
-        <AddForm onClose={() => closeAddDialog()}/>
+        title={"Add Item"}
+      >
+        <AddForm onClose={() => closeAddDialog()} />
       </BasePopup>
       <List />
       <AddButton
@@ -70,6 +91,9 @@ export default function App() {
           setAddOpen(!addOpen);
         }}
       />
+      <button className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded p-2 text-green-500 font-medium text-small border border-green-500">
+        🚀<span className="hover:underline ml-2">I'm done!</span>
+      </button>
     </AppContext.Provider>
   );
 }
