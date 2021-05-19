@@ -6,6 +6,7 @@ import MediaType from "./types/MediaType";
 import BasePopup from "./components/Popup/BasePopup";
 import AddForm from "./components/Form/AddForm";
 import DeployForm from "./components/Form/DeployForm";
+import NavBar from "./components/Nav/NavBar";
 import { useLocation } from "react-router-dom";
 
 import firebase from "firebase/app";
@@ -134,6 +135,7 @@ export default function App() {
       >
         <DeployForm id={id} onClose={() => closeSaveDialog()}/>
       </BasePopup>
+      <NavBar />
       <List />
       <AddButton
         className="fixed bottom-6 right-6"
