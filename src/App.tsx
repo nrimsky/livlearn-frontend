@@ -130,7 +130,7 @@ export default function App() {
       <BasePopup
         isOpen={saveOpen}
         onClickClose={closeSaveDialog}
-        title={id ? "Update this list" : "Save this list"}
+        title={id ? "Publish Changes" : "Publish New List"}
       >
         <DeployForm id={id} onClose={() => closeSaveDialog()}/>
       </BasePopup>
@@ -147,7 +147,7 @@ export default function App() {
           setSaveOpen(!saveOpen);
         }}
       >
-        🚀<span className="ml-2">I'm done!</span>
+        🚀<span className="ml-2">{ id ? "Publish Changes" : "Publish New List"}</span>
       </button>
     </AppContext.Provider>
   );

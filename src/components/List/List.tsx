@@ -12,12 +12,12 @@ export default function List() {
         type="text"
         placeholder="Name this list"
         value={state.title}
-        className="mb-4 py-2 px-3 rounded border-0 outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
+        className="mb-4 py-2 px-3 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           dispatch({ type: "RENAME", newTitle: event.target.value });
         }}
       />
-      <ul className="border border-gray-200 rounded divide-y divide-gray-200">
+      <ul className="rounded border border-gray-200 divide-y divide-gray-200">
         {state.data.map((item, index) => (
           <ListItem
             data={item}

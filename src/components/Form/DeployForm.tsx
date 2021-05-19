@@ -60,13 +60,13 @@ export default function DeployForm(props: {
       <p>
         {props.id
           ? "Update your list with a click of a button!"
-          : "Now it's time to deploy your list!"}
+          : "Now it's time to publish your list!"}
       </p>
       <div className="mt-3">
         <Button
           color="green"
           onClick={onSave}
-          text={props.id ? "Release changes" : "Deploy list"}
+          text={props.id ? "Publish Changes" : "Publish List"}
         />
       </div>
     </div>
