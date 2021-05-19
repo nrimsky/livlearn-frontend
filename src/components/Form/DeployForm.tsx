@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AppContext } from "../../App";
+import { ListContext } from "../Page/MakeList";
 import Button from "../Button/Button";
 
 import { useHistory } from "react-router-dom";
@@ -13,7 +13,7 @@ export default function DeployForm(props: {
 }) {
   var db = firebase.firestore();
 
-  const { state } = useContext(AppContext);
+  const { state } = useContext(ListContext);
   let history = useHistory();
 
   function saveNewList() {

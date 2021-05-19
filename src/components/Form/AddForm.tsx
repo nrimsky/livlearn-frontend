@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import ItemData from "../../types/ItemData";
 import MediaType from "../../types/MediaType";
-import { AppContext } from "../../App";
+import { ListContext } from "../Page/MakeList";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
 import Button from "../Button/Button";
 import Textarea from "./Textarea";
 
 export default function AddForm(props: { onClose: () => void }) {
-  const { dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(ListContext);
 
   const [item, setItem] = useState<ItemData>({
     url: "",

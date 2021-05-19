@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { AppContext } from "../../App";
+import { ListContext } from "../Page/MakeList";
 import ListItem from "./ListItem";
 import ItemData from "../../types/ItemData";
 
 export default function List() {
-  const { state, dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(ListContext);
 
   return (
     <div className="m-5">

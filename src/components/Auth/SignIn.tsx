@@ -1,8 +1,9 @@
 // Import FirebaseAuth and firebase.
-import React, { useEffect, useState } from "react";
+import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "firebase";
 import Button from "../Button/Button";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -16,35 +17,26 @@ const uiConfig = {
   },
 };
 
-function SignIn() {
-  const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
+type Props = {
+  loggedIn: boolean;
+};
 
-  // Listen to the Firebase Auth state and set the local state.
-  useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        setIsSignedIn(!!user);
-      });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
-
-  if (!isSignedIn) {
+const SignIn: React.FC<Props> = ({ loggedIn }) => {
+  if (!loggedIn) {
     return (
-      <div>
-        <h1>My App</h1>
-        <p>Please sign-in:</p>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
+      <div className="h-screen relative">
+        <div className="my-5">
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+        </div>
       </div>
     );
   }
   return (
-    <div>
-      <h1>My App</h1>
-      <p>You are now signed in!</p>
+    <div className="h-screen relative p-5 md:p-10">
+      <p className="text-gray-600 mb-5 font-medium">You are now signed in!</p>
       <Button
         color="yellow"
         onClick={() => firebase.auth().signOut()}
@@ -52,6 +44,6 @@ function SignIn() {
       />
     </div>
   );
-}
+};
 
 export default SignIn;

@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { BrowserRouter as Router } from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
@@ -22,17 +21,14 @@ const firebaseConfig = {
   storageBucket: "resourceee-e2166.appspot.com",
   messagingSenderId: "313558111631",
   appId: "1:313558111631:web:b161e43a004742cca0e7fa",
-  measurementId: "G-YWVTH562NL"
+  measurementId: "G-YWVTH562NL",
 };
 
 firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
