@@ -18,7 +18,12 @@ export default function Textarea(props: {
           placeholder={props.placeholder}
           value={props.value}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-            props.onChange(event.target.value);
+            let str = event.target.value;
+            if (str) {
+              // Avoid entries larger than 250
+              str = str.slice(0,250);
+            }
+            props.onChange(str);
           }}
         />
       </label>
