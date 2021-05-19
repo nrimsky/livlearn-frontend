@@ -12,7 +12,7 @@ export default function List() {
         type="text"
         placeholder="Name this list"
         value={state.title}
-        className="text-2xl mb-4 py-2 px-3 rounded border-0 outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
+        className="mb-4 py-2 px-3 rounded border-0 outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           dispatch({ type: "RENAME", newTitle: event.target.value });
         }}
