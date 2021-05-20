@@ -14,7 +14,11 @@ export default function List() {
         value={state.title}
         className="mb-4 py-2 px-3 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          dispatch({ type: "RENAME", newTitle: event.target.value });
+          if (event.target.value) {
+            dispatch({ type: "RENAME", newTitle: event.target.value.slice(0,250) });
+          } else {
+            dispatch({ type: "RENAME", newTitle: "" });
+          }
         }}
       />
       <ul className="rounded border border-gray-200 divide-y divide-gray-200">

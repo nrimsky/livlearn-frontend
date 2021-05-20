@@ -7,11 +7,14 @@ import MobileMenuButton from "./MobileMenuButton";
 import DesktopNav from "./DesktopNav";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const navigationLoggedIn: NavLoc[] = [
     { name: "Home", href: "/" },
-    { name: "My Lists", href: "#" },
+    { name: "My Lists", href: "/" },
     { name: "New", href: "/new" },
   ];
 
@@ -22,7 +25,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
   ];
 
   const userMenuActions: MenuAction[] = [
-    { name: "Sign out", action: () => console.log("Hello") },
+    { name: "Sign out", action: () => firebase.auth().signOut() },
   ];
 
   return (
