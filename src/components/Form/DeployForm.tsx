@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
 export default function DeployForm(props: {
   id: string | null;
@@ -16,14 +17,20 @@ export default function DeployForm(props: {
   const { state } = useContext(ListContext);
   let history = useHistory();
 
-  function saveNewList() {
+  function saveNewList(isPublic: boolean) {
+    const user = firebase.auth().currentUser;
+    if (!user) { console.error("No signed in user"); return; }
     db.collection("lists")
       .add({
         ...state,
+        creatorId: user.uid,
+        isPublic: isPublic
       })
       .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
-        history.push(`?id=${docRef.id}`);
+        history.replace({
+          search: `id=${docRef.id}`
+        });
         props.onClose();
       })
       .catch((error) => {
@@ -51,7 +58,7 @@ export default function DeployForm(props: {
     if (props.id) {
       editExitingList(props.id);
     } else {
-      saveNewList();
+      saveNewList(false);
     }
   };
 

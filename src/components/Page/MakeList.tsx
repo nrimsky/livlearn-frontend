@@ -6,7 +6,7 @@ import MediaType from "../../types/MediaType";
 import BasePopup from "../Popup/BasePopup";
 import AddForm from "../Form/AddForm";
 import DeployForm from "../Form/DeployForm";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -26,6 +26,8 @@ const default2: ItemData = {
 };
 
 export type State = {
+  creatorId?: string;
+  isPublic: boolean;
   title: string;
   data: ItemData[];
 };
@@ -37,7 +39,7 @@ type Action =
   | { type: "LOAD"; newState: State }
   | { type: "ADD"; newItem: ItemData };
 
-const initialState = { title: "", data: [default1, default2] };
+const initialState = { title: "", data: [default1, default2], isPublic: false };
 
 async function getDataFromFirebase(id: string): Promise<State> {
   const docRef = firebase.firestore().collection("lists").doc(id);
@@ -86,24 +88,33 @@ export const ListContext = createContext<{
 });
 
 export default function MakeList() {
-  let location = useLocation();
-
-  async function getDataWithId(searchedId: string) {
-    try {
-      const newState = await getDataFromFirebase(searchedId);
-      dispatch({ type: "LOAD", newState: newState });
-      setId(searchedId);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
+    function reset() {
+      dispatch({ type: "LOAD", newState: initialState });
+    }
+    async function getDataWithId(searchedId: string) {
+      try {
+        const newState = await getDataFromFirebase(searchedId);
+        dispatch({ type: "LOAD", newState: newState });
+        setId(searchedId);
+      } catch (error) {
+        console.error(error);
+        history.replace({
+          search: "",
+        });
+        reset();
+      }
+    }
     const searchedId = new URLSearchParams(location.search).get("id");
     if (searchedId) {
       getDataWithId(searchedId);
+    } else {
+      reset();
     }
-  }, [location]);
+  }, [location, history]);
 
   const [addOpen, setAddOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);

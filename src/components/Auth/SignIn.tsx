@@ -4,6 +4,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useHistory } from "react-router-dom";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -22,26 +23,34 @@ type Props = {
 };
 
 const SignIn: React.FC<Props> = ({ loggedIn }) => {
-  if (!loggedIn) {
-    return (
-      <div className="h-screen relative">
-        <div className="my-5">
+  const history = useHistory();
+  return (
+    <div className="flex justify-center items-center grad w-screen flex-grow">
+      {!loggedIn ? (
+        <div className="text-center">
           <StyledFirebaseAuth
             uiConfig={uiConfig}
             firebaseAuth={firebase.auth()}
           />
         </div>
-      </div>
-    );
-  }
-  return (
-    <div className="h-screen relative p-5 md:p-10">
-      <p className="text-gray-600 mb-5 font-medium">You are now signed in!</p>
-      <Button
-        color="yellow"
-        onClick={() => firebase.auth().signOut()}
-        text="Sign Out"
-      />
+      ) : (
+        <div className="text-center bg-white shadow p-8 sm:w-80">
+          <p className="text-gray-700 mb-5 font-medium">
+          👋 Hi {firebase.auth().currentUser?.displayName?.split(" ")[0] ?? "there"}!
+          </p>
+          <Button
+            color="green"
+            onClick={() => history.push("/")}
+            text="Home"
+          />
+          <div className="mt-3"></div>
+          <Button
+            color="yellow"
+            onClick={() => firebase.auth().signOut()}
+            text="Sign Out"
+          />
+        </div>
+      )}
     </div>
   );
 };

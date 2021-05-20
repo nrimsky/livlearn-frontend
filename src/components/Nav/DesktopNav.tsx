@@ -1,7 +1,7 @@
-import NavLoc from "../../types/NavLoc";
+import MenuAction from "../../types/MenuAction";
 import NavItem from "./NavItem";
 
-export default function DesktopNav(props: { navigation: NavLoc[] }) {
+export default function DesktopNav(props: { navigation: MenuAction[] }) {
   return (
     <div className="flex space-x-4 h-full">
       {props.navigation.map((item, i) => (

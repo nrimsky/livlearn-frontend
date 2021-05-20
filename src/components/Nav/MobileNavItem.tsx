@@ -1,13 +1,13 @@
-import NavLoc from "../../types/NavLoc";
+import MenuAction from "../../types/MenuAction";
 
-export default function MobileNavItem(props: { item: NavLoc; key?: number }) {
+export default function MobileNavItem(props: { item: MenuAction; key?: number }) {
   return (
-    <a
+    <button
       key={props.item.name}
-      href={props.item.href}
-      className="text-gray-500 block px-3 py-1 text-base text-sm"
+      onClick={props.item.action}
+      className="text-gray-500 block px-3 py-1 text-base text-sm focus:outline-none"
     >
       {props.item.name}
-    </a>
+    </button>
   );
 }

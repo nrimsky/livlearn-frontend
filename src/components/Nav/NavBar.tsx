@@ -1,6 +1,5 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import NavLoc from "../../types/NavLoc";
 import MenuAction from "../../types/MenuAction";
 import logo from "../../img/logo.svg";
 import MobileMenuButton from "./MobileMenuButton";
@@ -8,31 +7,63 @@ import DesktopNav from "./DesktopNav";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
 import firebase from "firebase/app";
+import { useHistory } from "react-router-dom";
 import "firebase/auth";
 
-
 export default function NavBar(props: { loggedIn: boolean }) {
-  const navigationLoggedIn: NavLoc[] = [
-    { name: "Home", href: "/" },
-    { name: "My Lists", href: "/" },
-    { name: "New", href: "/new" },
+  const history = useHistory();
+
+  const navigationLoggedInActions: MenuAction[] = [
+    {
+      name: "Home",
+      action: () => {
+        history.push("/");
+      },
+    },
+    {
+      name: "My Lists",
+      action: () => {
+        history.push("/");
+      },
+    },
+    {
+      name: "New",
+      action: () => {
+        history.push("/list");
+      },
+    },
   ];
 
-  const navigationLoggedOut: NavLoc[] = [
-    { name: "Home", href: "/" },
-    { name: "New", href: "/new" },
-    { name: "Login", href: "/auth" },
+  const navigationLoggedOutActions: MenuAction[] = [
+    {
+      name: "Home",
+      action: () => {
+        history.push("/");
+      },
+    },
+    {
+      name: "Login",
+      action: () => {
+        history.push("/auth");
+      },
+    },
   ];
 
   const userMenuActions: MenuAction[] = [
-    { name: "Sign out", action: () => firebase.auth().signOut() },
+    {
+      name: "Sign out",
+      action: () => {
+        firebase.auth().signOut();
+        history.push("/");
+      },
+    },
   ];
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-white shadow z-10">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto px-2 sm:px-6 lg:px-8 relative">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -47,7 +78,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
                 <div className="hidden sm:block sm:ml-6">
                   <DesktopNav
                     navigation={
-                      props.loggedIn ? navigationLoggedIn : navigationLoggedOut
+                      props.loggedIn ? navigationLoggedInActions : navigationLoggedOutActions
                     }
                   />
                 </div>
@@ -62,7 +93,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
           <Disclosure.Panel className="sm:hidden">
             <MobileNav
               navigation={
-                props.loggedIn ? navigationLoggedIn : navigationLoggedOut
+                props.loggedIn ? navigationLoggedInActions : navigationLoggedOutActions
               }
             />
           </Disclosure.Panel>

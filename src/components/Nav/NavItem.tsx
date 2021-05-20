@@ -1,13 +1,13 @@
-import NavLoc from "../../types/NavLoc";
+import MenuAction from "../../types/MenuAction";
 
-export default function NavItem(props: { item: NavLoc; key?: number }) {
+export default function NavItem(props: { item: MenuAction; key?: number }) {
   return (
-    <a
+    <button
       key={props.item.name}
-      href={props.item.href}
-      className="text-gray-500 hover:text-gray-700 my-auto inline-block text-sm"
+      onClick={props.item.action}
+      className="text-gray-500 hover:text-gray-700 my-auto inline-block text-sm focus:outline-none"
     >
       {props.item.name}
-    </a>
+    </button>
   );
 }
