@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ItemData from "../../types/ItemData";
 import MediaType from "../../types/MediaType";
-import { ListContext } from "../Page/MakeList";
+import { ListContext } from "../Page/ListPage";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
 import Button from "../Button/Button";
@@ -31,8 +31,15 @@ export default function AddForm(props: { onClose: () => void }) {
       <form className="my-6">
         <div className="mb-4">
           <label className="block">
-            <span className="text-gray-700 text-sm font-semibold mb-2 block">Type</span>
-            <TypePicker mType={item.type} onChange={(mType: MediaType) => {setItem({...item, type: mType})}}/>
+            <span className="text-gray-700 text-sm font-semibold mb-2 block">
+              Type
+            </span>
+            <TypePicker
+              mType={item.type}
+              onChange={(mType: MediaType) => {
+                setItem({ ...item, type: mType });
+              }}
+            />
           </label>
         </div>
         <Input
@@ -59,7 +66,7 @@ export default function AddForm(props: { onClose: () => void }) {
         />
       </form>
       <div className="mt-4">
-        <Button color="green" onClick={onAdd} text="Add"/>
+        <Button color="green" onClick={onAdd} text="Add" />
       </div>
     </div>
   );

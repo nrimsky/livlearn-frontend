@@ -73,7 +73,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img className="h-10 w-10 rounded-full" src={logo} alt="" />
+                  <img className="h-10 w-10 rounded-full cursor-pointer" src={logo} alt="" onClick={() => history.push("/")}/>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <DesktopNav

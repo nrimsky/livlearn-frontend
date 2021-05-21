@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ListContext } from "../Page/MakeList";
+import { ListContext } from "../Page/ListPage";
 import Button from "../Button/Button";
 
 import { useHistory } from "react-router-dom";
@@ -19,18 +19,19 @@ export default function DeployForm(props: {
 
   function saveNewList(isPublic: boolean) {
     const user = firebase.auth().currentUser;
-    if (!user) { console.error("No signed in user"); return; }
+    if (!user) {
+      console.error("No signed in user");
+      return;
+    }
     db.collection("lists")
       .add({
         ...state,
         creatorId: user.uid,
-        isPublic: isPublic
+        isPublic: isPublic,
       })
       .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
-        history.replace({
-          search: `id=${docRef.id}`
-        });
+        history.push(`/list/${docRef.id}`);
         props.onClose();
       })
       .catch((error) => {

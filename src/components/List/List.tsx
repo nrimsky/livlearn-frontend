@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ListContext } from "../Page/MakeList";
+import { ListContext } from "../Page/ListPage";
 import ListItem from "./ListItem";
 import ItemData from "../../types/ItemData";
 
@@ -15,7 +15,10 @@ export default function List() {
         className="mb-4 py-2 px-3 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           if (event.target.value) {
-            dispatch({ type: "RENAME", newTitle: event.target.value.slice(0,250) });
+            dispatch({
+              type: "RENAME",
+              newTitle: event.target.value.slice(0, 250),
+            });
           } else {
             dispatch({ type: "RENAME", newTitle: "" });
           }
@@ -30,7 +33,7 @@ export default function List() {
               dispatch({ type: "EDIT", index: index, newData: newData });
             }}
             onItemDelete={() => {
-              dispatch({ type: "DELETE", index: index })
+              dispatch({ type: "DELETE", index: index });
             }}
           />
         ))}
