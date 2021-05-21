@@ -1,6 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { getResourceList } from "../../firebase/FirestoreService";
 import ListEditor from "../List/ListEditor";
 import React, { useReducer, createContext, useEffect, useState } from "react";
 import ItemData from "../../types/ItemData";
@@ -56,16 +55,6 @@ export const ListContext = createContext<{
   dispatch: () => null,
 });
 
-async function getDataFromFirebase(id: string): Promise<ResourceList> {
-  const docRef = firebase.firestore().collection("lists").doc(id);
-  const docSnapShot = await docRef.get();
-  if (docSnapShot.exists) {
-    return docSnapShot.data() as ResourceList;
-  } else {
-    throw Error("No such document");
-  }
-}
-
 type ParamTypes = {
   id: string | undefined;
 };
@@ -81,7 +70,7 @@ export default function ListPage() {
       dispatch({ type: "LOAD", newState: defaultStart });
       setLoaded(true);
     } else {
-      getDataFromFirebase(id)
+      getResourceList(id)
         .then((s) => {
           dispatch({ type: "LOAD", newState: s });
           setLoaded(true);

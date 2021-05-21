@@ -4,6 +4,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
+import { signOut, getCurrentUserName } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
 
 // Configure FirebaseUI.
@@ -36,7 +37,7 @@ const SignIn: React.FC<Props> = ({ loggedIn }) => {
       ) : (
         <div className="text-center bg-white shadow p-8 sm:w-80">
           <p className="text-gray-700 mb-5 font-medium">
-          👋 Hi {firebase.auth().currentUser?.displayName?.split(" ")[0] ?? "there"}!
+          👋 Hi {getCurrentUserName()?.split(" ")[0] ?? "there"}!
           </p>
           <Button
             color="green"
@@ -46,7 +47,7 @@ const SignIn: React.FC<Props> = ({ loggedIn }) => {
           <div className="mt-3"></div>
           <Button
             color="yellow"
-            onClick={() => firebase.auth().signOut()}
+            onClick={signOut}
             text="Sign Out"
           />
         </div>

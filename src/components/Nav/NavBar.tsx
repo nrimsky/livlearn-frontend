@@ -6,9 +6,9 @@ import MobileMenuButton from "./MobileMenuButton";
 import DesktopNav from "./DesktopNav";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
-import firebase from "firebase/app";
+import { signOut } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
-import "firebase/auth";
+
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
@@ -53,7 +53,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
     {
       name: "Sign out",
       action: () => {
-        firebase.auth().signOut();
+        signOut();
         history.push("/");
       },
     },

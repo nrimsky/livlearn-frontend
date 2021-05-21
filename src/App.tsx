@@ -2,26 +2,16 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/Nav/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignIn from "./components/Auth/SignIn";
-import firebase from "firebase/app";
-import "firebase/auth";
+import { onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        if (user) {
-          setLoggedIn(true);
-        } else {
-          setLoggedIn(false);
-        }
-      });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    const unregisterAuthObserver = onAuthStateChanged((l) => setLoggedIn(l));
+    return () => unregisterAuthObserver();
   }, []);
 
   return (

@@ -3,61 +3,42 @@ import { ListContext } from "../Page/ListPage";
 import Button from "../Button/Button";
 
 import { useHistory } from "react-router-dom";
-
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
+import {
+  saveNewListForUser,
+  editExitingList,
+} from "../../firebase/FirestoreService";
 
 export default function DeployForm(props: {
   id: string | null;
   onClose: () => void;
 }) {
-  var db = firebase.firestore();
-
   const { state } = useContext(ListContext);
   let history = useHistory();
 
   function saveNewList(isPublic: boolean) {
-    const user = firebase.auth().currentUser;
-    if (!user) {
-      console.error("No signed in user");
-      return;
-    }
-    db.collection("lists")
-      .add({
-        ...state,
-        creatorId: user.uid,
-        isPublic: isPublic,
-      })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        history.push(`/list/${docRef.id}`);
+    saveNewListForUser(
+      state,
+      isPublic,
+      (id) => {
+        history.push(`/list/${id}`);
         props.onClose();
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
-      });
+      },
+      (message) => {
+        console.error(message);
+      }
+    );
   }
 
-  function editExitingList(id: string) {
-    db.collection("lists")
-      .doc(id)
-      .set({
-        ...state,
-      })
-      .then(() => {
-        console.log("Document successfully updated!");
-        props.onClose();
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-        props.onClose();
-      });
+  function edit(id: string) {
+    editExitingList(id, state, props.onClose, (e) => {
+      console.error("Error writing document: ", e);
+      props.onClose();
+    });
   }
 
   const onSave = () => {
     if (props.id) {
-      editExitingList(props.id);
+      edit(props.id);
     } else {
       saveNewList(false);
     }

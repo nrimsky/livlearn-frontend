@@ -1,39 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ResourceList from "../../types/ResourceList";
-import firebase from "firebase/app";
-import "firebase/firestore";
+import Entity from "../../types/Entity";
 import HomeCard from "../Card/HomeCard";
-
-export type Entity<T> = T & { id: string };
-
-function docToList(
-  docSnapshot: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
-): Entity<ResourceList> {
-  const docData = docSnapshot.data();
-  const id = docSnapshot.id;
-  return {
-    creatorId: docData.creatorId,
-    isPublic: docData.isPublic,
-    title: docData.title,
-    data: docData.data,
-    id: id,
-  };
-}
-
-async function getPublicListsFromFirebase(): Promise<Entity<ResourceList>[]> {
-  const listsRef = firebase.firestore().collection("lists");
-  const query = listsRef.where("isPublic", "==", true);
-  try {
-    const snapshot = await query.get();
-    return snapshot.docs.map((s) => {
-      return docToList(s) as Entity<ResourceList>;
-    });
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
+import { getPublicListsFromFirebase } from "../../firebase/FirestoreService";
 
 const Home = (props: { loggedIn: boolean }) => {
   const history = useHistory();
