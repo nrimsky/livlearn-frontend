@@ -4,6 +4,8 @@ import ListEditor from "../List/ListEditor";
 import React, { useReducer, createContext, useEffect, useState } from "react";
 import ItemData from "../../types/ItemData";
 import ResourceList from "../../types/ResourceList";
+import { getCurrentUserId } from "../../firebase/AuthService";
+import List from "../List/List";
 
 const defaultStart: ResourceList = {
   title: "",
@@ -64,6 +66,7 @@ export default function ListPage() {
   const history = useHistory();
   const [state, dispatch] = useReducer(reducer, defaultStart);
   const [loaded, setLoaded] = useState(false);
+  const userId = getCurrentUserId();
 
   useEffect(() => {
     if (!id) {
@@ -83,7 +86,12 @@ export default function ListPage() {
 
   return (
     <ListContext.Provider value={{ state, dispatch }}>
-      {loaded && <ListEditor id={id ? id : null} />}
+      {loaded &&
+        (!id || userId === state.creatorId ? (
+          <ListEditor id={id ? id : null} />
+        ) : (
+          <List />
+        ))}
     </ListContext.Provider>
   );
 }

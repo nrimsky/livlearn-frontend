@@ -2,11 +2,30 @@ import React, { useContext } from "react";
 import { ListContext } from "../Page/ListPage";
 import ListItem from "./ListItem";
 import ItemData from "../../types/ItemData";
+import { getCurrentUserId } from "../../firebase/AuthService";
 
 export default function List() {
-  const { state, dispatch } = useContext(ListContext);
 
-  return (
+  const { state, dispatch } = useContext(ListContext);
+  const userId = getCurrentUserId();
+
+  if (state.creatorId && (state.creatorId !== userId)) {
+    return     <div className="m-5">
+    <p className="mb-4 py-2 px-3 rounded outline-none border border-gray-200">{state.title}</p>
+    <ul className="rounded border border-gray-200 divide-y divide-gray-200">
+      {state.data.map((item, index) => (
+        <ListItem
+          data={item}
+          key={index}
+          onItemChange={() => { return; }}
+          onItemDelete={() => { return; }}
+          editable={false}
+        />
+      ))}
+    </ul>
+  </div>
+
+  } else {return (
     <div className="m-5">
       <input
         type="text"
@@ -35,9 +54,10 @@ export default function List() {
             onItemDelete={() => {
               dispatch({ type: "DELETE", index: index });
             }}
+            editable={true}
           />
         ))}
       </ul>
     </div>
-  );
+  );}
 }

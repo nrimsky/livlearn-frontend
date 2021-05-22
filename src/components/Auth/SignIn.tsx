@@ -37,19 +37,11 @@ const SignIn: React.FC<Props> = ({ loggedIn }) => {
       ) : (
         <div className="text-center bg-white shadow p-8 sm:w-80">
           <p className="text-gray-700 mb-5 font-medium">
-          👋 Hi {getCurrentUserName()?.split(" ")[0] ?? "there"}!
+            👋 Hi {getCurrentUserName()?.split(" ")[0] ?? "there"}!
           </p>
-          <Button
-            color="green"
-            onClick={() => history.push("/")}
-            text="Home"
-          />
+          <Button color="green" onClick={() => history.push("/")} text="Home" />
           <div className="mt-3"></div>
-          <Button
-            color="yellow"
-            onClick={signOut}
-            text="Sign Out"
-          />
+          <Button color="yellow" onClick={signOut} text="Sign Out" />
         </div>
       )}
     </div>

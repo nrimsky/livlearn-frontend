@@ -5,6 +5,7 @@ import SignIn from "./components/Auth/SignIn";
 import { onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
+import MyPage from "./components/Page/MyPage";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -21,6 +22,13 @@ export default function App() {
         <Switch>
           <Route exact path="/">
             <Home loggedIn={loggedIn} />
+          </Route>
+          <Route exact path="/u">
+            {loggedIn ? (
+              <MyPage />
+            ) : (
+              <h1 className="p-5">You must be logged in to view this page</h1>
+            )}
           </Route>
           <Route path="/auth">
             <SignIn loggedIn={loggedIn} />

@@ -21,7 +21,7 @@ export default function Textarea(props: {
             let str = event.target.value;
             if (str) {
               // Avoid entries larger than 250
-              str = str.slice(0,250);
+              str = str.slice(0, 250);
             }
             props.onChange(str);
           }}

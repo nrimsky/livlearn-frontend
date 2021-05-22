@@ -1,6 +1,9 @@
 import MenuAction from "../../types/MenuAction";
 
-export default function MobileNavItem(props: { item: MenuAction; key?: number }) {
+export default function MobileNavItem(props: {
+  item: MenuAction;
+  key?: number;
+}) {
   return (
     <button
       key={props.item.name}

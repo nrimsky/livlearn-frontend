@@ -3,28 +3,27 @@ import { useHistory } from "react-router-dom";
 import ResourceList from "../../types/ResourceList";
 import Entity from "../../types/Entity";
 import HomeCard from "../Card/HomeCard";
-import { getPublicListsFromFirebase } from "../../firebase/FirestoreService";
+import { getAllListsForUser } from "../../firebase/FirestoreService";
 import CardCollection from "../Card/CardCollection";
 
-const Home = (props: { loggedIn: boolean }) => {
+const MyPage = () => {
   const history = useHistory();
-
-  const [publicLists, setPublicLists] = useState<Entity<ResourceList>[]>([]);
+  const [myLists, setMyLists] = useState<Entity<ResourceList>[]>([]);
 
   const goToListPage = (id: string) => {
     history.push(`/list/${id}`);
   };
 
   useEffect(() => {
-    getPublicListsFromFirebase().then((lists) => {
-      setPublicLists(lists);
+    getAllListsForUser().then((lists) => {
+      setMyLists(lists);
     });
   }, []);
 
   return (
     <div className="flex w-screen flex-grow items-center flex-col sm:items-start">
-      <CardCollection title={"Recently shared lists"}>
-        {publicLists.map((l, i) => {
+      <CardCollection title={"Your Lists"}>
+        {myLists.map((l, i) => {
           return (
             <HomeCard
               title={l.title}
@@ -40,4 +39,4 @@ const Home = (props: { loggedIn: boolean }) => {
   );
 };
 
-export default Home;
+export default MyPage;

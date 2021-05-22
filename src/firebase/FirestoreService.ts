@@ -41,7 +41,7 @@ export async function editExitingList(
   updated: ResourceList,
   onSuccess: () => void,
   onError: (message: string) => void
-):Promise<void> {
+): Promise<void> {
   firebase
     .firestore()
     .collection("lists")
@@ -72,6 +72,25 @@ export async function getPublicListsFromFirebase(): Promise<
 > {
   const listsRef = firebase.firestore().collection("lists");
   const query = listsRef.where("isPublic", "==", true);
+  try {
+    const snapshot = await query.get();
+    return snapshot.docs.map((s) => {
+      return docToList(s) as Entity<ResourceList>;
+    });
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getAllListsForUser(): Promise<Entity<ResourceList>[]> {
+  const userId = getCurrentUserId();
+  if (!userId) {
+    console.error("No logged in user");
+    return [];
+  }
+  const listsRef = firebase.firestore().collection("lists");
+  const query = listsRef.where("creatorId", "==", userId);
   try {
     const snapshot = await query.get();
     return snapshot.docs.map((s) => {

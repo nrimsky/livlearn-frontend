@@ -9,7 +9,6 @@ import MobileNav from "./MobileNav";
 import { signOut } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
 
-
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
 
@@ -23,7 +22,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
     {
       name: "My Lists",
       action: () => {
-        history.push("/");
+        history.push("/u");
       },
     },
     {
@@ -73,12 +72,19 @@ export default function NavBar(props: { loggedIn: boolean }) {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img className="h-10 w-10 rounded-full cursor-pointer" src={logo} alt="" onClick={() => history.push("/")}/>
+                  <img
+                    className="h-10 w-10 rounded-full cursor-pointer"
+                    src={logo}
+                    alt=""
+                    onClick={() => history.push("/")}
+                  />
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <DesktopNav
                     navigation={
-                      props.loggedIn ? navigationLoggedInActions : navigationLoggedOutActions
+                      props.loggedIn
+                        ? navigationLoggedInActions
+                        : navigationLoggedOutActions
                     }
                   />
                 </div>
@@ -93,7 +99,9 @@ export default function NavBar(props: { loggedIn: boolean }) {
           <Disclosure.Panel className="sm:hidden">
             <MobileNav
               navigation={
-                props.loggedIn ? navigationLoggedInActions : navigationLoggedOutActions
+                props.loggedIn
+                  ? navigationLoggedInActions
+                  : navigationLoggedOutActions
               }
             />
           </Disclosure.Panel>
