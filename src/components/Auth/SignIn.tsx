@@ -4,7 +4,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
-import { signOut, getCurrentUserName } from "../../firebase/AuthService";
+import { getCurrentUserName } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
 
 // Configure FirebaseUI.
@@ -40,8 +40,6 @@ const SignIn: React.FC<Props> = ({ loggedIn }) => {
             👋 Hi {getCurrentUserName()?.split(" ")[0] ?? "there"}!
           </p>
           <Button color="green" onClick={() => history.push("/")} text="Home" />
-          <div className="mt-3"></div>
-          <Button color="yellow" onClick={signOut} text="Sign Out" />
         </div>
       )}
     </div>

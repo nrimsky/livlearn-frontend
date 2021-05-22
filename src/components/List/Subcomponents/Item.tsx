@@ -10,9 +10,6 @@ type Props = {
 };
 
 const Item = React.memo(({ data, onClick }: Props) => {
-
-  console.log(`List item ${data.title} rendered`);
-
   return (
     <li
       className="pl-3 pr-4 py-3 cursor-pointer bg-white hover:bg-green-50 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 text-sm"
