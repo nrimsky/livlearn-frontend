@@ -101,3 +101,11 @@ export async function getAllListsForUser(): Promise<Entity<ResourceList>[]> {
     return [];
   }
 }
+
+export async function deleteList(id: string) {
+  try {
+    firebase.firestore().collection("lists").doc(id).delete();
+  } catch (error) {
+    throw Error(`Delete unsuccessful - error: ${error}`);
+  }
+}

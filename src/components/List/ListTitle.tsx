@@ -6,7 +6,7 @@ type Props = {
 
 const ListTitle = ({ value }: Props) => {
   return (
-    <p className="mb-4 py-2 px-3 rounded outline-none border border-gray-200">
+    <p className="mb-4 py-1 px-2 rounded outline-none border border-gray-200 text-sm">
       {value}
     </p>
   );

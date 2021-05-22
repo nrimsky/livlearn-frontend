@@ -9,6 +9,7 @@ import { signOut } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
 import DropdownMenu from "../Dropdown/DropdownMenu";
 import { UserCircleIcon } from "@heroicons/react/solid";
+import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
@@ -95,9 +96,12 @@ export default function NavBar(props: { loggedIn: boolean }) {
                   <DropdownMenu
                     icon={<UserCircleIcon className="h-8 w-8" />}
                     aria-hidden="true"
-                    menuActions={userMenuActions}
                     name={"Open user menu"}
-                  />
+                  >
+                    {userMenuActions.map((a, i) => (
+                      <DropdownMenuItem menuAction={a} key={i} />
+                    ))}
+                  </DropdownMenu>
                 </div>
               )}
             </div>

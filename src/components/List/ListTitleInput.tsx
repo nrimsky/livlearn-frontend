@@ -11,7 +11,7 @@ const ListTitleInput = ({ value, onChange }: Props) => {
       type="text"
       placeholder="Name this list"
       value={value}
-      className="mb-4 py-2 px-3 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200"
+      className="mb-4 py-1 px-2 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200 text-small"
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value) {
           onChange(event.target.value.slice(0, 250));

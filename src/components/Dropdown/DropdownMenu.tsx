@@ -1,12 +1,10 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import MenuAction from "../../types/MenuAction";
-import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 
 export default function DropdownMenu(props: {
-  menuActions: MenuAction[];
   icon: React.ReactNode;
   name: string;
+  children: React.ReactNode;
 }) {
   return (
     <Menu as="div" className="ml-3 relative">
@@ -30,11 +28,9 @@ export default function DropdownMenu(props: {
           >
             <Menu.Items
               static
-              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg p-1 bg-white focus:outline-none"
             >
-              {props.menuActions.map((a, i) => (
-                <DropdownMenuItem menuAction={a} key={i} />
-              ))}
+              {props.children}
             </Menu.Items>
           </Transition>
         </>

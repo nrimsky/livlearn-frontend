@@ -26,7 +26,7 @@ type Props = {
 const SignIn: React.FC<Props> = ({ loggedIn }) => {
   const history = useHistory();
   return (
-    <div className="flex justify-center items-center grad w-screen flex-grow">
+    <div className="flex justify-center items-center w-screen flex-grow">
       {!loggedIn ? (
         <div className="text-center">
           <StyledFirebaseAuth
