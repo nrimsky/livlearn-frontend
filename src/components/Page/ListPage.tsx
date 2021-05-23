@@ -7,6 +7,8 @@ import StaticList from "../List/StaticList";
 import ItemData from "../../types/ItemData";
 import ListTitleInput from "../List/ListTitleInput";
 import ListTitle from "../List/ListTitle";
+import DropdownMenu from "../Dropdown/DropdownMenu";
+import { DotsHorizontalIcon } from "@heroicons/react/outline";
 
 type ParamTypes = {
   id: string | undefined;
@@ -79,7 +81,15 @@ const ListPage = () => {
       {loaded &&
         (currentUserId === creatorId ? (
           <div className="m-5">
-            <ListTitleInput value={title} onChange={rename} />
+            <div className="flex flex-row">
+              <ListTitleInput value={title} onChange={rename} />
+              <DropdownMenu
+                icon={<DotsHorizontalIcon className="h-6 w-6 mt-2" />}
+                aria-hidden="true"
+                menuActions={[]}
+                name={"Open user menu"}
+              />
+            </div>
             <EditableList
               id={id ? id : null}
               rl={{

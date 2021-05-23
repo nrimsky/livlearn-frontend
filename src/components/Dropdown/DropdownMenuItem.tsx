@@ -1,7 +1,7 @@
 import { Menu } from "@headlessui/react";
 import MenuAction from "../../types/MenuAction";
 
-export default function UserMenuItem(props: {
+export default function DropdownMenuItem(props: {
   menuAction: MenuAction;
   key?: number;
 }) {

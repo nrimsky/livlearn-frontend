@@ -4,10 +4,11 @@ import MenuAction from "../../types/MenuAction";
 import logo from "../../img/logo.svg";
 import MobileMenuButton from "./MobileMenuButton";
 import DesktopNav from "./DesktopNav";
-import ProfileDropdown from "./ProfileDropdown";
 import MobileNav from "./MobileNav";
 import { signOut } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
+import DropdownMenu from "../Dropdown/DropdownMenu";
+import { UserCircleIcon } from "@heroicons/react/solid";
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
@@ -91,7 +92,12 @@ export default function NavBar(props: { loggedIn: boolean }) {
               </div>
               {props.loggedIn && (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <ProfileDropdown menuActions={userMenuActions} />
+                  <DropdownMenu
+                    icon={<UserCircleIcon className="h-8 w-8" />}
+                    aria-hidden="true"
+                    menuActions={userMenuActions}
+                    name={"Open user menu"}
+                  />
                 </div>
               )}
             </div>
