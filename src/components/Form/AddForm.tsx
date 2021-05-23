@@ -1,26 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import ItemData from "../../types/ItemData";
 import MediaType from "../../types/MediaType";
-import { ListContext } from "../Page/ListPage";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
 import Button from "../Button/Button";
 import Textarea from "./Textarea";
 
-export default function AddForm(props: { onClose: () => void }) {
-  const { dispatch } = useContext(ListContext);
-
+export default function AddForm(props: {
+  onClose: () => void;
+  onAdd: (i: ItemData) => void;
+}) {
   const [item, setItem] = useState<ItemData>({
     url: "",
     title: "",
     detail: "",
     type: MediaType.Other,
   });
-
-  const onAdd = () => {
-    dispatch({ type: "ADD", newItem: item });
-    props.onClose();
-  };
 
   const onChange = (i: ItemData) => {
     setItem(i);
@@ -66,7 +61,10 @@ export default function AddForm(props: { onClose: () => void }) {
         />
       </form>
       <div className="mt-4">
-        <Button color="green" onClick={onAdd} text="Add" />
+        <Button color="green" onClick={() => {
+          props.onAdd(item);
+          props.onClose();
+        }} text="Add" />
       </div>
     </div>
   );

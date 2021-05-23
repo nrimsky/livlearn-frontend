@@ -11,10 +11,10 @@ import {
   DotsCircleHorizontalIcon,
 } from "@heroicons/react/outline";
 
-export default function Icon(props: {
+const Icon = React.memo((props: {
   mediaType: MediaType;
   className?: string;
-}) {
+}) => {
   switch (props.mediaType) {
     case MediaType.Article:
       return (
@@ -73,4 +73,5 @@ export default function Icon(props: {
         />
       );
   }
-}
+})
+ export default Icon;

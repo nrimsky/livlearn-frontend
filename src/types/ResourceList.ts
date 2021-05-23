@@ -1,7 +1,7 @@
 import ItemData from "./ItemData";
 
 type ResourceList = {
-  creatorId: string;
+  creatorId: string|null;
   isPublic: boolean;
   title: string;
   data: ItemData[];

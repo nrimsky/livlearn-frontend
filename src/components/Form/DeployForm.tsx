@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { ListContext } from "../Page/ListPage";
+import React from "react";
 import Button from "../Button/Button";
 
 import { useHistory } from "react-router-dom";
@@ -7,17 +6,18 @@ import {
   saveNewListForUser,
   editExitingList,
 } from "../../firebase/FirestoreService";
+import ResourceList from "../../types/ResourceList";
 
 export default function DeployForm(props: {
+  state: ResourceList;
   id: string | null;
   onClose: () => void;
 }) {
-  const { state } = useContext(ListContext);
   let history = useHistory();
 
   function saveNewList(isPublic: boolean) {
     saveNewListForUser(
-      state,
+      props.state,
       isPublic,
       (id) => {
         history.push(`/list/${id}`);
@@ -30,7 +30,7 @@ export default function DeployForm(props: {
   }
 
   function edit(id: string) {
-    editExitingList(id, state, props.onClose, (e) => {
+    editExitingList(id, props.state, props.onClose, (e) => {
       console.error("Error writing document: ", e);
       props.onClose();
     });

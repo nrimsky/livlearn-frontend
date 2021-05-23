@@ -1,97 +1,113 @@
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getResourceList } from "../../firebase/FirestoreService";
-import ListEditor from "../List/ListEditor";
-import React, { useReducer, createContext, useEffect, useState } from "react";
-import ItemData from "../../types/ItemData";
-import ResourceList from "../../types/ResourceList";
 import { getCurrentUserId } from "../../firebase/AuthService";
-import List from "../List/List";
-
-const defaultStart: ResourceList = {
-  title: "",
-  data: [],
-  isPublic: false,
-  creatorId: "",
-};
-
-type Action =
-  | { type: "RENAME"; newTitle: string }
-  | { type: "EDIT"; index: number; newData: ItemData }
-  | { type: "DELETE"; index: number }
-  | { type: "LOAD"; newState: ResourceList }
-  | { type: "ADD"; newItem: ItemData };
-
-function reducer(state: ResourceList, action: Action): ResourceList {
-  switch (action.type) {
-    case "EDIT":
-      return {
-        ...state,
-        data: [
-          ...state.data.slice(0, action.index),
-          action.newData,
-          ...state.data.slice(action.index + 1),
-        ],
-      };
-    case "DELETE":
-      return {
-        ...state,
-        data: [
-          ...state.data.slice(0, action.index),
-          ...state.data.slice(action.index + 1),
-        ],
-      };
-    case "RENAME":
-      return { ...state, title: action.newTitle };
-    case "ADD":
-      return { ...state, data: [...state.data, action.newItem] };
-    case "LOAD":
-      return { ...action.newState };
-  }
-}
-
-export const ListContext = createContext<{
-  state: ResourceList;
-  dispatch: React.Dispatch<any>;
-}>({
-  state: defaultStart,
-  dispatch: () => null,
-});
+import EditableList from "../List/EditableList";
+import StaticList from "../List/StaticList";
+import ItemData from "../../types/ItemData";
+import ListTitleInput from "../List/ListTitleInput";
+import ListTitle from "../List/ListTitle";
 
 type ParamTypes = {
   id: string | undefined;
 };
 
-export default function ListPage() {
+const ListPage = () => {
+  const currentUserId = getCurrentUserId();
   const { id } = useParams<ParamTypes>();
   const history = useHistory();
-  const [state, dispatch] = useReducer(reducer, defaultStart);
   const [loaded, setLoaded] = useState(false);
-  const userId = getCurrentUserId();
+  const [title, setTitle] = useState("");
+  const [data, setData] = useState<ItemData[]>([]);
+  const [creatorId, setCreatorId] = useState(currentUserId);
+  const [isPublic, setIsPublic] = useState(false);
+
+  console.log("render list page");
+
+  const add = useCallback(
+    (item: ItemData) => {
+      setData([...data, item]);
+    },
+    [data, setData]
+  );
+
+  const rename = useCallback(
+    (newTitle: string) => {
+      setTitle(newTitle);
+    },
+    [setTitle]
+  );
+
+  const del = useCallback(
+    (idx: number) => {
+      setData([...data.slice(0, idx), ...data.slice(idx + 1)]);
+    },
+    [data, setData]
+  );
+
+  const edit = useCallback(
+    (updated: ItemData, idx: number) => {
+      setData([...data.slice(0, idx), updated, ...data.slice(idx + 1)]);
+    },
+    [data, setData]
+  );
 
   useEffect(() => {
     if (!id) {
-      dispatch({ type: "LOAD", newState: defaultStart });
+      setTitle("");
+      setData([]);
+      setCreatorId(currentUserId);
+      setIsPublic(false);
       setLoaded(true);
     } else {
       getResourceList(id)
         .then((s) => {
-          dispatch({ type: "LOAD", newState: s });
+          setTitle(s.title);
+          setData(s.data);
+          setCreatorId(s.creatorId);
+          setIsPublic(s.isPublic);
           setLoaded(true);
         })
         .catch(() => {
           history.replace("/notfound");
         });
     }
-  }, [history, id]);
+  }, [history, id, currentUserId]);
 
   return (
-    <ListContext.Provider value={{ state, dispatch }}>
+    <>
       {loaded &&
-        (!id || userId === state.creatorId ? (
-          <ListEditor id={id ? id : null} />
+        (currentUserId === creatorId ? (
+          <div className="m-5">
+            <ListTitleInput value={title} onChange={rename} />
+            <EditableList
+              id={id ? id : null}
+              rl={{
+                creatorId: creatorId,
+                isPublic: isPublic,
+                data: data,
+                title: title,
+              }}
+              add={add}
+              edit={edit}
+              del={del}
+            />
+          </div>
         ) : (
-          <List />
+          <div className="m-5">
+            <ListTitle value={title} />
+            <StaticList
+              resourceList={{
+                creatorId: creatorId,
+                isPublic: isPublic,
+                data: data,
+                title: title,
+              }}
+            />
+          </div>
         ))}
-    </ListContext.Provider>
+    </>
   );
-}
+};
+
+export default ListPage;
