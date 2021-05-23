@@ -15,8 +15,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
   linkText,
 }) => {
   return (
-    <div className="max-w max-h py-4 px-8 bg-white shadow sm:rounded w-screen sm:w-auto">
-      <div>
+    <div className="max-w max-h py-4 px-8 bg-white shadow sm:rounded w-screen sm:w-auto flex flex-col">
+      <div className="flex-grow">
         <h2 className="text-gray-800 text-xl font-semibold">{title}</h2>
         <p className="mt-2 text-gray-600">{text}</p>
       </div>
