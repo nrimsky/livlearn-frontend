@@ -9,10 +9,19 @@ import ListTitleInput from "../List/ListTitleInput";
 import ListTitle from "../List/ListTitle";
 import DropdownMenu from "../Dropdown/DropdownMenu";
 import { DotsHorizontalIcon } from "@heroicons/react/outline";
+import MenuAction from "../../types/MenuAction";
 
 type ParamTypes = {
   id: string | undefined;
 };
+
+const moreMenuActions: MenuAction[] = [{
+  name: "Delete",
+  action: () => console.log("Delete")
+},{
+  name: "Share",
+  action: () => console.log("Share")
+}]
 
 const ListPage = () => {
   const currentUserId = getCurrentUserId();
@@ -80,13 +89,13 @@ const ListPage = () => {
     <>
       {loaded &&
         (currentUserId === creatorId ? (
-          <div className="m-5">
-            <div className="flex flex-row">
+          <div className="sm:mx-5 my-5">
+            <div className="flex flex-row mx-5 sm:mx-0">
               <ListTitleInput value={title} onChange={rename} />
               <DropdownMenu
                 icon={<DotsHorizontalIcon className="h-6 w-6 mt-2" />}
                 aria-hidden="true"
-                menuActions={[]}
+                menuActions={moreMenuActions}
                 name={"Open user menu"}
               />
             </div>
@@ -104,8 +113,10 @@ const ListPage = () => {
             />
           </div>
         ) : (
-          <div className="m-5">
-            <ListTitle value={title} />
+          <div className="sm:m-5 my-5">
+            <div className="flex flex-row mx-5 sm:mx-0">
+              <ListTitle value={title} />
+            </div>
             <StaticList
               resourceList={{
                 creatorId: creatorId,
