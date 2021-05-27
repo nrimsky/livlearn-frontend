@@ -1,47 +1,54 @@
 // Import FirebaseAuth and firebase.
-import React from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import React, { useState } from "react";
 import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
-import { getCurrentUserName } from "../../firebase/AuthService";
-import { useHistory } from "react-router-dom";
+import Input from "../Form/Input";
 
-// Configure FirebaseUI.
-const uiConfig = {
-  // Popup signin flow rather than redirect flow.
-  signInFlow: "popup",
-  // We will display Google and Facebook as auth providers.
-  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false,
-  },
-};
+const SignIn = () => {
 
-type Props = {
-  loggedIn: boolean;
-};
+  let url = "";
 
-const SignIn: React.FC<Props> = ({ loggedIn }) => {
-  const history = useHistory();
+  if ( window.location.hostname === "localhost") {
+    url = "http://localhost:3000/finishSignIn";
+  } else {
+    url = "https://resourceee.web.app/finishSignIn";
+  }
+  var actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: url,
+    handleCodeInApp: true,
+  };
+
+  const login = () => {
+    firebase
+      .auth()
+      .sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(() => {
+        window.localStorage.setItem("emailForSignIn", email);
+        setDone(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+
   return (
     <div className="flex justify-center items-center w-screen flex-grow">
-      {!loggedIn ? (
-        <div className="text-center">
-          <StyledFirebaseAuth
-            uiConfig={uiConfig}
-            firebaseAuth={firebase.auth()}
-          />
-        </div>
-      ) : (
-        <div className="text-center bg-white shadow p-8 sm:w-80">
-          <p className="text-gray-700 mb-5 font-medium">
-            👋 Hi {getCurrentUserName()?.split(" ")[0] ?? "there"}!
-          </p>
-          <Button color="green" onClick={() => history.push("/")} text="Home" />
-        </div>
-      )}
+      <div className="text-center p-5 max-w-md m-5 bg-white shadow-xl rounded-2xl">
+        <Input
+          value={email}
+          placeholder={"Enter your email"}
+          onChange={(n: string) => setEmail(n)}
+          name={"Login with just your email - no passwords needed!"}
+        />
+        <Button color="green" onClick={login} text="Login" />
+        { done && <p className="text-xs mt-3 text-gray-700">🎉 An email has been sent to {email}! Check your inbox for a link to sign in!</p>}
+      </div>
     </div>
   );
 };

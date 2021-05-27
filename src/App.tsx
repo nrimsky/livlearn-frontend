@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
 import MyPage from "./components/Page/MyPage";
+import FinishSignIn from "./components/Auth/FinishSignIn";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,7 +32,18 @@ export default function App() {
             )}
           </Route>
           <Route path="/auth">
-            <SignIn loggedIn={loggedIn} />
+            {loggedIn ? (
+              <h1 className="p-5">You are already logged in</h1>
+            ) : (
+              <SignIn />
+            )}
+          </Route>
+          <Route path="/finishSignIn">
+            {loggedIn ? (
+              <h1 className="p-5">You are already logged in</h1>
+            ) : (
+              <FinishSignIn />
+            )}
           </Route>
           <Route exact path="/list">
             <ListPage />
