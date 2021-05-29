@@ -10,15 +10,13 @@ import ResourceList from "../../types/ResourceList";
 
 export default function DeployForm(props: {
   state: ResourceList;
-  id: string | null;
   onClose: () => void;
 }) {
   let history = useHistory();
 
-  function saveNewList(isPublic: boolean) {
+  function saveNewList() {
     saveNewListForUser(
       props.state,
-      isPublic,
       (id) => {
         history.push(`/list/${id}`);
         props.onClose();
@@ -37,17 +35,17 @@ export default function DeployForm(props: {
   }
 
   const onSave = () => {
-    if (props.id) {
-      edit(props.id);
+    if (props.state.id) {
+      edit(props.state.id);
     } else {
-      saveNewList(false);
+      saveNewList();
     }
   };
 
   return (
     <div className="w-full">
       <p>
-        {props.id
+        {props.state.id
           ? "Update your list with a click of a button!"
           : "Now it's time to publish your list!"}
       </p>
@@ -55,7 +53,7 @@ export default function DeployForm(props: {
         <Button
           color="green"
           onClick={onSave}
-          text={props.id ? "Publish Changes" : "Publish List"}
+          text={props.state.id ? "Publish Changes" : "Publish List"}
         />
       </div>
     </div>

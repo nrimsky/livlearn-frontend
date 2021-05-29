@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ItemData from "../../types/ItemData";
+import ResourceListItem from "../../types/ResourceListItem";
 import MediaType from "../../types/MediaType";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
@@ -8,16 +8,16 @@ import Textarea from "./Textarea";
 
 export default function AddForm(props: {
   onClose: () => void;
-  onAdd: (i: ItemData) => void;
+  onAdd: (i: ResourceListItem) => void;
 }) {
-  const [item, setItem] = useState<ItemData>({
+  const [item, setItem] = useState<ResourceListItem>({
     url: "",
     title: "",
     detail: "",
     type: MediaType.Other,
   });
 
-  const onChange = (i: ItemData) => {
+  const onChange = (i: ResourceListItem) => {
     setItem(i);
   };
 

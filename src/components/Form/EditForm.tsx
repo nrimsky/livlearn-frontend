@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ItemData from "../../types/ItemData";
+import ResourceListItem from "../../types/ResourceListItem";
 import Input from "./Input";
 import TypePicker from "./TypePicker";
 import MediaType from "../../types/MediaType";
@@ -8,11 +8,11 @@ import Textarea from "./Textarea";
 
 export default function EditForm(props: {
   onClose: () => void;
-  onItemChange: (item: ItemData) => void;
+  onItemChange: (item: ResourceListItem) => void;
   onItemDelete: () => void;
-  initial: ItemData;
+  initial: ResourceListItem;
 }) {
-  const [item, setItem] = useState<ItemData>(props.initial);
+  const [item, setItem] = useState<ResourceListItem>(props.initial);
 
   const onDone = () => {
     props.onItemChange(item);
@@ -24,7 +24,7 @@ export default function EditForm(props: {
     props.onClose();
   };
 
-  const onChange = (i: ItemData) => {
+  const onChange = (i: ResourceListItem) => {
     setItem(i);
   };
 

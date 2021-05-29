@@ -1,14 +1,13 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import ResourceList from "../types/ResourceList";
-import Entity from "../types/Entity";
 import { getCurrentUserId } from "./AuthService";
 
 export async function getResourceList(id: string): Promise<ResourceList> {
   const docRef = firebase.firestore().collection("lists").doc(id);
   const docSnapShot = await docRef.get();
   if (docSnapShot.exists) {
-    return docSnapShot.data() as ResourceList;
+    return docToList(docSnapShot);
   } else {
     throw Error("No such document");
   }
@@ -16,7 +15,6 @@ export async function getResourceList(id: string): Promise<ResourceList> {
 
 export async function saveNewListForUser(
   newList: ResourceList,
-  isPublic: boolean,
   onSuccess: (id: string) => void,
   onError: (message: string) => void
 ) {
@@ -24,58 +22,61 @@ export async function saveNewListForUser(
   if (!userId) {
     onError("No signed in user");
   }
+  const { id, ...rest } = newList;
   firebase
     .firestore()
     .collection("lists")
     .add({
-      ...newList,
+      ...rest,
       creatorId: userId,
-      isPublic: isPublic,
+      createdAt: new Date(),
     })
     .then((docRef) => onSuccess(docRef.id))
     .catch(onError);
 }
 
 export async function editExitingList(
-  id: string,
+  itemId: string,
   updated: ResourceList,
   onSuccess: () => void,
   onError: (message: string) => void
 ): Promise<void> {
+  const { id, ...rest } = updated;
   firebase
     .firestore()
     .collection("lists")
-    .doc(id)
+    .doc(itemId)
     .set({
-      ...updated,
+      ...rest,
     })
     .then(() => onSuccess())
     .catch(onError);
 }
 
 function docToList(
-  docSnapshot: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
-): Entity<ResourceList> {
+  docSnapshot:
+    | firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+    | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
+): ResourceList {
   const docData = docSnapshot.data();
   const id = docSnapshot.id;
-  return {
-    creatorId: docData.creatorId,
-    isPublic: docData.isPublic,
-    title: docData.title,
-    data: docData.data,
-    id: id,
-  };
+  if (docData) {
+    return { ...docData, id: id } as ResourceList;
+  } else {
+    throw Error("No data in document snapshot");
+  }
 }
 
-export async function getPublicListsFromFirebase(): Promise<
-  Entity<ResourceList>[]
-> {
+export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
   const listsRef = firebase.firestore().collection("lists");
-  const query = listsRef.where("isPublic", "==", true);
+  const query = listsRef
+    .where("isPublic", "==", true)
+    .orderBy("createdAt", "desc")
+    .limit(10);
   try {
     const snapshot = await query.get();
     return snapshot.docs.map((s) => {
-      return docToList(s) as Entity<ResourceList>;
+      return docToList(s) as ResourceList;
     });
   } catch (error) {
     console.error(error);
@@ -83,18 +84,20 @@ export async function getPublicListsFromFirebase(): Promise<
   }
 }
 
-export async function getAllListsForUser(): Promise<Entity<ResourceList>[]> {
+export async function getAllListsForUser(): Promise<ResourceList[]> {
   const userId = getCurrentUserId();
   if (!userId) {
     console.error("No logged in user");
     return [];
   }
   const listsRef = firebase.firestore().collection("lists");
-  const query = listsRef.where("creatorId", "==", userId);
+  const query = listsRef
+    .where("creatorId", "==", userId)
+    .orderBy("createdAt", "desc");
   try {
     const snapshot = await query.get();
     return snapshot.docs.map((s) => {
-      return docToList(s) as Entity<ResourceList>;
+      return docToList(s);
     });
   } catch (error) {
     console.error(error);

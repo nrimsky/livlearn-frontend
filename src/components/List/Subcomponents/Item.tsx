@@ -1,10 +1,10 @@
 import React from "react";
 import Icon from "../../Icon/Icon";
 import { LinkIcon } from "@heroicons/react/outline";
-import ItemData from "../../../types/ItemData";
+import ResourceListItem from "../../../types/ResourceListItem";
 
 type Props = {
-  data: ItemData;
+  data: ResourceListItem;
   onClick?: () => void;
   key: number;
 };

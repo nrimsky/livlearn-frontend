@@ -1,12 +1,11 @@
 import MediaType from "./MediaType";
 
-type ItemData = {
+type ResourceListItem = {
   title: string;
   type: MediaType;
   detail: string;
   url: string;
+  index?: number;
 };
 
-// export type Keyed<T> = T & { key: number; };
-
-export default ItemData;
+export default ResourceListItem;

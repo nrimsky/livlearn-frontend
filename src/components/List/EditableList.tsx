@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Item from "./Subcomponents/Item";
-import ItemData from "../../types/ItemData";
+import ResourceListItem from "../../types/ResourceListItem";
 import AddButton from "../Button/AddButton";
 import BasePopup from "../Popup/BasePopup";
 import AddForm from "../Form/AddForm";
@@ -19,22 +19,22 @@ import {
 import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import { deleteList } from "../../firebase/FirestoreService";
 import ShareForm from "../Form/ShareForm";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 type Props = {
-  add: (item: ItemData) => void;
+  add: (item: ResourceListItem) => void;
   del: (idx: number) => void;
-  edit: (updated: ItemData, idx: number) => void;
+  edit: (updated: ResourceListItem, idx: number) => void;
   rename: (newTitle: string) => void;
-  id: string | null;
   rl: ResourceList;
 };
 
 type IndexedItem = {
-  item: ItemData;
+  item: ResourceListItem;
   index: number;
 };
 
-const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
+const EditableList = ({ add, del, edit, rename, rl }: Props) => {
   const [addOpen, setAddOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
@@ -65,9 +65,9 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
   const delListAction = {
     name: "Delete",
     action: () => {
-      if (id) {
+      if (rl.id) {
         try {
-          deleteList(id);
+          deleteList(rl.id);
           history.push("/u");
         } catch (error) {
           console.error(error);
@@ -83,7 +83,7 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
     action: () => setShareOpen(true),
   };
 
-  const openEdit = (item: ItemData, idx: number) => {
+  const openEdit = (item: ResourceListItem, idx: number) => {
     setItemEditing({ item: item, index: idx });
   };
 
@@ -95,7 +95,7 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
     <div className="sm:mx-5 my-5">
       <div className="flex flex-row mx-5 sm:mx-0">
         <ListTitleInput value={title} onChange={rename} />
-        {id && (
+        {rl.id && (
           <DropdownMenu
             icon={<DotsHorizontalIcon className="h-6 w-6 mt-1" />}
             aria-hidden="true"
@@ -121,10 +121,9 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
       <BasePopup
         isOpen={saveOpen}
         onClickClose={closeSave}
-        title={id ? "Publish Changes" : "Publish New List"}
+        title={rl.id ? "Publish Changes" : "Publish New List"}
       >
         <DeployForm
-          id={id}
           onClose={closeSave}
           state={{ ...rl, data: data, title: title }}
         />
@@ -138,7 +137,7 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
           <EditForm
             onClose={closeEdit}
             initial={itemEditing.item}
-            onItemChange={(n: ItemData) => {
+            onItemChange={(n: ResourceListItem) => {
               return edit(n, itemEditing.index);
             }}
             onItemDelete={() => del(itemEditing.index)}
@@ -157,7 +156,7 @@ const EditableList = ({ add, del, edit, rename, id, rl }: Props) => {
       >
         🚀
         <span className="ml-2">
-          {id ? "Publish Changes" : "Publish New List"}
+          {rl.id ? "Publish Changes" : "Publish New List"}
         </span>
       </button>
     </div>
