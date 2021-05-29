@@ -22,14 +22,16 @@ export async function saveNewListForUser(
   if (!userId) {
     onError("No signed in user");
   }
-  const { id, ...rest } = newList;
+  const { id, data, ...rest } = newList;
+  const dataWithIndices = data.map((item, idx) => { return {...item, index: idx}} );
   firebase
     .firestore()
     .collection("lists")
     .add({
       ...rest,
+      data: dataWithIndices,
       creatorId: userId,
-      createdAt: new Date(),
+      lastChanged: new Date(),
     })
     .then((docRef) => onSuccess(docRef.id))
     .catch(onError);
@@ -41,13 +43,16 @@ export async function editExitingList(
   onSuccess: () => void,
   onError: (message: string) => void
 ): Promise<void> {
-  const { id, ...rest } = updated;
+  const { id, data, ...rest } = updated;
+  const dataWithIndices = data.map((item, idx) => { return {...item, index: idx}} );
   firebase
     .firestore()
     .collection("lists")
     .doc(itemId)
     .set({
       ...rest,
+      lastChanged: new Date(),
+      data: dataWithIndices
     })
     .then(() => onSuccess())
     .catch(onError);
@@ -71,7 +76,7 @@ export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
   const listsRef = firebase.firestore().collection("lists");
   const query = listsRef
     .where("isPublic", "==", true)
-    .orderBy("createdAt", "desc")
+    .orderBy("lastChanged", "desc")
     .limit(10);
   try {
     const snapshot = await query.get();
@@ -93,7 +98,7 @@ export async function getAllListsForUser(): Promise<ResourceList[]> {
   const listsRef = firebase.firestore().collection("lists");
   const query = listsRef
     .where("creatorId", "==", userId)
-    .orderBy("createdAt", "desc");
+    .orderBy("lastChanged", "desc");
   try {
     const snapshot = await query.get();
     return snapshot.docs.map((s) => {

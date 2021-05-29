@@ -8,7 +8,7 @@ type ResourceList = {
   title: string;
   data: ResourceListItem[];
   id?: string;
-  createdAt?: firebase.firestore.Timestamp;
+  lastChanged?: firebase.firestore.Timestamp;
 };
 
 export default ResourceList;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Item from "./Subcomponents/Item";
 import ResourceListItem from "../../types/ResourceListItem";
 import AddButton from "../Button/AddButton";
 import BasePopup from "../Popup/BasePopup";
@@ -7,7 +6,6 @@ import AddForm from "../Form/AddForm";
 import DeployForm from "../Form/DeployForm";
 import EditForm from "../Form/EditForm";
 import ResourceList from "../../types/ResourceList";
-import ListWrapper from "./Subcomponents/ListWrapper";
 import { useHistory } from "react-router-dom";
 import ListTitleInput from "./ListTitleInput";
 import DropdownMenu from "../Dropdown/DropdownMenu";
@@ -19,13 +17,21 @@ import {
 import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import { deleteList } from "../../firebase/FirestoreService";
 import ShareForm from "../Form/ShareForm";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  DropResult,
+  Draggable,
+} from "react-beautiful-dnd";
+import { LinkIcon, MenuIcon } from "@heroicons/react/outline";
+import Icon from "../Icon/Icon";
 
 type Props = {
   add: (item: ResourceListItem) => void;
   del: (idx: number) => void;
   edit: (updated: ResourceListItem, idx: number) => void;
   rename: (newTitle: string) => void;
+  reorder: (startIndex: number, endIndex: number) => void;
   rl: ResourceList;
 };
 
@@ -34,7 +40,70 @@ type IndexedItem = {
   index: number;
 };
 
-const EditableList = ({ add, del, edit, rename, rl }: Props) => {
+const DragDropList = (props: {
+  onDragEnd: (result: DropResult) => void;
+  data: ResourceListItem[];
+  openEdit: (item: ResourceListItem, idx: number) => void;
+}) => {
+  return (
+    <DragDropContext onDragEnd={props.onDragEnd}>
+      <Droppable droppableId={"list"}>
+        {(provided) => (
+          <ul
+            className="sm:rounded border border-gray-200 divide-y divide-gray-200"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {props.data.map((d, idx) => (
+              <Draggable
+                key={"draggable=" + d.url + d.title}
+                draggableId={"draggable=" + d.url + d.title}
+                index={idx}
+              >
+                {(provided) => (
+                  <li
+                    className="pl-3 pr-4 py-3 cursor-pointer bg-white hover:bg-green-50 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 text-sm relative"
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                  >
+                    <div
+                      {...provided.dragHandleProps}
+                      className="absolute right-0 top-0 p-3"
+                    >
+                      <MenuIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
+                    </div>
+
+                    <div
+                      className="inline-flex"
+                      onClick={() => props.openEdit(d, idx)}
+                    >
+                      <Icon mediaType={d.type} />
+                      <p className="font-semibold ml-2">{d.title}</p>
+                    </div>
+                    <p className="" onClick={() => props.openEdit(d, idx)}>
+                      {d.detail}
+                    </p>
+                    <div className="underline text-green-500 hover:text-green-600 truncate mr-10">
+                      <span>
+                        <LinkIcon className="h-5 w-4 inline" />
+                        <a href={d.url} className="ml-2 truncate">
+                          {d.url}
+                        </a>
+                      </span>
+                    </div>
+                  </li>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
+};
+
+const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
   const [addOpen, setAddOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
@@ -60,7 +129,17 @@ const EditableList = ({ add, del, edit, rename, rl }: Props) => {
 
   const closeShare = () => {
     setShareOpen(false);
-  }
+  };
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+    reorder(result.source.index, result.destination.index);
+  };
 
   const delListAction = {
     name: "Delete",
@@ -112,7 +191,11 @@ const EditableList = ({ add, del, edit, rename, rl }: Props) => {
           </DropdownMenu>
         )}
       </div>
-      <BasePopup isOpen={shareOpen} onClickClose={closeShare} title={"Share this list"}>
+      <BasePopup
+        isOpen={shareOpen}
+        onClickClose={closeShare}
+        title={"Share this list"}
+      >
         <ShareForm />
       </BasePopup>
       <BasePopup isOpen={addOpen} onClickClose={closeAdd} title={"Add Item"}>
@@ -144,11 +227,7 @@ const EditableList = ({ add, del, edit, rename, rl }: Props) => {
           />
         </BasePopup>
       )}
-      <ListWrapper>
-        {data.map((d, i) => {
-          return <Item data={d} key={i} onClick={() => openEdit(d, i)} />;
-        })}
-      </ListWrapper>
+      <DragDropList onDragEnd={onDragEnd} openEdit={openEdit} data={rl.data} />
       <AddButton className="fixed bottom-6 right-6" onClick={openAdd} />
       <button
         className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded py-1 px-2 text-green-500 font-medium text-small border border-green-500"

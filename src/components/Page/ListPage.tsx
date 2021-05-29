@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getResourceList } from "../../firebase/FirestoreService";
 import { getCurrentUserId } from "../../firebase/AuthService";
@@ -11,6 +11,7 @@ type ParamTypes = {
 };
 
 const ListPage = () => {
+
   const currentUserId = getCurrentUserId();
   const { id } = useParams<ParamTypes>();
   const history = useHistory();
@@ -20,34 +21,28 @@ const ListPage = () => {
   const [creatorId, setCreatorId] = useState(currentUserId);
   const [isPublic, setIsPublic] = useState(false);
 
-  const add = useCallback(
-    (item: ResourceListItem) => {
-      const newItem = {...item, index: data.length};
-      setData([...data, newItem]);
-    },
-    [data, setData]
-  );
+  const add = (item: ResourceListItem) => {
+    setData([...data, item]);
+  };
 
-  const rename = useCallback(
-    (newTitle: string) => {
-      setTitle(newTitle);
-    },
-    [setTitle]
-  );
+  const rename = (newTitle: string) => {
+    setTitle(newTitle);
+  };
 
-  const del = useCallback(
-    (idx: number) => {
-      setData([...data.slice(0, idx), ...data.slice(idx + 1)]);
-    },
-    [data, setData]
-  );
+  const del = (idx: number) => {
+    setData([...data.slice(0, idx), ...data.slice(idx + 1)]);
+  };
 
-  const edit = useCallback(
-    (updated: ResourceListItem, idx: number) => {
-      setData([...data.slice(0, idx), updated, ...data.slice(idx + 1)]);
-    },
-    [data, setData]
-  );
+  const edit = (updated: ResourceListItem, idx: number) => {
+    setData([...data.slice(0, idx), updated, ...data.slice(idx + 1)]);
+  };
+
+  const reorder = (startIndex: number, endIndex: number) => {
+    const result = Array.from(data);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    setData(result);
+  };
 
   useEffect(() => {
     if (!id) {
@@ -60,7 +55,11 @@ const ListPage = () => {
       getResourceList(id)
         .then((s) => {
           setTitle(s.title);
-          setData(s.data.sort((a,b)=>{return (a.index && b.index && (a.index < b.index)) ? -1: 1}));
+          setData(
+            s.data.sort((a, b) => {
+              return a.index && b.index && a.index < b.index ? -1 : 1;
+            })
+          );
           setCreatorId(s.creatorId);
           setIsPublic(s.isPublic);
           setLoaded(true);
@@ -81,12 +80,13 @@ const ListPage = () => {
               isPublic: isPublic,
               data: data,
               title: title,
-              id: id
+              id: id,
             }}
             rename={rename}
             add={add}
             edit={edit}
             del={del}
+            reorder={reorder}
           />
         ) : (
           <StaticList
@@ -95,7 +95,7 @@ const ListPage = () => {
               isPublic: isPublic,
               data: data,
               title: title,
-              id: id
+              id: id,
             }}
           />
         ))}
