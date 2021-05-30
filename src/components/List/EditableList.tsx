@@ -108,7 +108,6 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
   const [saveOpen, setSaveOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [itemEditing, setItemEditing] = useState<IndexedItem | null>(null);
-  const { title, data } = rl;
   const history = useHistory();
 
   const closeAdd = () => {
@@ -173,7 +172,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
   return (
     <div className="sm:mx-5 my-5">
       <div className="flex flex-row mx-5 sm:mx-0">
-        <ListTitleInput value={title} onChange={rename} />
+        <ListTitleInput value={rl.title} onChange={rename} />
         {rl.id && (
           <DropdownMenu
             icon={<DotsHorizontalIcon className="h-6 w-6 mt-1" />}
@@ -196,7 +195,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
         onClickClose={closeShare}
         title={"Share this list"}
       >
-        <ShareForm />
+        <ShareForm onClose={closeShare} state={rl}/>
       </BasePopup>
       <BasePopup isOpen={addOpen} onClickClose={closeAdd} title={"Add Item"}>
         <AddForm onClose={closeAdd} onAdd={add} />
@@ -208,7 +207,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
       >
         <DeployForm
           onClose={closeSave}
-          state={{ ...rl, data: data, title: title }}
+          state={rl}
         />
       </BasePopup>
       {itemEditing && (
