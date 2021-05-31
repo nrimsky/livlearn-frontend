@@ -14,17 +14,17 @@ export async function getResourceList(id: string): Promise<ResourceList> {
 }
 
 export async function saveNewListForUser(
-  newList: ResourceList,
-  onSuccess: (id: string) => void,
-  onError: (message: string) => void
-) {
+  newList: ResourceList
+): Promise<string> {
   const userId = getCurrentUserId();
   if (!userId) {
-    onError("No signed in user");
+    throw Error("No signed in user");
   }
   const { id, data, ...rest } = newList;
-  const dataWithIndices = data.map((item, idx) => { return {...item, index: idx}} );
-  firebase
+  const dataWithIndices = data.map((item, idx) => {
+    return { ...item, index: idx };
+  });
+  const docref = await firebase
     .firestore()
     .collection("lists")
     .add({
@@ -32,30 +32,27 @@ export async function saveNewListForUser(
       data: dataWithIndices,
       creatorId: userId,
       lastChanged: new Date(),
-    })
-    .then((docRef) => onSuccess(docRef.id))
-    .catch(onError);
+    });
+  return docref.id;
 }
 
-export async function editExitingList(
-  itemId: string,
-  updated: ResourceList,
-  onSuccess: () => void,
-  onError: (message: string) => void
-): Promise<void> {
+export async function editExitingList(updated: ResourceList): Promise<void> {
   const { id, data, ...rest } = updated;
-  const dataWithIndices = data.map((item, idx) => { return {...item, index: idx}} );
-  firebase
+  if (!id) {
+    throw Error("Item has no id");
+  }
+  const dataWithIndices = data.map((item, idx) => {
+    return { ...item, index: idx };
+  });
+  await firebase
     .firestore()
     .collection("lists")
-    .doc(itemId)
+    .doc(id)
     .set({
       ...rest,
       lastChanged: new Date(),
-      data: dataWithIndices
-    })
-    .then(() => onSuccess())
-    .catch(onError);
+      data: dataWithIndices,
+    });
 }
 
 function docToList(

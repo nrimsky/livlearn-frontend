@@ -37,6 +37,10 @@ const ListPage = () => {
     setData(d => [...d.slice(0, idx), updated, ...d.slice(idx + 1)]);
   },[]);
 
+  const changePermissions = useCallback((isPublic: boolean) => {
+    setIsPublic(isPublic);
+  },[])
+
   const reorder = useCallback((startIndex: number, endIndex: number) => {
     setData(d => {
       const result = Array.from(d);
@@ -84,6 +88,7 @@ const ListPage = () => {
               title: title,
               id: id,
             }}
+            changePermissions={changePermissions}
             rename={rename}
             add={add}
             edit={edit}

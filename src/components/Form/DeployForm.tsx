@@ -14,29 +14,30 @@ export default function DeployForm(props: {
 }) {
   let history = useHistory();
 
-  function saveNewList() {
-    saveNewListForUser(
-      props.state,
-      (id) => {
-        history.push(`/list/${id}`);
-        props.onClose();
-      },
-      (message) => {
-        console.error(message);
-      }
-    );
-  }
-
-  function edit(id: string) {
-    editExitingList(id, props.state, props.onClose, (e) => {
-      console.error("Error writing document: ", e);
+  const saveNewList = async () => {
+    try {
+      const id = await saveNewListForUser(props.state);
+      history.push(`/list/${id}`);
       props.onClose();
-    });
-  }
+    } catch (error) {
+      console.error(error);
+      props.onClose();
+    }
+  };
+
+  const edit = () => {
+    try {
+      editExitingList(props.state);
+      props.onClose();
+    } catch (error) {
+      console.error(error);
+      props.onClose();
+    }
+  };
 
   const onSave = () => {
     if (props.state.id) {
-      edit(props.state.id);
+      edit();
     } else {
       saveNewList();
     }
