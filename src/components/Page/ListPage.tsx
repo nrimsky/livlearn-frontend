@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getResourceList } from "../../firebase/FirestoreService";
 import { getCurrentUserId } from "../../firebase/AuthService";
@@ -21,28 +21,30 @@ const ListPage = () => {
   const [creatorId, setCreatorId] = useState(currentUserId);
   const [isPublic, setIsPublic] = useState(false);
 
-  const add = (item: ResourceListItem) => {
-    setData([...data, item]);
-  };
+  const add = useCallback((item: ResourceListItem) => {
+    setData(d => [...d, item]);
+  },[]);
 
-  const rename = (newTitle: string) => {
+  const rename = useCallback((newTitle: string) => {
     setTitle(newTitle);
-  };
+  },[]);
 
-  const del = (idx: number) => {
-    setData([...data.slice(0, idx), ...data.slice(idx + 1)]);
-  };
+  const del = useCallback((idx: number) => {
+    setData(d => [...d.slice(0, idx), ...d.slice(idx + 1)]);
+  },[]);
 
-  const edit = (updated: ResourceListItem, idx: number) => {
-    setData([...data.slice(0, idx), updated, ...data.slice(idx + 1)]);
-  };
+  const edit = useCallback((updated: ResourceListItem, idx: number) => {
+    setData(d => [...d.slice(0, idx), updated, ...d.slice(idx + 1)]);
+  },[]);
 
-  const reorder = (startIndex: number, endIndex: number) => {
-    const result = Array.from(data);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    setData(result);
-  };
+  const reorder = useCallback((startIndex: number, endIndex: number) => {
+    setData(d => {
+      const result = Array.from(d);
+      const [removed] = result.splice(startIndex, 1);
+      result.splice(endIndex, 0, removed);
+      return result;
+    });
+  },[]);
 
   useEffect(() => {
     if (!id) {

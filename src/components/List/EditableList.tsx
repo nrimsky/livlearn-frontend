@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ResourceListItem from "../../types/ResourceListItem";
 import AddButton from "../Button/AddButton";
 import BasePopup from "../Popup/BasePopup";
@@ -40,6 +40,44 @@ type IndexedItem = {
   index: number;
 };
 
+const DraggableListItem = React.memo((props: {item: ResourceListItem; idx: number;  openEdit: (item: ResourceListItem, idx: number) => void; key: string;}) => {
+  return <Draggable
+    draggableId={"draggable=" + props.item.url + props.item.title}
+    index={props.idx}
+  >
+    {(provided) => (
+      <li
+        className="pl-3 pr-4 py-3 cursor-pointer bg-white hover:bg-green-50 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 text-sm relative"
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+      >
+        <div
+          {...provided.dragHandleProps}
+          className="absolute right-0 top-0 p-3"
+        >
+          <MenuIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
+        </div>
+
+        <div className="inline-flex" onClick={() => props.openEdit(props.item,  props.idx)}>
+          <Icon mediaType={props.item.type} />
+          <p className="font-semibold ml-2">{props.item.title}</p>
+        </div>
+        <p className="" onClick={() => props.openEdit(props.item,  props.idx)}>
+          {props.item.detail}
+        </p>
+        <div className="underline text-green-500 hover:text-green-600 truncate mr-10">
+          <span>
+            <LinkIcon className="h-5 w-4 inline" />
+            <a href={props.item.url} className="ml-2 truncate">
+              {props.item.url}
+            </a>
+          </span>
+        </div>
+      </li>
+    )}
+  </Draggable>;
+});
+
 const DragDropList = (props: {
   onDragEnd: (result: DropResult) => void;
   data: ResourceListItem[];
@@ -55,45 +93,7 @@ const DragDropList = (props: {
             {...provided.droppableProps}
           >
             {props.data.map((d, idx) => (
-              <Draggable
-                key={"draggable=" + d.url + d.title}
-                draggableId={"draggable=" + d.url + d.title}
-                index={idx}
-              >
-                {(provided) => (
-                  <li
-                    className="pl-3 pr-4 py-3 cursor-pointer bg-white hover:bg-green-50 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 text-sm relative"
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                  >
-                    <div
-                      {...provided.dragHandleProps}
-                      className="absolute right-0 top-0 p-3"
-                    >
-                      <MenuIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
-                    </div>
-
-                    <div
-                      className="inline-flex"
-                      onClick={() => props.openEdit(d, idx)}
-                    >
-                      <Icon mediaType={d.type} />
-                      <p className="font-semibold ml-2">{d.title}</p>
-                    </div>
-                    <p className="" onClick={() => props.openEdit(d, idx)}>
-                      {d.detail}
-                    </p>
-                    <div className="underline text-green-500 hover:text-green-600 truncate mr-10">
-                      <span>
-                        <LinkIcon className="h-5 w-4 inline" />
-                        <a href={d.url} className="ml-2 truncate">
-                          {d.url}
-                        </a>
-                      </span>
-                    </div>
-                  </li>
-                )}
-              </Draggable>
+              <DraggableListItem item={d} idx={idx} openEdit={props.openEdit} key={"draggable=" + d.url + d.title}/>
             ))}
             {provided.placeholder}
           </ul>
@@ -130,7 +130,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
     setShareOpen(false);
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = useCallback((result: DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -138,7 +138,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
       return;
     }
     reorder(result.source.index, result.destination.index);
-  };
+  },[reorder]);
 
   const delListAction = {
     name: "Delete",
@@ -161,9 +161,9 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
     action: () => setShareOpen(true),
   };
 
-  const openEdit = (item: ResourceListItem, idx: number) => {
+  const openEdit = useCallback((item: ResourceListItem, idx: number) => {
     setItemEditing({ item: item, index: idx });
-  };
+  },[]);
 
   const closeEdit = () => {
     setItemEditing(null);
@@ -195,7 +195,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
         onClickClose={closeShare}
         title={"Share this list"}
       >
-        <ShareForm onClose={closeShare} state={rl}/>
+        <ShareForm onClose={closeShare} state={rl} />
       </BasePopup>
       <BasePopup isOpen={addOpen} onClickClose={closeAdd} title={"Add Item"}>
         <AddForm onClose={closeAdd} onAdd={add} />
@@ -205,10 +205,7 @@ const EditableList = ({ add, del, edit, rename, reorder, rl }: Props) => {
         onClickClose={closeSave}
         title={rl.id ? "Publish Changes" : "Publish New List"}
       >
-        <DeployForm
-          onClose={closeSave}
-          state={rl}
-        />
+        <DeployForm onClose={closeSave} state={rl} />
       </BasePopup>
       {itemEditing && (
         <BasePopup

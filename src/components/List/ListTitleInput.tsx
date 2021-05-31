@@ -5,7 +5,7 @@ type Props = {
   onChange: (val: string) => void;
 };
 
-const ListTitleInput = ({ value, onChange }: Props) => {
+const ListTitleInput = React.memo(({ value, onChange }: Props) => {
   return (
     <input
       type="text"
@@ -21,6 +21,6 @@ const ListTitleInput = ({ value, onChange }: Props) => {
       }}
     />
   );
-};
+});
 
 export default ListTitleInput;
