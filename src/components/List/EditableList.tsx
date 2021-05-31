@@ -204,7 +204,7 @@ const EditableList = ({
 
   return (
     <div className="sm:mx-5 my-5">
-      <div className="flex flex-row mx-5 sm:mx-0">
+      <div className="flex flex-row mx-3 sm:mx-0">
         <ListTitleInput value={rl.title} onChange={rename} />
         {rl.id && (
           <DropdownMenu
@@ -266,7 +266,7 @@ const EditableList = ({
           openEdit={openEdit}
           data={rl.data}
         />
-      ) : <p className="text-gray-400">Use the <span className="font-bold">+</span> button to add new items</p>}
+      ) : <p className="text-gray-400 mx-3 sm:mx-0">Use the <span className="font-bold">+</span> button to add new items</p>}
       <AddButton className="fixed bottom-6 right-6" onClick={openAdd} />
       <button
         className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded py-1 px-2 text-green-500 font-medium text-small border border-green-500"
