@@ -13,6 +13,8 @@ import {
   DotsHorizontalIcon,
   ShareIcon,
   TrashIcon,
+  ViewListIcon,
+  LinkIcon
 } from "@heroicons/react/solid";
 import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import { deleteList } from "../../firebase/FirestoreService";
@@ -23,7 +25,6 @@ import {
   DropResult,
   Draggable,
 } from "react-beautiful-dnd";
-import { LinkIcon, MenuIcon } from "@heroicons/react/outline";
 import Icon from "../Icon/Icon";
 
 type Props = {
@@ -63,7 +64,7 @@ const DraggableListItem = React.memo(
               {...provided.dragHandleProps}
               className="absolute right-0 top-0 p-3"
             >
-              <MenuIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
+              <ViewListIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
             </div>
 
             <div
