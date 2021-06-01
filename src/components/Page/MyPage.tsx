@@ -19,7 +19,7 @@ const MyPage = () => {
   return (
     <div className="flex w-screen flex-grow items-center flex-col sm:items-start">
       {myLists.length > 0 ? (
-        <CardCollection title={"Recently shared public lists"}>
+        <CardCollection title={"Your lists"}>
           {myLists
             .filter((l) => !!l.id)
             .map((l, i) => {

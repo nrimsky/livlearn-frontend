@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "../../helpers/classNames";
 
 type Props = {
   value: string;
@@ -11,7 +12,10 @@ const ListTitleInput = React.memo(({ value, onChange }: Props) => {
       type="text"
       placeholder="Name this list"
       value={value}
-      className="mb-4 py-1 px-2 rounded outline-none focus:outline-none focus:ring w-full ring-green-300 border border-gray-200 text-small"
+      className={classNames(
+        "mb-4 py-1 px-2 outline-none focus:outline-none w-full border-b border-gray-300 text-gray-800",
+        value === "" ? "bg-white" : "bg-gray-50"
+      )}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value) {
           onChange(event.target.value.slice(0, 250));

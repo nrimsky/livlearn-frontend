@@ -37,25 +37,23 @@ const SignIn = () => {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="flex justify-center items-center w-screen flex-grow">
-      <div className="text-center p-5 max-w-md mx-5 mt-5 mb-10 bg-white shadow-xl rounded-2xl">
-        {done ? (
-          <p className="text-xs text-gray-700">
-            🎉 An email has been sent to {email}! Check your inbox for a link to
-            sign in!
-          </p>
-        ) : (
-          <>
-            <Input
-              value={email}
-              placeholder={"Enter your email"}
-              onChange={(n: string) => setEmail(n)}
-              name={"Login with just your email - no passwords needed!"}
-            />
-            <Button color="green" onClick={login} text="Login" />
-          </>
-        )}
-      </div>
+    <div className="text-center p-5 max-w-md mx-5 mt-5 mb-10 bg-white shadow rounded">
+      {done ? (
+        <p className="text-xs text-gray-700">
+          🎉 An email has been sent to {email}! Check your inbox for a link to
+          sign in!
+        </p>
+      ) : (
+        <>
+          <Input
+            value={email}
+            placeholder={"Enter your email"}
+            onChange={(n: string) => setEmail(n)}
+            name={"Login with just your email - no passwords needed!"}
+          />
+          <Button color="green" onClick={login} text="Login" />
+        </>
+      )}
     </div>
   );
 };

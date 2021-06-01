@@ -13,7 +13,7 @@ export default function Input(props: {
           {props.name}
         </span>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
           type="text"
           placeholder={props.placeholder}
           value={props.value}

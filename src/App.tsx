@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./components/Nav/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import SignIn from "./components/Auth/SignIn";
+import SignInPage from "./components/Page/SignInPage";
 import { onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
@@ -35,7 +35,7 @@ export default function App() {
             {loggedIn ? (
               <h1 className="p-5">You are already logged in</h1>
             ) : (
-              <SignIn />
+              <SignInPage />
             )}
           </Route>
           <Route path="/finishSignIn">

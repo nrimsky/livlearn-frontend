@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/outline";
 
 const ResourceListCard = React.memo(
-  (props: { rl: ResourceList; key: string }) => {
+  (props: { rl: ResourceList; key: string; hideLock?: boolean }) => {
     const history = useHistory();
 
     const goToListPage = (id: string) => {
@@ -15,6 +15,25 @@ const ResourceListCard = React.memo(
     if (!props.rl.id) {
       return <></>;
     }
+
+    const lockIcon = !props.hideLock ? (
+      props.rl.isPublic ? (
+        <LockOpenIcon
+          className="flex-shrink-0 h-5 w-5 text-green-500 pt-1"
+          role="img"
+          aria-label="Anyone can see this list with a link"
+        />
+      ) : (
+        <LockClosedIcon
+          className="flex-shrink-0 h-5 w-5 text-yellow-500 pt-1"
+          role="img"
+          aria-label="Private list"
+        />
+      )
+    ) : (
+      <div />
+    );
+
     return (
       <div className="max-w max-h py-3 px-4 bg-white shadow sm:rounded w-screen sm:w-auto flex flex-col">
         <div className="flex-grow">
@@ -24,19 +43,7 @@ const ResourceListCard = React.memo(
           </p>
         </div>
         <div className="flex justify-between mt-4">
-          {props.rl.isPublic ? (
-            <LockOpenIcon
-              className="flex-shrink-0 h-4 w-4 text-green-500"
-              role="img"
-              aria-label="Anyone can see this list with a link"
-            />
-          ) : (
-            <LockClosedIcon
-              className="flex-shrink-0 h-4 w-4 text-yellow-500"
-              role="img"
-              aria-label="Private list"
-            />
-          )}
+          { lockIcon }
           <button
             className="font-medium text-green-500 focus:outline-none"
             onClick={() => goToListPage(props.rl.id!)}
