@@ -2,7 +2,7 @@ import ResourceListItem from "../types/ResourceListItem";
 import MediaType from "../types/MediaType";
 
 const getDetails = (items: ResourceListItem[]) => {
-  const counts = [0, 0, 0, 0, 0, 0, 0, 0];
+  const counts = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   const titles = [
     "Podcasts",
     "Books",
@@ -10,8 +10,9 @@ const getDetails = (items: ResourceListItem[]) => {
     "Blogs",
     "Articles",
     "Online Courses",
-    "Video",
+    "Videos",
     "Other",
+    "Tools",
   ];
   for (const i of items) {
     switch (i.type) {
@@ -38,6 +39,9 @@ const getDetails = (items: ResourceListItem[]) => {
         break;
       case MediaType.Other:
         counts[7]++;
+        break;
+      case MediaType.Tool:
+        counts[8]++;
         break;
     }
   }

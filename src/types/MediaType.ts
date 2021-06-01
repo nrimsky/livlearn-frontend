@@ -6,6 +6,7 @@ enum MediaType {
   Article = "Article",
   OnlineCourse = "Course",
   FreeVideo = "Video",
+  Tool = "Tool",
   Other = "Other",
 }
 

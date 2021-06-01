@@ -67,9 +67,9 @@ export default function EditForm(props: {
           value={item.url}
         />
       </form>
-      <div className="mt-4 grid gap-4 grid-cols-2">
-        <Button color="green" onClick={onDone} text="Save" />
-        <Button color="red" onClick={onDelete} text="Delete" />
+      <div className="mt-4 flex">
+        <Button color="red" onClick={onDelete} text="Delete" className="flex-none mr-3"/>
+        <Button color="green" onClick={onDone} text="Save" className="flex-1"/>
       </div>
     </div>
   );
