@@ -11,7 +11,7 @@ const StaticList = ({ resourceList }: Props) => {
   return (
     <div className="sm:m-5 my-5">
       <div className="mx-5 sm:mx-0 w-100">
-        <p className="mb-3 px-2 w-full text-gray-800 font-medium">
+        <p className="mb-3 px-2 w-full text-gray-800 font-medium no-round">
           {resourceList.title}
         </p>
       </div>
