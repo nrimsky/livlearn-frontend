@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import classNames from "../../helpers/Helpers";
+import classNames from "../../helpers/classNames";
 import MenuAction from "../../types/MenuAction";
 
 export default function DropdownMenuItem(props: {

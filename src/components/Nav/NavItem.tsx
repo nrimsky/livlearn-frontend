@@ -5,7 +5,7 @@ export default function NavItem(props: { item: MenuAction; key?: number }) {
     <button
       key={props.item.name}
       onClick={props.item.action}
-      className="text-gray-500 hover:text-gray-700 my-auto inline-block focus:outline-none"
+      className="text-gray-500 hover:text-gray-700 my-auto inline-block focus:outline-none hover:underline"
     >
       {props.item.name}
     </button>
