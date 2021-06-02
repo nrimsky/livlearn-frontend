@@ -55,7 +55,7 @@ const ListPage = () => {
       setTitle("");
       setData([]);
       setCreatorId(currentUserId);
-      setIsPublic(false);
+      setIsPublic(true);
       setLoaded(true);
     } else {
       getResourceList(id)

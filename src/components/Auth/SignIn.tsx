@@ -4,8 +4,12 @@ import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
 import Input from "../Form/Input";
+import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
+
+  const history = useHistory();
+
   let url = "";
 
   if (window.location.hostname === "localhost") {
@@ -33,6 +37,18 @@ const SignIn = () => {
       });
   };
 
+  const loginTest = () => {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
@@ -49,9 +65,15 @@ const SignIn = () => {
             value={email}
             placeholder={"Enter your email"}
             onChange={(n: string) => setEmail(n)}
-            name={"Login with just your email - no passwords needed!"}
+            name={"Login with just an email - no password needed!"}
           />
-          <Button color="green" onClick={login} text="Login" />
+          <Button color="green" className="mr-1" onClick={login} text="Login" /> or 
+          <Button
+            color="yellow"
+            onClick={loginTest}
+            text="Try a test account"
+            className="ml-2"
+          />
         </>
       )}
     </div>
