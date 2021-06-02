@@ -53,7 +53,7 @@ const SignIn = () => {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="text-center p-5 max-w-md mx-5 mt-5 mb-10 bg-white shadow rounded">
+    <div className="text-center p-5 max-w-md mt-5 mb-10 bg-white shadow rounded">
       {done ? (
         <p className="text-xs text-gray-700">
           🎉 An email has been sent to {email}! Check your inbox for a link to
@@ -67,12 +67,12 @@ const SignIn = () => {
             onChange={(n: string) => setEmail(n)}
             name={"Login with just an email - no password needed!"}
           />
-          <Button color="green" className="mr-1" onClick={login} text="Login" /> or 
+          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login" /> <span className="text-gray-500 font-medium text-sm">or</span>
           <Button
             color="yellow"
             onClick={loginTest}
             text="Try a test account"
-            className="ml-2"
+            className="ml-2 mt-2 sm:mt-0"
           />
         </>
       )}
