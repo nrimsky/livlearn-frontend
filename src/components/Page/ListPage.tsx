@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getResourceList } from "../../firebase/FirestoreService";
 import { getCurrentUserId } from "../../firebase/AuthService";
-import EditableList from "../List/EditableList";
+import EditableList from "../List/EditableList/EditableList";
 import StaticList from "../List/StaticList";
 import ResourceListItem from "../../types/ResourceListItem";
 
@@ -10,8 +10,7 @@ type ParamTypes = {
   id: string | undefined;
 };
 
-const ListPage = () => {
-
+const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
   const currentUserId = getCurrentUserId();
   const { id } = useParams<ParamTypes>();
   const history = useHistory();
@@ -22,33 +21,41 @@ const ListPage = () => {
   const [isPublic, setIsPublic] = useState(false);
 
   const add = useCallback((item: ResourceListItem) => {
-    setData(d => [...d, item]);
-  },[]);
+    setData((d) => [...d, item]);
+  }, []);
 
   const rename = useCallback((newTitle: string) => {
     setTitle(newTitle);
-  },[]);
+  }, []);
 
   const del = useCallback((idx: number) => {
-    setData(d => [...d.slice(0, idx), ...d.slice(idx + 1)]);
-  },[]);
+    setData((d) => [...d.slice(0, idx), ...d.slice(idx + 1)]);
+  }, []);
 
   const edit = useCallback((updated: ResourceListItem, idx: number) => {
-    setData(d => [...d.slice(0, idx), updated, ...d.slice(idx + 1)]);
-  },[]);
+    setData((d) => [...d.slice(0, idx), updated, ...d.slice(idx + 1)]);
+  }, []);
 
   const changePermissions = useCallback((isPublic: boolean) => {
     setIsPublic(isPublic);
-  },[])
+  }, []);
+
+  const loadFromFile = useCallback(
+    (items: ResourceListItem[], name: string) => {
+      setTitle(name);
+      setData(items);
+    },
+    []
+  );
 
   const reorder = useCallback((startIndex: number, endIndex: number) => {
-    setData(d => {
+    setData((d) => {
       const result = Array.from(d);
       const [removed] = result.splice(startIndex, 1);
       result.splice(endIndex, 0, removed);
       return result;
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!id) {
@@ -88,6 +95,7 @@ const ListPage = () => {
               title: title,
               id: id,
             }}
+            loadFromFile={loadFromFile}
             changePermissions={changePermissions}
             rename={rename}
             add={add}

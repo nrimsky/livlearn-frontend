@@ -1,5 +1,5 @@
 import React from "react";
-import classNames from "../../helpers/classNames";
+import classNames from "../../../helpers/classNames";
 
 type Props = {
   value: string;
