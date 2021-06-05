@@ -63,7 +63,11 @@ function docToList(
   const docData = docSnapshot.data();
   const id = docSnapshot.id;
   if (docData) {
-    return { ...docData, id: id } as ResourceList;
+    return { 
+      id: id,
+      ...docData,
+      shareSettings: docData.shareSettings ?? "ONLYLINK"
+    } as ResourceList;
   } else {
     throw Error("No data in document snapshot");
   }
@@ -72,13 +76,13 @@ function docToList(
 export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
   const listsRef = firebase.firestore().collection("lists");
   const query = listsRef
-    .where("isPublic", "==", true)
+    .where("shareSettings", "==", "HOMEPAGE")
     .orderBy("lastChanged", "desc")
     .limit(10);
   try {
     const snapshot = await query.get();
     return snapshot.docs.map((s) => {
-      return docToList(s) as ResourceList;
+      return docToList(s);
     });
   } catch (error) {
     console.error(error);

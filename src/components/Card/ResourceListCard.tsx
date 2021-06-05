@@ -17,11 +17,11 @@ const ResourceListCard = React.memo(
     }
 
     const lockIcon = !props.hideLock ? (
-      props.rl.isPublic ? (
+      props.rl.shareSettings !== "PRIVATE" ? (
         <LockOpenIcon
           className="flex-shrink-0 h-5 w-5 text-green-500 pt-1"
           role="img"
-          aria-label="Anyone can see this list with a link"
+          aria-label="Public list"
         />
       ) : (
         <LockClosedIcon
@@ -43,7 +43,7 @@ const ResourceListCard = React.memo(
           </p>
         </div>
         <div className="flex justify-between mt-4">
-          { lockIcon }
+          {lockIcon}
           <button
             className="font-medium text-green-500 focus:outline-none"
             onClick={() => goToListPage(props.rl.id!)}

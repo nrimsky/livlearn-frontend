@@ -1,10 +1,11 @@
 import ResourceListItem from "./ResourceListItem";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import ShareSettings from "./ShareSettings";
 
 type ResourceList = {
   creatorId: string|null;
-  isPublic: boolean;
+  shareSettings: ShareSettings;
   title: string;
   data: ResourceListItem[];
   id?: string;

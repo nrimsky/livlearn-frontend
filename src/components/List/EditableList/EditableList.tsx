@@ -18,12 +18,13 @@ import {
 } from "@heroicons/react/solid";
 import DropdownMenuItem from "../../Dropdown/DropdownMenuItem";
 import { deleteList } from "../../../firebase/FirestoreService";
-import ShareForm from "../../Form/ShareForm";
+import ShareForm from "../../Form/ShareForm/ShareForm";
 import { DropResult } from "react-beautiful-dnd";
 import { saveAs } from "file-saver";
 import toCsv from "../../../helpers/toCsv";
 import FileUploadPage from "../../Form/FileUploadForm";
 import DragDropList from "./DragDropList";
+import ShareSettings from "../../../types/ShareSettings";
 
 type Props = {
   add: (item: ResourceListItem) => void;
@@ -31,7 +32,7 @@ type Props = {
   edit: (updated: ResourceListItem, idx: number) => void;
   rename: (newTitle: string) => void;
   reorder: (startIndex: number, endIndex: number) => void;
-  changePermissions: (isPublic: boolean) => void;
+  changeShareSettings: (shareSettings: ShareSettings) => void;
   loadFromFile: (items: ResourceListItem[], name: string) => void;
   rl: ResourceList;
 };
@@ -47,7 +48,7 @@ const EditableList = ({
   edit,
   rename,
   reorder,
-  changePermissions,
+  changeShareSettings,
   loadFromFile,
   rl,
 }: Props) => {
@@ -143,7 +144,9 @@ const EditableList = ({
   const closeEdit = () => {
     setItemEditing(null);
   };
-  // one popup wrapper with many forms...
+
+  // Share on homepage - show relevant on homepage
+  // More clearly publish process
 
   return (
     <div className="sm:mx-5 my-5">
@@ -191,7 +194,7 @@ const EditableList = ({
         <ShareForm
           onClose={closeShare}
           state={rl}
-          changePermissions={changePermissions}
+          changeShareSettings={changeShareSettings}
         />
       </BasePopup>
       <BasePopup isOpen={addOpen} onClickClose={closeAdd} title={"Add Item"}>
@@ -231,9 +234,12 @@ const EditableList = ({
           Use the <span className="font-bold">+</span> button to add new items
         </p>
       )}
-      <AddButton className="fixed bottom-6 right-6" onClick={openAdd} />
+      <AddButton
+        className="fixed bottom-6 right-6 shadow-xl"
+        onClick={openAdd}
+      />
       <button
-        className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded py-1 px-2 text-green-500 font-medium text-small border border-green-500"
+        className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded py-1 px-2 text-green-500 font-medium text-small border border-green-500 shadow-xl"
         onClick={openSave}
       >
         🚀

@@ -5,12 +5,13 @@ import { getCurrentUserId } from "../../firebase/AuthService";
 import EditableList from "../List/EditableList/EditableList";
 import StaticList from "../List/StaticList";
 import ResourceListItem from "../../types/ResourceListItem";
+import ShareSettings from "../../types/ShareSettings";
 
 type ParamTypes = {
   id: string | undefined;
 };
 
-const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
+const ListPage = () => {
   const currentUserId = getCurrentUserId();
   const { id } = useParams<ParamTypes>();
   const history = useHistory();
@@ -18,7 +19,7 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
   const [title, setTitle] = useState("");
   const [data, setData] = useState<ResourceListItem[]>([]);
   const [creatorId, setCreatorId] = useState(currentUserId);
-  const [isPublic, setIsPublic] = useState(false);
+  const [shareSettings, setShareSettings] = useState<ShareSettings>("HOMEPAGE");
 
   const add = useCallback((item: ResourceListItem) => {
     setData((d) => [...d, item]);
@@ -36,8 +37,8 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
     setData((d) => [...d.slice(0, idx), updated, ...d.slice(idx + 1)]);
   }, []);
 
-  const changePermissions = useCallback((isPublic: boolean) => {
-    setIsPublic(isPublic);
+  const changeShareSettings = useCallback((shareSettings: ShareSettings) => {
+    setShareSettings(shareSettings);
   }, []);
 
   const loadFromFile = useCallback(
@@ -62,7 +63,7 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
       setTitle("");
       setData([]);
       setCreatorId(currentUserId);
-      setIsPublic(true);
+      setShareSettings("HOMEPAGE");
       setLoaded(true);
     } else {
       getResourceList(id)
@@ -74,7 +75,7 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
             })
           );
           setCreatorId(s.creatorId);
-          setIsPublic(s.isPublic);
+          setShareSettings(s.shareSettings);
           setLoaded(true);
         })
         .catch(() => {
@@ -90,13 +91,13 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
           <EditableList
             rl={{
               creatorId: creatorId,
-              isPublic: isPublic,
+              shareSettings: shareSettings,
               data: data,
               title: title,
               id: id,
             }}
             loadFromFile={loadFromFile}
-            changePermissions={changePermissions}
+            changeShareSettings={changeShareSettings}
             rename={rename}
             add={add}
             edit={edit}
@@ -107,7 +108,7 @@ const ListPage = (props: { title?: string; data?: ResourceListItem[] }) => {
           <StaticList
             resourceList={{
               creatorId: creatorId,
-              isPublic: isPublic,
+              shareSettings: shareSettings,
               data: data,
               title: title,
               id: id,
