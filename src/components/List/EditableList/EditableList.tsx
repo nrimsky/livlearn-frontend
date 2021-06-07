@@ -145,8 +145,10 @@ const EditableList = ({
     setItemEditing(null);
   };
 
-  // Share on homepage - show relevant on homepage
-  // More clearly publish process
+  // TODO
+  // Add upvotes to homepage
+  // More clear publish process
+  // check for unnecessary rerenders
 
   return (
     <div className="sm:mx-5 my-5">

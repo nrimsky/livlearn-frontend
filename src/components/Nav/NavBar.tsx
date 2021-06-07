@@ -65,7 +65,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
       {({ open }) => (
         <>
           <div className="mx-auto px-2 sm:px-6 lg:px-8 relative">
-            <div className="relative flex items-center justify-between h-16">
+            <div className="relative flex items-center justify-between h-14">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 focus:outline-none">
@@ -80,8 +80,9 @@ export default function NavBar(props: { loggedIn: boolean }) {
                     alt=""
                     onClick={() => history.push("/")}
                   />
+                  <div className="hidden sm:inline sm:ml-3 font-black italic text-green-600 tracking-tighter">RESOURCEEE</div>
                 </div>
-                <div className="hidden sm:block sm:ml-6">
+                <div className="hidden sm:block sm:ml-8">
                   <DesktopNav
                     navigation={
                       props.loggedIn
