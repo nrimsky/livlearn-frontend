@@ -46,7 +46,7 @@ const ShareForm = (props: {
       >
         <span className="sr-only">Copy to clipboard</span>
         <ClipboardCopyIcon
-          className="h-7 w-7 text-gray-600 p-1"
+          className="h-7 w-7 text-gray-500 p-1"
           aria-hidden={true}
         />
       </button>

@@ -14,7 +14,7 @@ const ListTitleInput = React.memo(({ value, onChange }: Props) => {
       value={value}
       className={classNames(
         "mb-4 py-1 px-2 outline-none focus:outline-none w-full border-b border-gray-300 text-gray-800 no-round",
-        value === "" ? "bg-white" : "bg-gray-50"
+        value === "" ? "bg-white" : "bg-gray-100"
       )}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value) {

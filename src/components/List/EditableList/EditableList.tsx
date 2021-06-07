@@ -25,6 +25,7 @@ import toCsv from "../../../helpers/toCsv";
 import FileUploadPage from "../../Form/FileUploadForm";
 import DragDropList from "./DragDropList";
 import ShareSettings from "../../../types/ShareSettings";
+import Button from "../../Button/Button";
 
 type Props = {
   add: (item: ResourceListItem) => void;
@@ -232,7 +233,7 @@ const EditableList = ({
           data={rl.data}
         />
       ) : (
-        <p className="text-gray-400 mx-3 sm:mx-0">
+        <p className="text-gray-500 mx-3 sm:mx-0">
           Use the <span className="font-bold">+</span> button to add new items
         </p>
       )}
@@ -240,15 +241,12 @@ const EditableList = ({
         className="fixed bottom-6 right-6 shadow-xl"
         onClick={openAdd}
       />
-      <button
-        className="fixed bottom-6 left-6 bg-green-50 focus:outline-none rounded py-1 px-2 text-green-500 font-medium text-small border border-green-500 shadow-xl"
+      <Button
+        text={rl.id ? "🚀 Publish Changes" : "🚀 Publish New List"}
         onClick={openSave}
-      >
-        🚀
-        <span className="ml-2">
-          {rl.id ? "Publish Changes" : "Publish New List"}
-        </span>
-      </button>
+        className="fixed bottom-6 left-6 border-green-500 shadow"
+        color="green"
+      />
     </div>
   );
 };

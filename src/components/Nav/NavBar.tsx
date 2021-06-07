@@ -22,13 +22,13 @@ export default function NavBar(props: { loggedIn: boolean }) {
       },
     },
     {
-      name: "My Lists",
+      name: "Your lists",
       action: () => {
         history.push("/u");
       },
     },
     {
-      name: "New",
+      name: "New list",
       action: () => {
         history.push("/list");
       },
@@ -68,7 +68,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
             <div className="relative flex items-center justify-between h-14">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 focus:outline-none">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 focus:outline-none">
                   <MobileMenuButton open={open} />
                 </Disclosure.Button>
               </div>

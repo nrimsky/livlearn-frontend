@@ -11,7 +11,7 @@ export default function DropdownMenu(props: {
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="flex text-sm rounded-full focus:outline-none text-gray-600">
+            <Menu.Button className="flex text-sm rounded-full focus:outline-none text-gray-500">
               <span className="sr-only">{props.name}</span>
               {props.icon}
             </Menu.Button>

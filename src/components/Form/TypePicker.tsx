@@ -20,7 +20,7 @@ export default function TypePicker(props: {
     <div>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-medium hover:bg-green-100">
+          <Menu.Button className="inline-flex justify-center appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline font-medium hover:bg-green-100">
             <Icon mediaType={props.mType} />
             <span className="ml-2">{props.mType}</span>
             <ChevronDownIcon

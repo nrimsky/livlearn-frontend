@@ -22,15 +22,15 @@ const MyPage = () => {
       onClick={() => history.push("/list")}
       text="Create a new list"
       color="green"
-      className="m-2"
+      className="m-2 border border-green-500"
     />
   );
 
   return (
-    <div className="flex w-screen flex-grow items-center flex-col sm:items-start">
+    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl mx-auto">
       {myLists.length > 0 ? (
         <>
-          <CardCollection title={"Your lists"}>
+          <CardCollection title={`Your lists (${myLists.length})`}>
             {myLists
               .filter((l) => !!l.id)
               .map((l, i) => {
@@ -40,8 +40,8 @@ const MyPage = () => {
           <div className="mx-auto">{createButton}</div>
         </>
       ) : (
-        <div className="flex w-screen flex-grow items-center flex-col mt-10 p-10">
-          <p className="text-gray-400 pb-8">You haven't saved any lists yet</p>
+        <div className="flex w-full flex-grow items-center flex-col mt-10 p-10">
+          <p className="text-gray-500 pb-8">You haven't saved any lists yet</p>
           {createButton}
         </div>
       )}

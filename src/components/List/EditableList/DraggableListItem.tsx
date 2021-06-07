@@ -29,7 +29,7 @@ const DraggableListItem = React.memo(
               {...provided.dragHandleProps}
               className="absolute right-0 top-0 p-3"
             >
-              <ViewListIcon className="flex-shrink-0 h-4 w-4 text-gray-400" />
+              <ViewListIcon className="flex-shrink-0 h-4 w-4 text-gray-500" />
             </div>
 
             <div
