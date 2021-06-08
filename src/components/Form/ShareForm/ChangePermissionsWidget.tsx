@@ -31,7 +31,7 @@ const CheckBox: React.FC<{
           <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
         </svg>
       </span>
-      <span className="text-sm text-gray-500 font-medium">{name}</span>
+      <span className=" text-gray-500 font-medium">{name}</span>
     </label>
   );
 };
@@ -49,7 +49,7 @@ const ChangePermissionsWidget: React.FC<{
             onChange("HOMEPAGE");
           }
         }}
-        name="Share with resourceee community and via link"
+        name="Share with livlearn community and via link"
       />
       <CheckBox
         checked={shareSettings === "ONLYLINK"}

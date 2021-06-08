@@ -38,7 +38,7 @@ const ShareForm = (props: {
         rows={1}
         readOnly={true}
         value={window.location.href}
-        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500 text-sm align-middle py-1 px-2"
+        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500  align-middle py-1 px-2"
       />
       <button
         className="h-full inline-block hover:bg-green-100 focus:outline-none"

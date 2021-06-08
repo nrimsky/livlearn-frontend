@@ -11,7 +11,7 @@ export default function Button(props: {
     <button
       type="button"
       className={classNames(
-        "inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md focus:outline-none focus-visible:ring-2",
+        "inline-flex justify-center px-4 py-2  font-medium border border-transparent rounded-md focus:outline-none focus-visible:ring-2",
         props.color === "green"
           ? " text-green-900 bg-green-100 hover:bg-green-200 border-transparent"
           : "",

@@ -47,14 +47,14 @@ export default function DeployForm(props: {
     <div className="w-full">
       <p>
         {props.state.id
-          ? "Update your list with a click of a button!"
-          : "Now it's time to publish your list!"}
+          ? "Update your collection with a click of a button!"
+          : "Now it's time to publish your collection!"}
       </p>
       <div className="mt-3">
         <Button
           color="green"
           onClick={onSave}
-          text={props.state.id ? "Publish Changes" : "Publish List"}
+          text={props.state.id ? "Publish Changes" : "Publish collection"}
         />
       </div>
     </div>

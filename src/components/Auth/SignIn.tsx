@@ -15,7 +15,7 @@ const SignIn = () => {
   if (window.location.hostname === "localhost") {
     url = "http://localhost:3000/finishSignIn";
   } else {
-    url = "https://resourceee.web.app/finishSignIn";
+    url = "https://livlearn.web.app/finishSignIn";
   }
   var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
@@ -55,7 +55,7 @@ const SignIn = () => {
   return (
     <div className="text-center p-5 max-w-md my-5 bg-white rounded border border-gray-200 shadow-sm">
       {done ? (
-        <p className="text-xs text-gray-800">
+        <p className="text-xs text-gray-900">
           🎉 An email has been sent to {email}! Check your inbox for a link to
           sign in!
         </p>
@@ -67,7 +67,7 @@ const SignIn = () => {
             onChange={(n: string) => setEmail(n)}
             name={"Login with just an email - no password needed!"}
           />
-          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login" /> <span className="text-gray-500 font-medium text-sm">or</span>
+          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login" /> <span className="text-gray-500 font-medium">or</span>
           <Button
             color="yellow"
             onClick={loginTest}

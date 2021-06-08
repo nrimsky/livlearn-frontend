@@ -104,7 +104,7 @@ const EditableList = ({
           console.error(error);
         }
       } else {
-        console.log("There is no list to delete");
+        console.log("There is no collection to delete");
       }
     },
   };
@@ -147,8 +147,12 @@ const EditableList = ({
   };
 
   // TODO
-  // Add upvotes to homepage
-  // More clear publish process
+  // Stream upvotes
+  // Improve upvote process
+  // Individual recommendations from editors
+  // Search lists and search recommended resources
+  // Comments
+  // Tags
 
   return (
     <div className="sm:mx-5 my-5">
@@ -191,7 +195,7 @@ const EditableList = ({
       <BasePopup
         isOpen={shareOpen}
         onClickClose={closeShare}
-        title={"Share this list"}
+        title={"Share this collection"}
       >
         <ShareForm
           onClose={closeShare}
@@ -205,7 +209,7 @@ const EditableList = ({
       <BasePopup
         isOpen={saveOpen}
         onClickClose={closeSave}
-        title={rl.id ? "Publish Changes" : "Publish New List"}
+        title={rl.id ? "Publish Changes" : "Publish New collection"}
       >
         <DeployForm onClose={closeSave} state={rl} />
       </BasePopup>
@@ -241,7 +245,7 @@ const EditableList = ({
         onClick={openAdd}
       />
       <Button
-        text={rl.id ? "🚀 Publish Changes" : "🚀 Publish New List"}
+        text={rl.id ? "🚀 Publish Changes" : "🚀 Publish New collection"}
         onClick={openSave}
         className="fixed bottom-6 left-6 border-green-500 shadow"
         color="green"

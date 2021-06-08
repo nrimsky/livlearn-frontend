@@ -22,13 +22,13 @@ export default function NavBar(props: { loggedIn: boolean }) {
       },
     },
     {
-      name: "Your lists",
+      name: "Your collections",
       action: () => {
         history.push("/u");
       },
     },
     {
-      name: "New list",
+      name: "New collection",
       action: () => {
         history.push("/list");
       },
@@ -80,7 +80,6 @@ export default function NavBar(props: { loggedIn: boolean }) {
                     alt=""
                     onClick={() => history.push("/")}
                   />
-                  <div className="hidden sm:inline sm:ml-3 font-black italic text-green-600 tracking-tighter">RESOURCEEE</div>
                 </div>
                 <div className="hidden sm:block sm:ml-8">
                   <DesktopNav

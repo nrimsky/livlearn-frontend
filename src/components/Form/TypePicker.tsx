@@ -20,7 +20,7 @@ export default function TypePicker(props: {
     <div>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center appearance-none border rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline font-medium hover:bg-green-100">
+          <Menu.Button className="inline-flex justify-center appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline font-medium hover:bg-green-100">
             <Icon mediaType={props.mType} />
             <span className="ml-2">{props.mType}</span>
             <ChevronDownIcon
@@ -46,7 +46,7 @@ export default function TypePicker(props: {
                   <Menu.Item key={m}>
                     <button
                       onClick={(e) => handleClick(e, MediaType[m])}
-                      className="group flex rounded-md items-center w-full pl-2 pr-4 py-2 text-sm hover:bg-green-100 focus:outline-none"
+                      className="group flex rounded-md items-center w-full pl-2 pr-4 py-2  hover:bg-green-100 focus:outline-none"
                     >
                       <Icon mediaType={MediaType[m]} />
                       <span className="ml-2 font-medium">{MediaType[m]}</span>

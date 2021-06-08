@@ -1,1 +1,1 @@
-# easily make and share a list of learning resources
+# easily make and share a collection of learning resources

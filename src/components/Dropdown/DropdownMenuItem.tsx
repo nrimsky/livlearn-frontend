@@ -11,7 +11,7 @@ export default function DropdownMenuItem(props: {
     <Menu.Item onClick={props.menuAction.action}>
       <button
         className={classNames(
-          "group flex rounded-md items-center w-full px-2 py-2 text-sm text-gray-800 focus:outline-none",
+          "group flex rounded-md items-center w-full px-2 py-2  text-gray-900 focus:outline-none",
           props.menuAction.name.toLowerCase().includes("delete")
             ? "hover:bg-red-500 hover:text-white"
             : "hover:bg-green-500 hover:text-white"

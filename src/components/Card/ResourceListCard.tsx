@@ -44,7 +44,7 @@ const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }
       <span className="sr-only">
         {isUpvoted ? "You have upvoted this" : ""}
       </span>
-      <span className="text-sm mt-1 w-full text-center">{resourceList.upvotes.length}</span>
+      <span className=" mt-1 w-full text-center">{resourceList.upvotes.length}</span>
     </button>
   );
 };
@@ -71,13 +71,13 @@ const ResourceListCard = React.memo(
         <LockOpenIcon
           className="h-5 w-5 pb-1 text-green-500 inline"
           role="img"
-          aria-label="Public list"
+          aria-label="Public collection"
         />
       ) : (
         <LockClosedIcon
           className="h-5 w-5 pb-1 text-yellow-500 inline"
           role="img"
-          aria-label="Private list"
+          aria-label="Private collection"
         />
       )
     ) : null;
@@ -89,16 +89,16 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white sm:rounded w-screen sm:w-auto flex justify-between items-stretch leading-tight cursor-pointer hover:bg-gray-50 border border-gray-200"
+        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch leading-tight cursor-pointer hover:bg-gray-50 border border-gray-200"
         onClick={goToList}
       >
         <button className="sr-only" onClick={goToList}>
-          Go to list
+          Go to collection
         </button>
         <div className="flex flex-col content-start">
           <div className="flex-grow pr-2">
-            <h2 className="text-gray-800 font-semibold">{props.rl.title}</h2>
-            <p className="text-sm mt-2 text-gray-500">
+            <h2 className="text-gray-900 font-semibold">{props.rl.title}</h2>
+            <p className="text-sm mt-2 text-gray-500 leading-tighter">
               {lockIcon} {getDetails(props.rl.data)}
             </p>
           </div>

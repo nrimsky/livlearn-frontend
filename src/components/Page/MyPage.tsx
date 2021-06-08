@@ -20,7 +20,7 @@ const MyPage = () => {
   const createButton = (
     <Button
       onClick={() => history.push("/list")}
-      text="Create a new list"
+      text="Create a newcollection"
       color="green"
       className="m-2 border border-green-500"
     />
@@ -30,7 +30,7 @@ const MyPage = () => {
     <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl mx-auto">
       {myLists.length > 0 ? (
         <>
-          <CardCollection title={`Your lists (${myLists.length})`}>
+          <CardCollection title={`Your collections (${myLists.length})`}>
             {myLists
               .filter((l) => !!l.id)
               .map((l, i) => {
@@ -41,7 +41,7 @@ const MyPage = () => {
         </>
       ) : (
         <div className="flex w-full flex-grow items-center flex-col mt-10 p-10">
-          <p className="text-gray-500 pb-8">You haven't saved any lists yet</p>
+          <p className="text-gray-500 pb-8">You haven't saved any collections yet</p>
           {createButton}
         </div>
       )}
