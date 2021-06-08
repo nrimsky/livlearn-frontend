@@ -246,10 +246,10 @@ const EditableList = ({
         onClick={openAdd}
       />
       <Button
-        text={rl.id ? "🚀 Publish changes" : "🚀 Publish new collection"}
+        text={rl.id ? "Publish changes" : "Publish new collection"}
         onClick={openSave}
-        className="fixed bottom-6 left-6 border-green-500 shadow"
-        color="green"
+        className="fixed bottom-6 left-6 shadow text-sm bg-green-500 text-white"
+        color=""
       />
     </div>
   );
