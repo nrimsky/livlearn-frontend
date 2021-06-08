@@ -5,8 +5,8 @@
   "targets": {
     "resourceee-e2166": {
       "hosting": {
-        "resourceee": [
-          "resourceee"
+        "livlearn": [
+          "livlearn"
         ]
       }
     }

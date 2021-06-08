@@ -1,7 +1,7 @@
 import SignIn from "../Auth/SignIn";
 import Button from "../Button/Button";
 import { useHistory } from "react-router-dom";
-import { getPublicListsFromFirebase } from "../../firebase/FirestoreService";
+import { streamPublicLists } from "../../firebase/FirestoreService";
 import { useEffect, useState } from "react";
 import ResourceList from "../../types/ResourceList";
 import CardCollection from "../Card/CardCollection";
@@ -13,9 +13,12 @@ const Home = (props: { loggedIn: boolean }) => {
   const [publicLists, setPublicLists] = useState<ResourceList[]>([]);
 
   useEffect(() => {
-    getPublicListsFromFirebase().then((lists) => {
+    const unsubscribe = streamPublicLists((lists) => {
       setPublicLists(lists);
-    });
+    }, (error) => {
+      console.error(error);
+    })
+    return unsubscribe;
   }, []);
 
   return (

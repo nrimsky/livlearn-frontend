@@ -8,6 +8,7 @@ type ResourceList = {
   shareSettings: ShareSettings;
   title: string;
   data: ResourceListItem[];
+  upvotes: string[];
   id?: string;
   lastChanged?: firebase.firestore.Timestamp;
 };

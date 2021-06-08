@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import getDetails from "../../helpers/getDetails";
 import ResourceList from "../../types/ResourceList";
 import { useHistory } from "react-router-dom";
@@ -7,12 +7,44 @@ import {
   LockOpenIcon,
   ChevronUpIcon,
 } from "@heroicons/react/outline";
+import { getCurrentUserId } from "../../firebase/AuthService";
+import classNames from "../../helpers/classNames";
+import { downvoteResourceList, upvoteResourceList } from "../../firebase/FirestoreService";
 
-const UpvoteButton = () => {
+const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }) => {
+  const currentUserId = getCurrentUserId();
+
+  const isUpvoted = useMemo(() => {
+    if (!currentUserId) {
+      return false;
+    } else {
+      return resourceList.upvotes.includes(currentUserId);
+    }
+  }, [currentUserId, resourceList]);
+
   return (
-    <button className="flex justify-center my-auto p-2 border bg-white border-gray-200 hover:bg-gray-50 rounded flex-col justify-center z-5 focus:outline-none">
-      <ChevronUpIcon className="h-5 w-5 text-gray-500" />
-      <span className="text-sm text-gray-500 mt-1 w-full text-center">9</span>
+    <button
+      onClick={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!currentUserId) { return; }
+        if (resourceList.upvotes.includes(currentUserId)) {
+          downvoteResourceList(resourceList, currentUserId);
+        } else {
+          upvoteResourceList(resourceList, currentUserId);
+        }
+      }}
+      className={classNames(
+        "flex justify-center my-auto p-2 border bg-white hover:bg-gray-50 rounded flex-col justify-center z-5 focus:outline-none",
+        isUpvoted
+          ? "border-green-500 text-green-500"
+          : "border-gray-200 text-gray-500"
+      )}
+    >
+      <ChevronUpIcon className="h-5 w-5" />
+      <span className="sr-only">
+        {isUpvoted ? "You have upvoted this" : ""}
+      </span>
+      <span className="text-sm mt-1 w-full text-center">{resourceList.upvotes.length}</span>
     </button>
   );
 };
@@ -71,7 +103,9 @@ const ResourceListCard = React.memo(
             </p>
           </div>
         </div>
-        {!!props.onVote && <UpvoteButton />}
+        {props.rl.shareSettings === "HOMEPAGE" && (
+          <UpvoteButton resourceList={props.rl} />
+        )}
       </div>
     );
   }

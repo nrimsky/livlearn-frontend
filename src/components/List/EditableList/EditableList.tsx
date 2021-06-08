@@ -149,7 +149,6 @@ const EditableList = ({
   // TODO
   // Add upvotes to homepage
   // More clear publish process
-  // check for unnecessary rerenders
 
   return (
     <div className="sm:mx-5 my-5">

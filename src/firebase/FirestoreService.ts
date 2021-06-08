@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import ResourceList from "../types/ResourceList";
+import ResourceListItem from "../types/ResourceListItem";
 import { getCurrentUserId } from "./AuthService";
 
 export async function getResourceList(id: string): Promise<ResourceList> {
@@ -11,6 +12,28 @@ export async function getResourceList(id: string): Promise<ResourceList> {
   } else {
     throw Error("No such document");
   }
+}
+
+export async function upvoteResourceList(rl: ResourceList, userId: string) {
+  if (!rl.id) {
+    return;
+  }
+  await firebase
+    .firestore()
+    .collection("lists")
+    .doc(rl.id)
+    .update({ upvotes: [...rl.upvotes, userId] });
+}
+
+export async function downvoteResourceList(rl: ResourceList, userId: string) {
+  if (!rl.id) {
+    return;
+  }
+  await firebase
+    .firestore()
+    .collection("lists")
+    .doc(rl.id)
+    .update({ upvotes: rl.upvotes.filter((u) => u !== userId) });
 }
 
 export async function saveNewListForUser(
@@ -63,31 +86,53 @@ function docToList(
   const docData = docSnapshot.data();
   const id = docSnapshot.id;
   if (docData) {
-    return { 
-      id: id,
+    return {
       ...docData,
-      shareSettings: docData.shareSettings ?? "ONLYLINK"
+      upvotes: docData.upvotes ?? [],
+      id: id,
+      shareSettings: docData.shareSettings ?? "ONLYLINK",
+      data: docData.data.sort((a: ResourceListItem, b: ResourceListItem) => {
+        return a.index && b.index && a.index < b.index ? -1 : 1;
+      }),
     } as ResourceList;
   } else {
     throw Error("No data in document snapshot");
   }
 }
 
-export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
+// export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
+//   const listsRef = firebase.firestore().collection("lists");
+//   const query = listsRef
+//     .where("shareSettings", "==", "HOMEPAGE")
+//     .orderBy("lastChanged", "desc")
+//     .limit(10);
+//   try {
+//     const snapshot = await query.get();
+//     return snapshot.docs.map(docToList);
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// }
+
+export function streamPublicLists(
+  onRlRecieved: (rls: ResourceList[]) => void,
+  onError: (error: Error) => void
+): () => void {
   const listsRef = firebase.firestore().collection("lists");
   const query = listsRef
     .where("shareSettings", "==", "HOMEPAGE")
     .orderBy("lastChanged", "desc")
     .limit(10);
-  try {
-    const snapshot = await query.get();
-    return snapshot.docs.map((s) => {
-      return docToList(s);
-    });
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return query.onSnapshot({
+    next: (querySnapshot) => {
+      const updatedData = querySnapshot.docs.map(docToList);
+      onRlRecieved(updatedData)
+    },
+    error: (error) => {
+      onError(error);
+    },
+  })
 }
 
 export async function getAllListsForUser(): Promise<ResourceList[]> {
@@ -102,9 +147,7 @@ export async function getAllListsForUser(): Promise<ResourceList[]> {
     .orderBy("lastChanged", "desc");
   try {
     const snapshot = await query.get();
-    return snapshot.docs.map((s) => {
-      return docToList(s);
-    });
+    return snapshot.docs.map(docToList);
   } catch (error) {
     console.error(error);
     return [];
