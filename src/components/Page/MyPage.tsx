@@ -27,7 +27,7 @@ const MyPage = () => {
   );
 
   return (
-    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl">
+    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl mx-auto">
       {myLists.length > 0 ? (
         <>
           <CardCollection title={`Your collections (${myLists.length})`}>
