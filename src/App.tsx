@@ -20,7 +20,7 @@ export default function App() {
   return (
     <Router>
       <div>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col w-full">
           <NavBar loggedIn={loggedIn} />
           <Switch>
             <Route exact path="/">

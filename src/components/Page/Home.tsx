@@ -19,7 +19,7 @@ const Home = (props: { loggedIn: boolean }) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full max-w-screen-2xl mx-auto">
+    <div className="flex flex-col w-full max-w-screen-2xl sm:mx-auto">
       <div className="border border-gray-200 bg-white p-5 rounded shadow-sm m-5 relative">
         <img src={elephant} alt="" className="absolute w-12 h-12 bottom-0 right-2" />
         <h1 className="text-gray-800 text-2xl">
