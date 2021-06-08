@@ -20,21 +20,21 @@ const MyPage = () => {
   const createButton = (
     <Button
       onClick={() => history.push("/list")}
-      text="Create a newcollection"
+      text="Create a new collection"
       color="green"
       className="m-2 border border-green-500"
     />
   );
 
   return (
-    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl mx-auto">
+    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl">
       {myLists.length > 0 ? (
         <>
           <CardCollection title={`Your collections (${myLists.length})`}>
             {myLists
               .filter((l) => !!l.id)
               .map((l, i) => {
-                return <ResourceListCard rl={l} key={l.id!} />;
+                return <ResourceListCard rl={l} key={l.id!} hideUpvotes/>;
               })}
           </CardCollection>
           <div className="mx-auto">{createButton}</div>

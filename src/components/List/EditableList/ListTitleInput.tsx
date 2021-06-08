@@ -10,7 +10,7 @@ const ListTitleInput = React.memo(({ value, onChange }: Props) => {
   return (
     <input
       type="text"
-      placeholder="Name thiscollection"
+      placeholder="Name this collection"
       value={value}
       className={classNames(
         "mb-4 py-1 px-2 outline-none focus:outline-none w-full border-b border-gray-300 text-gray-900 no-round",

@@ -15,7 +15,7 @@ const StaticList = ({ resourceList }: Props) => {
           {resourceList.title}
         </p>
       </div>
-      <ul className="sm:rounded border border-gray-200 divide-y divide-gray-200">
+      <ul className="sm:rounded border border-gray-300 divide-y divide-gray-200">
         {resourceList.data.map((d, i) => {
           return <li
             className="pl-3 pr-4 py-3 bg-white grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3"

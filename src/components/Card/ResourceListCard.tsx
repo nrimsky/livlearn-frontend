@@ -37,7 +37,7 @@ const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }
         "flex justify-center my-auto p-2 border bg-white hover:bg-gray-50 rounded flex-col justify-center z-5 focus:outline-none",
         isUpvoted
           ? "border-green-500 text-green-500"
-          : "border-gray-200 text-gray-500"
+          : "border-gray-300 text-gray-500"
       )}
     >
       <ChevronUpIcon className="h-5 w-5" />
@@ -54,6 +54,7 @@ const ResourceListCard = React.memo(
     rl: ResourceList;
     key: string;
     hideLock?: boolean;
+    hideUpvotes?: boolean;
     onVote?: (up: boolean) => void;
   }) => {
     const history = useHistory();
@@ -89,7 +90,7 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch leading-tight cursor-pointer hover:bg-gray-50 border border-gray-200"
+        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch leading-tight cursor-pointer hover:bg-gray-50 border border-gray-300"
         onClick={goToList}
       >
         <button className="sr-only" onClick={goToList}>
@@ -103,7 +104,7 @@ const ResourceListCard = React.memo(
             </p>
           </div>
         </div>
-        {props.rl.shareSettings === "HOMEPAGE" && (
+        {!props.hideUpvotes && props.rl.shareSettings === "HOMEPAGE" && (
           <UpvoteButton resourceList={props.rl} />
         )}
       </div>

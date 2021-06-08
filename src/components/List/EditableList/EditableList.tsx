@@ -153,6 +153,7 @@ const EditableList = ({
   // Search lists and search recommended resources
   // Comments
   // Tags
+  // Add more emojis
 
   return (
     <div className="sm:mx-5 my-5">
@@ -245,7 +246,7 @@ const EditableList = ({
         onClick={openAdd}
       />
       <Button
-        text={rl.id ? "🚀 Publish Changes" : "🚀 Publish New collection"}
+        text={rl.id ? "🚀 Publish changes" : "🚀 Publish new collection"}
         onClick={openSave}
         className="fixed bottom-6 left-6 border-green-500 shadow"
         color="green"

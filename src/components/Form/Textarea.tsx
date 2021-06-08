@@ -14,7 +14,7 @@ export default function Textarea(props: {
         </span>
         <textarea
           rows={2}
-          className="resize-y overflow-hidden appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none"
+          className="resize-y overflow-hidden appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none"
           placeholder={props.placeholder}
           value={props.value}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => {

@@ -20,7 +20,7 @@ const ListPage = () => {
 
   const [rl, setRl] = useState<ResourceList>({
     upvotes: [],
-    title: "",
+    title: "Untitled",
     data: [],
     creatorId: currentUserId,
     shareSettings: "HOMEPAGE",
@@ -102,7 +102,7 @@ const ListPage = () => {
     if (!id) {
       setRl({
         upvotes: [],
-        title: "",
+        title: "Untitled",
         data: [],
         creatorId: currentUserId,
         shareSettings: "HOMEPAGE",

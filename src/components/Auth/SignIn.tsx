@@ -53,7 +53,7 @@ const SignIn = () => {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="text-center p-5 max-w-md my-5 bg-white rounded border border-gray-200 shadow-sm">
+    <div className="text-center p-5 max-w-md my-5 bg-white rounded border border-gray-300 shadow-sm">
       {done ? (
         <p className="text-xs text-gray-900">
           🎉 An email has been sent to {email}! Check your inbox for a link to
