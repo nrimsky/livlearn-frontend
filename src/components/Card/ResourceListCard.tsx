@@ -90,7 +90,7 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch leading-tight cursor-pointer hover:bg-gray-50 border border-gray-300"
+        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 border border-gray-300"
         onClick={goToList}
       >
         <button className="sr-only" onClick={goToList}>
@@ -98,8 +98,8 @@ const ResourceListCard = React.memo(
         </button>
         <div className="flex flex-col content-start">
           <div className="flex-grow pr-2">
-            <h2 className="text-gray-900 font-semibold">{props.rl.title}</h2>
-            <p className="text-sm mt-2 text-gray-500 leading-tighter">
+            <h3 className="text-gray-900 font-semibold leading-tight">{props.rl.title}</h3>
+            <p className="text-sm mt-2 text-gray-500 leading-none">
               {lockIcon} {getDetails(props.rl.data)}
             </p>
           </div>

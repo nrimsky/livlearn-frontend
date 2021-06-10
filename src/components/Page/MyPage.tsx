@@ -22,12 +22,12 @@ const MyPage = () => {
       onClick={() => history.push("/list")}
       text="Create a new collection"
       color="green"
-      className="m-2 border border-green-500"
+      className="my-5 border border-green-500"
     />
   );
 
   return (
-    <div className="flex w-full flex-grow items-center flex-col sm:items-start max-w-screen-2xl mx-auto">
+    <div className="flex w-full flex-grow items-center flex-col md:items-start max-w-screen-2xl mx-auto">
       {myLists.length > 0 ? (
         <>
           <CardCollection title={`Your collections (${myLists.length})`}>

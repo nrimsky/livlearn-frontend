@@ -5,37 +5,66 @@ import ResourceList from "../../types/ResourceList";
 import CardCollection from "../Card/CardCollection";
 import ResourceListCard from "../Card/ResourceListCard";
 import elephant from "../../img/elephant.svg";
+import ResourceRec from "../../types/ResourceRec";
+import { Query, getResources } from "../../api/LivlearnApi";
+import RecommendedCard from "../Card/RecommendedCard";
 
 const Home = (props: { loggedIn: boolean }) => {
-
   const [publicLists, setPublicLists] = useState<ResourceList[]>([]);
+  const [recommendedResources, setRecommendedResources] = useState<
+    ResourceRec[]
+  >([]);
 
   useEffect(() => {
-    const unsubscribe = streamPublicLists((lists) => {
-      setPublicLists(lists);
-    }, (error) => {
-      console.error(error);
-    })
+    const unsubscribe = streamPublicLists(
+      (lists) => {
+        setPublicLists(lists);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    const query: Query = {
+      types: [],
+      tagIds: [],
+      levels: [],
+    };
+    getResources(query)
+      .then((r) => setRecommendedResources(r))
+      .catch((e) => console.error(e));
+  }, []);
+
   return (
-    <div className="flex flex-col w-100 max-w-screen-2xl sm:mx-auto">
-      <p className="text-gray-900 pt-5 pl-5 text-3xl leading-none font-extrabold tracking-tight">livlearn - curate and share learning resources.</p>
-      <div className="flex justify-center">
-        {!props.loggedIn && <SignIn />}
-      </div>
-      <CardCollection title={"Resource collections recently shared with the community"}>
+    <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto">
+      <h1 className="text-gray-900 px-4 pt-5 text-3xl leading-none font-extrabold tracking-tight">
+          livlearn - curate and share learning resources.
+      </h1>
+      <div className="flex justify-center">{!props.loggedIn && <SignIn />}</div>
+      <CardCollection
+        title={"Learning resource collections recently shared with the community"}
+      >
         {publicLists
           .filter((l) => !!l.id)
           .map((l, i) => {
             return <ResourceListCard rl={l} key={l.id!} hideLock />;
           })}
       </CardCollection>
-      <img src={elephant} alt="" className="absolute w-12 h-12 bottom-0 right-2" />
+      <CardCollection title={"Learning resources we appreciated"}>
+        {recommendedResources.map((r) => {
+          return <RecommendedCard rr={r} key={r.id}/>;
+        })}
+      </CardCollection>
+      <img
+        src={elephant}
+        alt=""
+        className="fixed w-12 h-12 bottom-0 right-2"
+      />
     </div>
   );
 };
 
 export default Home;
-
