@@ -8,6 +8,7 @@ const API_ROOT = "https://api.livlearn.howshouldilearn.com/";
 // Search and filter widgets
 // More details popup
 // Add a link to a list (bookmark (add to a list called bookmarks) or add to existing list)
+// Firestore rules length limits
 
 export type Query = {
   tagIds: number[];
