@@ -1,6 +1,5 @@
-import SignIn from "../Auth/SignIn";
 import { streamPublicLists } from "../../firebase/FirestoreService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ResourceList from "../../types/ResourceList";
 import CardCollection from "../Card/CardCollection";
 import ResourceListCard from "../Card/ResourceListCard";
@@ -42,16 +41,19 @@ const Home = (props: { loggedIn: boolean }) => {
       .catch((e) => console.error(e));
   }, []);
 
+  const viewDetails = useCallback(
+    (r: ResourceRec) => setSelectedViewDetail(r),
+    []
+  );
+
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto">
-      <h1 className="text-gray-900 px-4 pt-5 text-3xl leading-none font-extrabold tracking-tight">
-        livlearn - curate and share learning resources.
+      <h1 className="text-gray-900 px-4 pt-8 text-3xl leading-none font-extrabold tracking-tight">
+        livlearn - we <span className="text-red-500">❤️</span> learning cool
+        stuff online
       </h1>
-      <div className="flex justify-center">{!props.loggedIn && <SignIn />}</div>
       <CardCollection
-        title={
-          "Learning resource collections recently shared with the community"
-        }
+        title={"Resource collections recently shared with the community"}
       >
         {publicLists
           .filter((l) => !!l.id)
@@ -65,7 +67,7 @@ const Home = (props: { loggedIn: boolean }) => {
             <RecommendedCard
               rr={r}
               key={r.id}
-              onViewDetails={() => setSelectedViewDetail(r)}
+              onViewDetails={viewDetails}
             />
           );
         })}

@@ -98,7 +98,7 @@ const ResourceListCard = React.memo(
         </button>
         <div className="flex flex-col content-start">
           <div className="flex-grow pr-2">
-            <h3 className="text-gray-900 font-semibold leading-tight">{props.rl.title}</h3>
+            <h3 className="text-gray-900 font-semibold leading-tight tracking-tight">{props.rl.title}</h3>
             <p className="text-sm mt-2 text-gray-500 leading-none">
               {lockIcon} {getDetails(props.rl.data)}
             </p>

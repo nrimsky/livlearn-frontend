@@ -45,13 +45,13 @@ export default function BasePopup(props: {
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
               <button
                 onClick={props.onClickClose}
-                className="focus:outline-none absolute top-4 right-4"
+                className="focus:outline-none absolute top-2 right-2"
               >
-                <XIcon className="text-gray-900 h-5 w-5" />
+                <XIcon className="text-gray-500 h-4 w-4" />
               </button>
               <Dialog.Title
                 as="h3"
-                className="text-lg font-semibold leading-6 text-gray-900"
+                className="text-lg font-semibold leading-tight text-gray-900"
               >
                 {props.title}
               </Dialog.Title>

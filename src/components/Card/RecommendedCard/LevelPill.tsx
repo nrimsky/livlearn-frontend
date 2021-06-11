@@ -18,7 +18,7 @@ const LevelPill = React.memo((props: { level: Level }) => {
   return (
     <div
       className={classNames(
-        "rounded-full px-2 text-xs inline-flex mr-1 mb-1 font-medium items-center",
+        "rounded-full px-2 text-xs inline-flex mr-1 mb-1 font-medium items-center tracking-tight",
         props.level === "AD" ? "bg-red-100 text-red-800" : "",
         props.level === "BE" ? "bg-green-100 text-green-800" : "",
         props.level === "IN" ? "bg-yellow-100 text-yellow-800" : "",

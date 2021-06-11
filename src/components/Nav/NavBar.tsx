@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import DropdownMenu from "../Dropdown/DropdownMenu";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
+import SmallOutlineButton from "../Button/SmallOutlineButton";
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
@@ -42,12 +43,12 @@ export default function NavBar(props: { loggedIn: boolean }) {
         history.push("/");
       },
     },
-    {
-      name: "Login",
-      action: () => {
-        history.push("/auth");
-      },
-    },
+    // {
+    //   name: "Login",
+    //   action: () => {
+    //     history.push("/auth");
+    //   },
+    // },
   ];
 
   const userMenuActions: MenuAction[] = [
@@ -91,7 +92,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
                   />
                 </div>
               </div>
-              {props.loggedIn && (
+              {props.loggedIn ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <DropdownMenu
                     icon={<UserCircleIcon className="h-8 w-8" />}
@@ -103,6 +104,12 @@ export default function NavBar(props: { loggedIn: boolean }) {
                     ))}
                   </DropdownMenu>
                 </div>
+              ) : (
+                <SmallOutlineButton
+                  className="border-green-500 text-green-500 tracking-tighter"
+                  text="LOGIN"
+                  onClick={() => history.push("/auth")}
+                />
               )}
             </div>
           </div>
