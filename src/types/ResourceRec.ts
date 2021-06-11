@@ -5,7 +5,7 @@ export type Type = "PO" | "BO" | "AB" | "BL" | "AR" | "CO" | "VI" | "TO" | "OT"
 type ResourceRec = {
     id: string;
     tags: string[];
-    created_at: Date 
+    created_at: string; 
     level: Level;
     type: Type;
     url: string;

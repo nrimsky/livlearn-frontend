@@ -1,18 +1,12 @@
 import React from "react";
-import { mediaTypeFromApiType } from "../../types/MediaType";
-import ResourceRec from "../../types/ResourceRec";
-import Icon from "../Icon/Icon";
-
-const TagPill = React.memo((props: { tag: string; key: string }) => {
-  return (
-    <div className="rounded-full px-2 text-xs bg-gray-100 text-green-900 inline-flex">
-      {props.tag}
-    </div>
-  );
-});
+import { mediaTypeFromApiType } from "../../../types/MediaType";
+import ResourceRec from "../../../types/ResourceRec";
+import Icon from "../../Icon/Icon";
+import LevelPill from "./LevelPill";
+import TagPill from "./TagPill";
 
 const RecommendedCard = React.memo(
-  (props: { rr: ResourceRec; key: string }) => {
+  (props: { rr: ResourceRec; key: string; onViewDetails: () => void }) => {
     return (
       <div className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-start border border-gray-300 flex-col">
         <div className="text-gray-900 font-semibold leading-tight flex">
@@ -25,13 +19,17 @@ const RecommendedCard = React.memo(
         <p className="text-sm text-gray-500 leading-tight">
           {props.rr.tagline}
         </p>
-        <div className="flex flex-wrap mt-2 gap-1.5">
+        <div className="flex flex-wrap mt-2">
           {props.rr.tags.map((t) => {
             return <TagPill tag={t} key={t} />;
           })}
+          <LevelPill level={props.rr.level} />
         </div>
-        <div className="flex gap-2 mt-2">
-          <button className="text-xs font-medium text-green-500 px-3 py-1 focus:outline-none border border-green-500 rounded flex-none">
+        <div className="flex mt-1">
+          <button
+            className="text-xs font-medium text-green-500 px-3 py-1 focus:outline-none border border-green-500 rounded flex-none mr-2"
+            onClick={props.onViewDetails}
+          >
             More details
           </button>
           <a
