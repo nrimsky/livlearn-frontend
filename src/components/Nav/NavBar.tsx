@@ -74,8 +74,17 @@ export default function NavBar(props: { loggedIn: boolean }) {
                 </Disclosure.Button>
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex-shrink-0 flex items-center">
+                <div className="hidden sm:flex flex-shrink-0 items-center">
                   <img
+                    className="h-10 w-10 rounded-full cursor-pointer"
+                    src={logo}
+                    alt=""
+                    onClick={() => history.push("/")}
+                  />
+                </div>
+                <div className="sm:hidden" style={{ position: "absolute", left: "50%", top: "8px" }}>
+                  <img
+                    style={{ position: "relative", left: "-50%" }}
                     className="h-10 w-10 rounded-full cursor-pointer"
                     src={logo}
                     alt=""
