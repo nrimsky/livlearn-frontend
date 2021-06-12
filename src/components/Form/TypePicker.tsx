@@ -38,7 +38,7 @@ export default function TypePicker(props: {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-green-900">
+          <Menu.Items className="absolute mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-gray-900">
             <div className="px-1 py-1">
               {Object.keys(MediaType).map((mediaType: string) => {
                 const m = mediaType as keyof typeof MediaType;

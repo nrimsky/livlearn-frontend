@@ -4,6 +4,34 @@
 @tailwind utilities;
 
 input.no-round {
-    -webkit-appearance: none;
-    border-radius: 0;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom checkbox appearance */
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-clip: content-box;
+  border: 1.5px solid #10b981;
+  background-color: rgba(16,185,129, 0.8);
+}
+
+input[type="checkbox"]:focus {
+  border: 2px solid #10b9818c;
+}
+
+input[type="checkbox"]:focus {
+  outline: none !important;
 }

@@ -5,20 +5,29 @@ const API_ROOT = "https://api.livlearn.howshouldilearn.com/";
 
 // TODO:
 // Pagination / infite scroll
-// Search and filter widgets
 // Add a link to a list (bookmark (add to a list called bookmarks) or add to existing list)
 // Firestore rules length limits
+// Just one collections tab with a new button
+// Recommend tab
+// Learning plan tab
+// Tips tab
 
 export type Query = {
   tagIds: number[];
   types: Type[];
-  levels: Level[];
+  level: Level;
+  search?: string;
 };
 
-const queryString = ({ tagIds, types, levels }: Query) => {
-  return `?tags=${tagIds.map(toString).join(",")}&type=${types.join(
+const queryString = ({ tagIds, types, level, search }: Query) => {
+  let lq = "";
+  if (level !== "AN") {
+    lq = `${level},AN`;
+  }
+  let tq = (types.length === 9) ? [] : types;
+  return `?tags=${tagIds.map(toString).join(",")}&type=${tq.join(
     ","
-  )}&level=${levels.join(",")}`;
+  )}&level=${lq}&search=${search}&ordering=-created_at&page_size=30`;
 };
 
 const isResourceRec = (resourceRec: any) => {

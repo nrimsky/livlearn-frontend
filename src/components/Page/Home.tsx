@@ -9,9 +9,16 @@ import { Query, getResources } from "../../api/LivlearnApi";
 import RecommendedCard from "../Card/RecommendedCard/RecommendedCard";
 import BasePopup from "../Popup/BasePopup";
 import ViewDetailsRec from "../Form/ViewDetailsRec";
+import SearchBar from "../Search/SearchBar";
 
 const Home = (props: { loggedIn: boolean }) => {
   const [publicLists, setPublicLists] = useState<ResourceList[]>([]);
+  const [query, setQuery] = useState<Query>({
+    tagIds: [],
+    level: "AN",
+    types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO" ,"VI"],
+    search: "",
+  });
   const [recommendedResources, setRecommendedResources] = useState<
     ResourceRec[]
   >([]);
@@ -31,20 +38,19 @@ const Home = (props: { loggedIn: boolean }) => {
   }, []);
 
   useEffect(() => {
-    const query: Query = {
-      types: [],
-      tagIds: [],
-      levels: [],
-    };
     getResources(query)
       .then((r) => setRecommendedResources(r))
       .catch((e) => console.error(e));
-  }, []);
+  }, [query]);
 
   const viewDetails = useCallback(
     (r: ResourceRec) => setSelectedViewDetail(r),
     []
   );
+
+  const onSearch = useCallback((query: Query) => {
+    setQuery(query);
+  }, []);
 
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto">
@@ -61,14 +67,14 @@ const Home = (props: { loggedIn: boolean }) => {
             return <ResourceListCard rl={l} key={l.id!} hideLock />;
           })}
       </CardCollection>
-      <CardCollection title={"Learning resources we appreciated"}>
+
+      <CardCollection
+        title={"Learning resources we appreciated"}
+        widgets={<SearchBar onSearch={onSearch} className="mb-3" query={query}/>}
+      >
         {recommendedResources.map((r) => {
           return (
-            <RecommendedCard
-              rr={r}
-              key={r.id}
-              onViewDetails={viewDetails}
-            />
+            <RecommendedCard rr={r} key={r.id} onViewDetails={viewDetails} />
           );
         })}
       </CardCollection>
