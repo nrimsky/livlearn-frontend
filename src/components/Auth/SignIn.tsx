@@ -14,8 +14,10 @@ const SignIn = () => {
 
   if (window.location.hostname === "localhost") {
     url = "http://localhost:3000/finishSignIn";
-  } else {
+  } else if (window.location.hostname[0] === "l") {
     url = "https://livlearn.web.app/finishSignIn";
+  } else {
+    url = "https://howshouldilearn.com/finishSignIn";
   }
   var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
