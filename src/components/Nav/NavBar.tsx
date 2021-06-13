@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Disclosure } from "@headlessui/react";
 import MenuAction from "../../types/MenuAction";
 import logo from "../../img/logo.svg";
@@ -11,19 +11,13 @@ import DropdownMenu from "../Dropdown/DropdownMenu";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import SmallOutlineButton from "../Button/SmallOutlineButton";
+import { ThemeContext } from "../../App";
 
-export default function NavBar(props: { loggedIn: boolean }) {
+
+export default function NavBar(props: { loggedIn: boolean}) {
+  const { mode, onChange }  = useContext(ThemeContext);
   const history = useHistory();
   const id = getCurrentUserId();
-
-  function toggleDarkMode() {
-    var body = document.body;
-    body.classList.toggle("dark");
-    var button = document.getElementById("dark-mode-button");
-    if (button) {
-      button.innerHTML = body.classList.contains("dark") ? "🌙" : "🌞";
-    }
-  }
 
   const navigationLoggedInActions: MenuAction[] = [
     {
@@ -46,13 +40,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
       action: () => {
         history.push("/");
       },
-    },
-    // {
-    //   name: "Login",
-    //   action: () => {
-    //     history.push("/auth");
-    //   },
-    // },
+    }
   ];
 
   const userMenuActions: MenuAction[] = [
@@ -82,9 +70,9 @@ export default function NavBar(props: { loggedIn: boolean }) {
       className="mr-2 sm:mr-3"
       name="toggle dark mode"
       id="dark-mode-button"
-      onClick={toggleDarkMode}
+      onClick={() => onChange((mode === "dark") ? "light" : "dark")}
     >
-      {document.body.classList.contains("dark") ? "🌙" : "🌞"}
+      {(mode === "dark") ? "🌙" : "🌞"}
     </button>
   );
 

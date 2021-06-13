@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { XIcon } from "@heroicons/react/outline";
+import { ThemeContext } from "../../App";
 
 export default function BasePopup(props: {
   isOpen: boolean;
@@ -8,11 +9,12 @@ export default function BasePopup(props: {
   children: React.ReactNode;
   title: string;
 }) {
+  const { mode }  = useContext(ThemeContext);
   return (
     <Transition appear show={props.isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className={"fixed inset-0 z-10 overflow-y-auto "}
+        className={`fixed inset-0 z-10 overflow-y-auto ${mode}`}
         onClose={props.onClickClose}
       >
         <div className="min-h-screen px-4 text-center">

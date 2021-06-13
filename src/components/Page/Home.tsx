@@ -90,7 +90,7 @@ const Home = (props: { loggedIn: boolean }) => {
         </BasePopup>
       )}
 
-      <img src={elephant} alt="" className="fixed w-12 h-12 bottom-0 right-2" />
+      <img src={elephant} alt="" className="sticky w-12 h-12 bottom-0 ml-auto mr-3" />
     </div>
   );
 };

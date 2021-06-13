@@ -242,13 +242,13 @@ const EditableList = ({
         </p>
       )}
       <div className="flex fixed bottom-0 w-full justify-between left-0 px-5 pb-5">
-        <AddButton onClick={openAdd} />
         <Button
           text={rl.id ? "Publish changes" : "Publish new collection"}
           onClick={openSave}
           className="shadow text-sm bg-green-500 text-white dark:bg-green-600"
           color=""
         />
+        <AddButton onClick={openAdd} />
       </div>
     </div>
   );
