@@ -66,6 +66,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
           type="submit"
           className="absolute right-0 top-0 mt-3 mr-3 focus:outline-none"
           onClick={onPressSearch}
+          aria-label="Search"
         >
           <SearchIcon className="text-gray-500  dark:text-gray-400 h-4 w-4 gap-1" />
         </button>

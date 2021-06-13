@@ -12,6 +12,7 @@ export default function AddButton(props: {
         props.className
       }
       onClick={props.onClick}
+      aria-label="Add a new item"
     >
       <PlusIcon
         className="h-6 w-6 text-white"

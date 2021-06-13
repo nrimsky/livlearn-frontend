@@ -33,6 +33,7 @@ const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }
           upvoteResourceList(resourceList, currentUserId);
         }
       }}
+      aria-label="Upvote button"
       className={classNames(
         "flex justify-center my-auto p-2 border bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-green-800 rounded flex-col justify-center z-5 focus:outline-none",
         isUpvoted
