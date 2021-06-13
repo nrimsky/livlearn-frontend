@@ -38,10 +38,10 @@ const ShareForm = (props: {
         rows={1}
         readOnly={true}
         value={window.location.href}
-        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500 dark:text-gray-400 align-middle py-1 px-2 dark:bg-gray-800"
+        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500 dark:text-gray-400 align-middle py-1 px-2 dark:bg-gray-800 focus:ring focus:ring-green-200 focus:ring-opacity-50"
       />
       <button
-        className="h-full inline-block hover:bg-green-100 focus:outline-none"
+        className="h-full inline-block hover:bg-green-100 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50"
         onClick={copyToClipboard}
       >
         <span className="sr-only">Copy to clipboard</span>

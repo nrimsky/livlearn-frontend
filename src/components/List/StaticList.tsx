@@ -11,14 +11,14 @@ const StaticList = ({ resourceList }: Props) => {
   return (
     <div className="sm:m-5 my-5">
       <div className="mx-5 sm:mx-0 w-100">
-        <p className="mb-3 px-2 w-full text-gray-900 dark:text-gray-100 font-medium no-round leading-snug">
+        <p className="mb-3 px-2 w-full text-gray-900 dark:text-white font-medium no-round leading-snug">
           {resourceList.title}
         </p>
       </div>
       <ul className="sm:rounded border-t border-b sm:border border-gray-300 dark:border-gray-500 divide-y divide-gray-200 dark:divide-gray-500">
         {resourceList.data.map((d, i) => {
           return <li
-            className="pl-3 pr-4 py-3 bg-white dark:bg-gray-900 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 leading-snug text-gray-900 dark:text-gray-100"
+            className="pl-3 pr-4 py-3 bg-white dark:bg-gray-900 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 leading-snug text-gray-900 dark:text-white"
             key={i}
           >
             <div className="inline-flex">

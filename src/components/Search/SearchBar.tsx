@@ -64,7 +64,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
         />
         <button
           type="submit"
-          className="absolute right-0 top-0 mt-3 mr-3 focus:outline-none"
+          className="absolute right-0 top-0 mt-3 mr-3 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50"
           onClick={onPressSearch}
           aria-label="Search"
         >
@@ -90,7 +90,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
                     typeFromMediaType(MediaType[v])
                   )}
                 />
-                <label htmlFor={MediaType[v]} className="ml-1 text-gray-900  dark:text-gray-100">
+                <label htmlFor={MediaType[v]} className="ml-1 text-gray-900  dark:text-white">
                   {MediaType[v]}s
                 </label>
               </div>

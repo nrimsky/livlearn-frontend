@@ -19,14 +19,14 @@ const LevelMenuItem: React.FC<{
     <Menu.Item>
       <button
         onClick={onChangePress}
-        className="group flex rounded-md items-center w-full px-1 pt-1 focus:outline-none"
+        className="group flex rounded-md items-center w-full px-1 pt-1 focus:outline-none focus:ring-4 focus:ring-green-200 focus:ring-opacity-75"
       >
         <span
           className={classNames(
-            "font-medium hover:bg-green-500 hover:text-white px-2 py-1 rounded w-full text-left",
+            "font-medium hover:bg-green-500 hover:text-white px-2 py-1 rounded w-full text-left dark:hover:bg-green-600",
             value === selected
-              ? "bg-green-500 text-white"
-              : "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+              ? "bg-green-500 dark:bg-green-600 text-white"
+              : "bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
           )}
         >
           {toStr(value)}
@@ -73,7 +73,7 @@ const LevelMenu: React.FC<{
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="text-xs absolute mt-10 bg-white dark:bg-gray-900 rounded focus:outline-none pb-1 border border-gray-300 dark:border-gray-500 shadow justify-left z-10">
+        <Menu.Items className="text-xs absolute mt-10 bg-white dark:bg-gray-900 rounded focus:outline-none pb-1 border border-gray-300 dark:border-gray-500 shadow justify-left z-10 focus:ring focus:ring-green-200 focus:ring-opacity-50">
           <LevelMenuItem selected={selected} value={"AN"} onSelect={onSelect} />
           <LevelMenuItem selected={selected} value={"BE"} onSelect={onSelect} />
           <LevelMenuItem selected={selected} value={"IN"} onSelect={onSelect} />

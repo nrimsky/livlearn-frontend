@@ -26,7 +26,7 @@ export default function MyProfile(props: { user: firebase.User }) {
                 <UserIcon className="w-12 h-12 text-gray-400 rounded-full font-thin" />
               </div>
               <div className="flex flex-col items-center text-center justify-center">
-                <h2 className="font-medium title-font mt-4 text-gray-900  dark:text-gray-100 text-lg">
+                <h2 className="font-medium title-font mt-4 text-gray-900  dark:text-white text-lg">
                   {props.user.displayName ??
                     props.user.email?.split("@")[0] ??
                     "Anonomous user"}

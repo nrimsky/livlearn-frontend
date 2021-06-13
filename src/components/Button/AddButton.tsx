@@ -8,7 +8,7 @@ export default function AddButton(props: {
   return (
     <button
       className={
-        "bg-green-500 hover:bg-green-600 focus:outline-none rounded-full p-2 dark:bg-green-600 shadow dark:hover:bg-green-700" +
+        "bg-green-500 hover:bg-green-600 focus:outline-none rounded-full p-2 dark:bg-green-600 shadow dark:hover:bg-green-700 focus:ring focus:ring-green-200 focus:ring-opacity-50" +
         props.className
       }
       onClick={props.onClick}

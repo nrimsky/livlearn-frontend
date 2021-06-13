@@ -57,7 +57,7 @@ const SignIn = () => {
   return (
     <div className="text-center p-5 max-w-md mb-12 bg-white dark:bg-gray-900 rounded border border-gray-300 dark:border-gray-500 shadow-sm">
       {done ? (
-        <p className="text-gray-900  dark:text-gray-100">
+        <p className="text-gray-900  dark:text-white">
           🎉 An email has been sent to {email}! Check your inbox for a link to
           sign in!
         </p>

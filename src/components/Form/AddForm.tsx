@@ -26,7 +26,7 @@ export default function AddForm(props: {
       <form className="my-6">
         <div className="mb-4">
           <label className="block">
-            <span className="text-gray-900  dark:text-gray-100  font-semibold mb-2 block">
+            <span className="text-gray-900  dark:text-white  font-semibold mb-2 block">
               Type
             </span>
             <TypePicker

@@ -45,7 +45,7 @@ export default function DeployForm(props: {
 
   return (
     <div className="w-full">
-      <p className="text-gray-900 dark:text-gray-100">
+      <p className="text-gray-900 dark:text-white">
         {props.state.id
           ? "Update your collection with a click of a button!"
           : "Now it's time to publish your collection!"}

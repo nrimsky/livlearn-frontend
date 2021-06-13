@@ -30,7 +30,7 @@ const FinishSignIn = () => {
         });
     }
   }
-  return <p className="m-5 text-gray-900 dark:text-gray-100">Signing you in...</p>;
+  return <p className="m-5 text-gray-900 dark:text-white">Signing you in...</p>;
 };
 
 export default FinishSignIn;

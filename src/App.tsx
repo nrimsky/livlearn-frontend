@@ -31,19 +31,19 @@ export default function App() {
               {loggedIn ? (
                 <MyPage />
               ) : (
-                <h1 className="p-5 text-gray-900 dark:text-gray-100">You must be logged in to view this page</h1>
+                <h1 className="p-5 text-gray-900 dark:text-white">You must be logged in to view this page</h1>
               )}
             </Route>
             <Route path="/auth">
               {loggedIn ? (
-                <h1 className="p-5 text-gray-900 dark:text-gray-100">You are already logged in</h1>
+                <h1 className="p-5 text-gray-900 dark:text-white">You are already logged in</h1>
               ) : (
                 <SignInPage />
               )}
             </Route>
             <Route path="/finishSignIn">
               {loggedIn ? (
-                <h1 className="p-5 text-gray-900 dark:text-gray-100">You are already logged in</h1>
+                <h1 className="p-5 text-gray-900 dark:text-white">You are already logged in</h1>
               ) : (
                 <FinishSignIn />
               )}
@@ -54,7 +54,7 @@ export default function App() {
             <Route path="/profile/:uid" children={<ProfilePage />} />
             <Route path="/list/:id" children={<ListPage />} />
             <Route path="*">
-              <h1 className="p-5 text-gray-900 dark:text-gray-100">Sorry this page was not found</h1>
+              <h1 className="p-5 text-gray-900 dark:text-white">Sorry this page was not found</h1>
             </Route>
           </Switch>
         </div>

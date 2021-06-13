@@ -1,17 +1,22 @@
 import React from "react";
 import { mediaTypeFromApiType } from "../../../types/MediaType";
 import ResourceRec from "../../../types/ResourceRec";
-import SmallOutlineButton from "../../Button/SmallOutlineButton";
+import SmallOutlineButton, {
+  SmallLinkButton,
+} from "../../Button/SmallOutlineButton";
 import Icon from "../../Icon/Icon";
 import LevelPill from "./LevelPill";
 import TagPill from "./TagPill";
 
 const RecommendedCard = React.memo(
-  (props: { rr: ResourceRec; key: string; onViewDetails: (r: ResourceRec) => void }) => {
-
+  (props: {
+    rr: ResourceRec;
+    key: string;
+    onViewDetails: (r: ResourceRec) => void;
+  }) => {
     return (
       <div className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-start border-gray-300 dark:border-gray-500 flex-col border-t border-b md:border">
-        <div className="text-gray-900  dark:text-gray-100 font-semibold leading-tight flex">
+        <div className="text-gray-900  dark:text-white font-semibold leading-tight flex">
           <Icon
             mediaType={mediaTypeFromApiType(props.rr.type)}
             className="inline mr-2 mb-1"
@@ -33,14 +38,11 @@ const RecommendedCard = React.memo(
             text="More details"
             onClick={() => props.onViewDetails(props.rr)}
           />
-          <a
+          <SmallLinkButton
+            className="text-white border-green-500 bg-green-500 dark:bg-green-700"
             href={props.rr.url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs font-medium text-white px-3 py-1 bg-green-500 dark:bg-green-600 rounded flex-none transform hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-xl border border-transparent"
-          >
-            Access resource
-          </a>
+            text="Access resource"
+          />
         </div>
       </div>
     );

@@ -47,7 +47,7 @@ export default function FileUploadPage(props: {
     <div>
       <div className="flex flex-col flex-grow my-3">
         <div className="block w-full py-5 px-3 relative bg-white dark:bg-gray-900 appearance-none rounded bg-gray-100 border-gray-400 cursor-pointer border-dashed border-2 hover:bg-gray-200 dark:bg-gray-700">
-          <p className="absolute top-2 left-3 cursor-pointer w-full text-center text-gray-900  dark:text-gray-100 font-medium">
+          <p className="absolute top-2 left-3 cursor-pointer w-full text-center text-gray-900  dark:text-white font-medium">
             {fileName ?? "Select a file"}
           </p>
           <input

@@ -79,7 +79,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
 
   const toggleDarkModeButton = (
     <button
-      className="focus:outline-none mr-2 sm:mr-3"
+      className="mr-2 sm:mr-3"
       name="toggle dark mode"
       id="dark-mode-button"
       onClick={toggleDarkMode}
@@ -96,7 +96,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
             <div className="relative flex items-center justify-between h-14">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500  dark:text-gray-400 focus:outline-none">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500  dark:text-gray-400 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50">
                   <MobileMenuButton open={open} />
                 </Disclosure.Button>
               </div>
