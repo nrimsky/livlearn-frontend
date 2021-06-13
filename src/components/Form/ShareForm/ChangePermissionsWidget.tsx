@@ -11,8 +11,8 @@ const CheckBox: React.FC<{
     <label className="flex justify-start items-center w-full py-1">
       <span
         className={classNames(
-          "bg-white border-2 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 cursor-pointer",
-          checked ? "border-green-600 bg-green-100" : "border-gray-400"
+          "bg-white dark:bg-gray-900 border-2 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 cursor-pointer",
+          checked ? "border-green-600 bg-green-100 dark:bg-green-500" : "border-gray-400"
         )}
       >
         <input
@@ -20,18 +20,8 @@ const CheckBox: React.FC<{
           className="opacity-0 absolute cursor-pointer"
           onClick={() => onChange(!checked)}
         />
-        <svg
-          aria-label={checked ? "Checkbox checked" : "Checkbox unchecked"}
-          className={classNames(
-            "fill-current w-3 h-3 text-green-600 cursor-pointer",
-            checked ? "block" : "hidden"
-          )}
-          viewBox="0 0 20 20"
-        >
-          <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
-        </svg>
       </span>
-      <span className=" text-gray-500 font-medium">{name}</span>
+      <span className=" text-gray-500  dark:text-gray-400 font-medium">{name}</span>
     </label>
   );
 };

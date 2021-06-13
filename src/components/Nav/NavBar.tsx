@@ -5,7 +5,7 @@ import logo from "../../img/logo.svg";
 import MobileMenuButton from "./MobileMenuButton";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import { signOut } from "../../firebase/AuthService";
+import { getCurrentUserId, signOut } from "../../firebase/AuthService";
 import { useHistory } from "react-router-dom";
 import DropdownMenu from "../Dropdown/DropdownMenu";
 import { UserCircleIcon } from "@heroicons/react/solid";
@@ -14,6 +14,16 @@ import SmallOutlineButton from "../Button/SmallOutlineButton";
 
 export default function NavBar(props: { loggedIn: boolean }) {
   const history = useHistory();
+  const id = getCurrentUserId();
+
+  function toggleDarkMode() {
+    var body = document.body;
+    body.classList.toggle("dark");
+    var button = document.getElementById("dark-mode-button");
+    if (button) {
+      button.innerHTML = body.classList.contains("dark") ? "🌙" : "🌞";
+    }
+  }
 
   const navigationLoggedInActions: MenuAction[] = [
     {
@@ -23,17 +33,11 @@ export default function NavBar(props: { loggedIn: boolean }) {
       },
     },
     {
-      name: "Your collections",
+      name: "Collections",
       action: () => {
         history.push("/u");
       },
-    },
-    {
-      name: "New collection",
-      action: () => {
-        history.push("/list");
-      },
-    },
+    }
   ];
 
   const navigationLoggedOutActions: MenuAction[] = [
@@ -53,6 +57,18 @@ export default function NavBar(props: { loggedIn: boolean }) {
 
   const userMenuActions: MenuAction[] = [
     {
+      name: "Learner profile",
+      action: () => {
+        history.push(`/profile/${id ?? ""}`);
+      },
+    },
+    {
+      name: "New collection",
+      action: () => {
+        history.push("/list");
+      },
+    },
+    {
       name: "Sign out",
       action: () => {
         signOut();
@@ -61,15 +77,26 @@ export default function NavBar(props: { loggedIn: boolean }) {
     },
   ];
 
+  const toggleDarkModeButton = (
+    <button
+      className="focus:outline-none mr-2 sm:mr-3"
+      name="toggle dark mode"
+      id="dark-mode-button"
+      onClick={toggleDarkMode}
+    >
+      {document.body.classList.contains("dark") ? "🌙" : "🌞"}
+    </button>
+  );
+
   return (
-    <Disclosure as="nav" className="bg-white shadow z-10">
+    <Disclosure as="nav" className="bg-white dark:bg-gray-900 shadow z-10">
       {({ open }) => (
         <>
           <div className="mx-auto px-2 sm:px-6 lg:px-8 relative">
             <div className="relative flex items-center justify-between h-14">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 focus:outline-none">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500  dark:text-gray-400 focus:outline-none">
                   <MobileMenuButton open={open} />
                 </Disclosure.Button>
               </div>
@@ -82,7 +109,10 @@ export default function NavBar(props: { loggedIn: boolean }) {
                     onClick={() => history.push("/")}
                   />
                 </div>
-                <div className="sm:hidden" style={{ position: "absolute", left: "50%", top: "8px" }}>
+                <div
+                  className="sm:hidden"
+                  style={{ position: "absolute", left: "50%", top: "8px" }}
+                >
                   <img
                     style={{ position: "relative", left: "-50%" }}
                     className="h-10 w-10 rounded-full cursor-pointer"
@@ -103,6 +133,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
               </div>
               {props.loggedIn ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  {toggleDarkModeButton}
                   <DropdownMenu
                     icon={<UserCircleIcon className="h-8 w-8" />}
                     aria-hidden="true"
@@ -114,11 +145,14 @@ export default function NavBar(props: { loggedIn: boolean }) {
                   </DropdownMenu>
                 </div>
               ) : (
-                <SmallOutlineButton
-                  className="border-green-500 text-green-500 tracking-tighter"
-                  text="LOGIN"
-                  onClick={() => history.push("/auth")}
-                />
+                <>
+                  {toggleDarkModeButton}
+                  <SmallOutlineButton
+                    className="border-green-500 text-green-500 tracking-tighter"
+                    text="LOGIN"
+                    onClick={() => history.push("/auth")}
+                  />
+                </>
               )}
             </div>
           </div>

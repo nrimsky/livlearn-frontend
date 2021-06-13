@@ -54,7 +54,7 @@ const Home = (props: { loggedIn: boolean }) => {
 
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto">
-      <h1 className="text-gray-900 px-4 pt-8 text-3xl leading-none font-extrabold tracking-tight">
+      <h1 className="text-gray-900  dark:text-gray-100 px-4 pt-8 text-3xl leading-none font-extrabold tracking-tight">
         livlearn - we <span className="text-red-500">❤️</span> learning cool
         stuff online
       </h1>

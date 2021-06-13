@@ -21,8 +21,8 @@ const MyPage = () => {
     <Button
       onClick={() => history.push("/list")}
       text="Create a new collection"
-      color="green"
-      className="my-5 border border-green-500"
+      color=""
+      className="my-5 border border-green-500 text-green-500 bg-white dark:bg-gray-900 "
     />
   );
 
@@ -41,7 +41,7 @@ const MyPage = () => {
         </>
       ) : (
         <div className="flex w-full flex-grow items-center flex-col mt-10 p-10">
-          <p className="text-gray-500 pb-8">You haven't saved any collections yet</p>
+          <p className="text-gray-500  dark:text-gray-400 pb-8">You haven't saved any collections yet</p>
           {createButton}
         </div>
       )}

@@ -42,16 +42,16 @@ export default function BasePopup(props: {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-900 shadow-xl rounded-2xl">
               <button
                 onClick={props.onClickClose}
                 className="focus:outline-none absolute top-2 right-2"
               >
-                <XIcon className="text-gray-500 h-4 w-4" />
+                <XIcon className="text-gray-500  dark:text-gray-400 h-4 w-4" />
               </button>
               <Dialog.Title
                 as="h3"
-                className="text-lg font-semibold leading-tight text-gray-900"
+                className="text-lg font-semibold leading-tight text-gray-900  dark:text-gray-100"
               >
                 {props.title}
               </Dialog.Title>

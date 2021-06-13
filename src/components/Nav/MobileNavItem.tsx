@@ -8,7 +8,7 @@ export default function MobileNavItem(props: {
     <button
       key={props.item.name}
       onClick={props.item.action}
-      className="text-gray-500 block px-3 py-1 text-base focus:outline-none tracking-tight"
+      className="text-gray-500  dark:text-gray-400 block px-3 py-1 text-base focus:outline-none tracking-tight"
     >
       {props.item.name}
     </button>

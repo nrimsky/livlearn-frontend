@@ -21,7 +21,7 @@ const DraggableListItem = React.memo(
             role="button"
             aria-label="click to edit"
             aria-haspopup="true"
-            className="pl-3 pr-4 py-3 cursor-pointer bg-white hover:bg-green-50 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 relative leading-snug"
+            className="pl-3 pr-4 py-3 text-gray-900 cursor-pointer bg-white dark:bg-gray-900 hover:bg-green-50 dark:hover:bg-green-900 dark:text-gray-200 grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-3 relative leading-snug"
             ref={provided.innerRef}
             {...provided.draggableProps}
           >
@@ -29,7 +29,7 @@ const DraggableListItem = React.memo(
               {...provided.dragHandleProps}
               className="absolute right-0 top-0 p-3"
             >
-              <ViewListIcon className="flex-shrink-0 h-4 w-4 text-gray-500" />
+              <ViewListIcon className="flex-shrink-0 h-4 w-4 text-gray-500 dark:text-gray-400" />
             </div>
 
             <div

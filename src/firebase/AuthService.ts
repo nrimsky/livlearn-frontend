@@ -22,3 +22,7 @@ export function getCurrentUserName(): string | null {
 export function getCurrentUserId(): string | null {
   return firebase.auth().currentUser?.uid ?? null;
 }
+
+export function getCurrentUser(): firebase.User | null {
+  return firebase.auth().currentUser ?? null;
+}

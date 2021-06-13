@@ -34,10 +34,10 @@ const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }
         }
       }}
       className={classNames(
-        "flex justify-center my-auto p-2 border bg-white hover:bg-gray-50 rounded flex-col justify-center z-5 focus:outline-none",
+        "flex justify-center my-auto p-2 border bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-green-800 rounded flex-col justify-center z-5 focus:outline-none",
         isUpvoted
           ? "border-green-500 text-green-500"
-          : "border-gray-300 text-gray-500"
+          : "border-gray-300 dark:border-gray-500 text-gray-500  dark:text-gray-400"
       )}
     >
       <ChevronUpIcon className="h-5 w-5" />
@@ -90,7 +90,7 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 border border-gray-300"
+        className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 border-b border-t md:border border-gray-300 dark:border-gray-600"
         onClick={goToList}
       >
         <button className="sr-only" onClick={goToList}>
@@ -98,8 +98,8 @@ const ResourceListCard = React.memo(
         </button>
         <div className="flex flex-col content-start">
           <div className="flex-grow pr-2">
-            <h3 className="text-gray-900 font-semibold leading-tight tracking-tight">{props.rl.title}</h3>
-            <p className="text-sm mt-2 text-gray-500 leading-none">
+            <h3 className="text-gray-900  dark:text-gray-100 font-semibold leading-tight tracking-tight">{props.rl.title}</h3>
+            <p className="text-sm mt-2 text-gray-500  dark:text-gray-400 leading-none">
               {lockIcon} {getDetails(props.rl.data)}
             </p>
           </div>

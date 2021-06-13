@@ -11,7 +11,7 @@ export default function DropdownMenu(props: {
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="flex  rounded-full focus:outline-none text-gray-500">
+            <Menu.Button className="flex  rounded-full focus:outline-none text-gray-500  dark:text-gray-400">
               <span className="sr-only">{props.name}</span>
               {props.icon}
             </Menu.Button>
@@ -28,7 +28,8 @@ export default function DropdownMenu(props: {
           >
             <Menu.Items
               static
-              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg p-1 bg-white focus:outline-none"
+              as="div"
+              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg p-1 bg-white dark:bg-gray-900 focus:outline-none border border-gray-300 dark:border-gray-600"
             >
               {props.children}
             </Menu.Items>

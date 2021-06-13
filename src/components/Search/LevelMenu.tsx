@@ -26,7 +26,7 @@ const LevelMenuItem: React.FC<{
             "font-medium hover:bg-green-500 hover:text-white px-2 py-1 rounded w-full text-left",
             value === selected
               ? "bg-green-500 text-white"
-              : "bg-white text-gray-900"
+              : "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
           )}
         >
           {toStr(value)}
@@ -56,10 +56,10 @@ const LevelMenu: React.FC<{
   return (
     <Menu as="div" className="relative inline-flex mt-3 md:mt-0">
       <div>
-        <Menu.Button className="bg-white inline-flex justify-center appearance-none border border-gray-300 rounded w-full p-2 text-gray-800 text-xs leading-tight focus:outline-none focus:shadow-outline items-center">
+        <Menu.Button className="bg-white dark:bg-gray-900 inline-flex justify-center appearance-none border border-gray-300 dark:border-gray-500 rounded w-full p-2 text-gray-800 text-xs leading-tight focus:outline-none focus:shadow-outline items-center dark:text-gray-400">
           <span>{toStr(selected)}</span>
           <ChevronDownIcon
-            className="w-4 h-4 ml-2 text-gray-500"
+            className="w-4 h-4 ml-2 text-gray-500  dark:text-gray-400"
             aria-hidden="true"
           />
         </Menu.Button>
@@ -73,7 +73,7 @@ const LevelMenu: React.FC<{
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="text-xs absolute mt-10 bg-white rounded focus:outline-none pb-1 border border-gray-300 shadow justify-left z-10">
+        <Menu.Items className="text-xs absolute mt-10 bg-white dark:bg-gray-900 rounded focus:outline-none pb-1 border border-gray-300 dark:border-gray-500 shadow justify-left z-10">
           <LevelMenuItem selected={selected} value={"AN"} onSelect={onSelect} />
           <LevelMenuItem selected={selected} value={"BE"} onSelect={onSelect} />
           <LevelMenuItem selected={selected} value={"IN"} onSelect={onSelect} />

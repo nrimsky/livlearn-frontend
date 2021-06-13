@@ -156,8 +156,8 @@ const EditableList = ({
   // Add more emojis
 
   return (
-    <div className="sm:mx-5 my-5">
-      <div className="flex flex-row mx-3 sm:mx-0">
+    <div className="sm:mx-5 my-5 w-100">
+      <div className="flex flex-row mx-3 sm:mx-0 w-100">
         <ListTitleInput value={rl.title} onChange={rename} />
         <DropdownMenu
           icon={<DotsHorizontalIcon className="h-6 w-6 mt-1" />}
@@ -210,7 +210,7 @@ const EditableList = ({
       <BasePopup
         isOpen={saveOpen}
         onClickClose={closeSave}
-        title={rl.id ? "Publish Changes" : "Publish New collection"}
+        title={rl.id ? "🚀 Publish Changes" : "🚀 Publish New collection"}
       >
         <DeployForm onClose={closeSave} state={rl} />
       </BasePopup>
@@ -237,20 +237,19 @@ const EditableList = ({
           data={rl.data}
         />
       ) : (
-        <p className="text-gray-500 mx-3 sm:mx-0">
+        <p className="text-gray-500 dark:text-gray-400 mx-3 sm:mx-0">
           Use the <span className="font-bold">+</span> button to add new items
         </p>
       )}
-      <AddButton
-        className="fixed bottom-6 right-6 shadow-xl"
-        onClick={openAdd}
-      />
-      <Button
-        text={rl.id ? "Publish changes" : "Publish new collection"}
-        onClick={openSave}
-        className="fixed bottom-6 left-6 shadow text-sm bg-green-500 text-white"
-        color=""
-      />
+      <div className="flex fixed bottom-0 w-full justify-between left-0 px-5 pb-5">
+        <AddButton onClick={openAdd} />
+        <Button
+          text={rl.id ? "Publish changes" : "Publish new collection"}
+          onClick={openSave}
+          className="shadow text-sm bg-green-500 text-white dark:bg-green-600"
+          color=""
+        />
+      </div>
     </div>
   );
 };

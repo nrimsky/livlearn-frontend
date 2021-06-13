@@ -20,7 +20,7 @@ export default function TypePicker(props: {
     <div>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline font-medium hover:bg-green-100">
+          <Menu.Button className="inline-flex justify-center appearance-none border rounded border-gray-200 dark:border-gray-500 w-full py-2 px-3 text-gray-900 dark:text-gray-100 leading-tight focus:outline-none focus:shadow-outline font-medium">
             <Icon mediaType={props.mType} />
             <span className="ml-2">{props.mType}</span>
             <ChevronDownIcon
@@ -38,7 +38,7 @@ export default function TypePicker(props: {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-gray-900">
+          <Menu.Items className="absolute mt-2 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg focus:outline-none text-gray-900 dark:text-gray-100 focus:ring focus:ring-green-200">
             <div className="px-1 py-1">
               {Object.keys(MediaType).map((mediaType: string) => {
                 const m = mediaType as keyof typeof MediaType;
@@ -46,7 +46,7 @@ export default function TypePicker(props: {
                   <Menu.Item key={m}>
                     <button
                       onClick={(e) => handleClick(e, MediaType[m])}
-                      className="group flex rounded-md items-center w-full pl-2 pr-4 py-2  hover:bg-green-100 focus:outline-none"
+                      className="group flex rounded-md items-center w-full pl-2 pr-4 py-2  hover:bg-green-100 dark:hover:bg-green-900 focus:outline-none"
                     >
                       <Icon mediaType={MediaType[m]} />
                       <span className="ml-2 font-medium">{MediaType[m]}</span>

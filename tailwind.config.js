@@ -3,7 +3,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
@@ -14,6 +14,8 @@ module.exports = {
     borderWidth: {
       DEFAULT: "1px",
       2: "1.5px",
+      3: "3px",
+      4: "4px",
     },
   },
   variants: {

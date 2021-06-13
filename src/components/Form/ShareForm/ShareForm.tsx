@@ -32,13 +32,13 @@ const ShareForm = (props: {
   };
 
   const linkCopy = (
-    <div className="inline-flex flex-row w-full mt-2 mb-3 border rounded divide-x divide-gray-200 items-center">
+    <div className="inline-flex flex-row w-full mt-2 mb-3 border border-gray-200 dark:border-gray-500 rounded divide-x divide-gray-200 items-center">
       <textarea
         ref={textAreaRef}
         rows={1}
         readOnly={true}
         value={window.location.href}
-        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500  align-middle py-1 px-2"
+        className="flex-1 appearance-none resize-none focus:outline-none block text-gray-500 dark:text-gray-400 align-middle py-1 px-2 dark:bg-gray-800"
       />
       <button
         className="h-full inline-block hover:bg-green-100 focus:outline-none"
@@ -46,7 +46,7 @@ const ShareForm = (props: {
       >
         <span className="sr-only">Copy to clipboard</span>
         <ClipboardCopyIcon
-          className="h-7 w-7 text-gray-500 p-1"
+          className="h-7 w-7 text-gray-500  dark:text-gray-400 p-1"
           aria-hidden={true}
         />
       </button>

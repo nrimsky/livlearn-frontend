@@ -55,9 +55,9 @@ const SignIn = () => {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="text-center p-5 max-w-md mb-12 bg-white rounded border border-gray-300 shadow-sm">
+    <div className="text-center p-5 max-w-md mb-12 bg-white dark:bg-gray-900 rounded border border-gray-300 dark:border-gray-500 shadow-sm">
       {done ? (
-        <p className="text-gray-900">
+        <p className="text-gray-900  dark:text-gray-100">
           🎉 An email has been sent to {email}! Check your inbox for a link to
           sign in!
         </p>
@@ -69,7 +69,7 @@ const SignIn = () => {
             onChange={(n: string) => setEmail(n)}
             name={"Get access with passwordless login"}
           />
-          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login / Sign up" /> <span className="text-gray-500 font-medium">or</span>
+          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login / Sign up" /> <span className="text-gray-500  dark:text-gray-400 font-medium">or</span>
           <Button
             color="yellow"
             onClick={loginTest}

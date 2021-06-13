@@ -50,13 +50,13 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
   return (
     <div
       className={classNames(
-        "text-gray-500 flex-none flex flex-col md:flex-row px-4 md:px-0 w-100 flex-wrap",
+        "text-gray-500  dark:text-gray-400 flex-none flex flex-col md:flex-row px-4 md:px-0 w-100 flex-wrap",
         className ?? ""
       )}
     >
       <form className="relative max-w-sm">
         <input
-          className="border border-gray-300 bg-white h-10 px-3 pr-16 rounded focus:outline-none w-full focus:outline-none focus:ring-4 focus:ring-green-200 focus:ring-opacity-50 focus:outline-none focus:bg-white bg-white"
+          className="border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:outline-none focus:ring-4 focus:ring-green-200 focus:ring-opacity-50 focus:outline-none focus:bg-white dark:bg-gray-900 bg-white dark:bg-gray-900"
           name="search"
           onChange={onSearchChange}
           value={searchQuery}
@@ -67,7 +67,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
           className="absolute right-0 top-0 mt-3 mr-3 focus:outline-none"
           onClick={onPressSearch}
         >
-          <SearchIcon className="text-gray-500 h-4 w-4 gap-1" />
+          <SearchIcon className="text-gray-500  dark:text-gray-400 h-4 w-4 gap-1" />
         </button>
       </form>
       <form>
@@ -89,7 +89,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
                     typeFromMediaType(MediaType[v])
                   )}
                 />
-                <label htmlFor={MediaType[v]} className="ml-1 text-gray-900">
+                <label htmlFor={MediaType[v]} className="ml-1 text-gray-900  dark:text-gray-100">
                   {MediaType[v]}s
                 </label>
               </div>

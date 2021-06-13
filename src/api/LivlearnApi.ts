@@ -11,6 +11,8 @@ const API_ROOT = "https://api.livlearn.howshouldilearn.com/";
 // Recommend tab
 // Learning plan tab
 // Tips tab
+// Suggest form
+// highlight publish changes when publish changes is needed
 
 export type Query = {
   tagIds: number[];

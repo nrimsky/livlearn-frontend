@@ -8,10 +8,10 @@ export default function DropdownMenuItem(props: {
   icon?: React.ReactNode;
 }) {
   return (
-    <Menu.Item onClick={props.menuAction.action}>
+    <Menu.Item onClick={props.menuAction.action} as="div">
       <button
         className={classNames(
-          "group flex rounded-md items-center w-full px-2 py-2  text-gray-900 focus:outline-none",
+          "group flex rounded items-center w-full px-2 py-2 text-gray-900  dark:text-gray-100 focus:outline-none",
           props.menuAction.name.toLowerCase().includes("delete")
             ? "hover:bg-red-500 hover:text-white"
             : "hover:bg-green-500 hover:text-white"
