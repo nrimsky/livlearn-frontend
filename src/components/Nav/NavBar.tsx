@@ -88,7 +88,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
   );
 
   return (
-    <Disclosure as="nav" className="bg-white dark:bg-gray-900 shadow z-10">
+    <Disclosure as="nav" className="bg-white dark:bg-gray-900 shadow z-10 dark:shadow-none">
       {({ open }) => (
         <>
           <div className="mx-auto px-2 sm:px-6 lg:px-8 relative">

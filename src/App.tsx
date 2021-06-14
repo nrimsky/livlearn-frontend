@@ -30,8 +30,24 @@ export default function App() {
     return () => unregisterAuthObserver();
   }, []);
 
+  useEffect(() => {
+    let matched = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (matched) {
+      setDarkMode("dark");
+    } else {
+      setDarkMode("light");
+    }
+  }, []);
+
   return (
-    <ThemeContext.Provider value={{ mode: darkMode, onChange: (mode: "dark" | "light") => {setDarkMode(mode)} }}>
+    <ThemeContext.Provider
+      value={{
+        mode: darkMode,
+        onChange: (mode: "dark" | "light") => {
+          setDarkMode(mode);
+        },
+      }}
+    >
       <Router>
         <div className={darkMode}>
           <div className="min-h-screen flex flex-col w-full bg-gray-100 dark:bg-gray-800">

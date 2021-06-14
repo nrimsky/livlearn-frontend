@@ -30,6 +30,7 @@ const RoadmapItem = (props: {
         </div>
       </div>
     </div>
+
   );
 };
 
@@ -56,7 +57,7 @@ const Roadmap = () => {
         <RoadmapItem
           title="Learner profiles"
           status="Next up"
-          text="Build your learner profile on LivLearn - share what you're currently learning, what resources you benefitted from and stay accountable with your goals. Receieve daily prompts and tips personalised especially for your learning style and interests."
+          text="Build your learner profile on LivLearn - share what you're currently learning, what resources you benefitted from and stay accountable with your goals. Receive daily prompts and tips personalised especially for your learning style and interests."
           num={3}
           icon={<UserGroupIcon className="h-12 w-12" />}
         />
