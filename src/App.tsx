@@ -9,6 +9,7 @@ import MyPage from "./components/Page/MyPage";
 import FinishSignIn from "./components/Auth/FinishSignIn";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Page/Profile";
+import Roadmap from "./components/Page/Roadmap";
 
 export const ThemeContext = React.createContext<{
   mode: "dark" | "light";
@@ -38,6 +39,9 @@ export default function App() {
             <Switch>
               <Route exact path="/">
                 <Home loggedIn={loggedIn} />
+              </Route>
+              <Route exact path="/roadmap">
+                <Roadmap />
               </Route>
               <Route exact path="/u">
                 {loggedIn ? (

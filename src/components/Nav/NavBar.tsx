@@ -13,9 +13,8 @@ import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import SmallOutlineButton from "../Button/SmallOutlineButton";
 import { ThemeContext } from "../../App";
 
-
-export default function NavBar(props: { loggedIn: boolean}) {
-  const { mode, onChange }  = useContext(ThemeContext);
+export default function NavBar(props: { loggedIn: boolean }) {
+  const { mode, onChange } = useContext(ThemeContext);
   const history = useHistory();
   const id = getCurrentUserId();
 
@@ -31,7 +30,13 @@ export default function NavBar(props: { loggedIn: boolean}) {
       action: () => {
         history.push("/u");
       },
-    }
+    },
+    {
+      name: "Our roadmap",
+      action: () => {
+        history.push("/roadmap");
+      },
+    },
   ];
 
   const navigationLoggedOutActions: MenuAction[] = [
@@ -40,7 +45,13 @@ export default function NavBar(props: { loggedIn: boolean}) {
       action: () => {
         history.push("/");
       },
-    }
+    },
+    {
+      name: "Our roadmap",
+      action: () => {
+        history.push("/roadmap");
+      },
+    },
   ];
 
   const userMenuActions: MenuAction[] = [
@@ -70,9 +81,9 @@ export default function NavBar(props: { loggedIn: boolean}) {
       className="mr-2 sm:mr-3"
       name="toggle dark mode"
       id="dark-mode-button"
-      onClick={() => onChange((mode === "dark") ? "light" : "dark")}
+      onClick={() => onChange(mode === "dark" ? "light" : "dark")}
     >
-      {(mode === "dark") ? "🌙" : "🌞"}
+      {mode === "dark" ? "🌙" : "🌞"}
     </button>
   );
 
