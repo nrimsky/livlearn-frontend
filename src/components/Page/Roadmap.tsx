@@ -37,7 +37,7 @@ const RoadmapItem = (props: {
 const Roadmap = () => {
   return (
     <div className="text-gray-600 body-font dark:text-gray-400 w-100 md:px-8">
-      <div className="container px-5 my-12 py-12 mx-auto flex flex-wrap bg-white dark:bg-gray-900 md:rounded-lg border-t-2 border-b-2 md:border md:ring-4 md:ring-green-200 border-green-500 md:ring-opacity-20 max-w-4xl">
+      <div className="container px-5 my-12 py-12 mx-auto flex flex-wrap bg-white dark:bg-gray-900 md:rounded-lg max-w-4xl">
         <h1 className="flex relative pt-5 pb-2 sm:items-center md:w-2/3 mx-auto text-2xl text-gray-900 dark:text-white font-medium">Our roadmap...</h1>
         <p className="flex relative pb-5 sm:items-center md:w-2/3 mx-auto text-sm">We are two uni students trying to make lifelong learning in tech accessible for all! Got a feature suggestion? Email us at info[at]howshouldilearn[dot]com!</p>
         <RoadmapItem
