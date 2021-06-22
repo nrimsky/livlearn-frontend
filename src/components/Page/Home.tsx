@@ -15,7 +15,7 @@ const Home = (props: { loggedIn: boolean }) => {
   const [query, setQuery] = useState<Query>({
     tagIds: [],
     level: "AN",
-    types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO" ,"VI"],
+    types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO", "VI"],
     search: "",
   });
   const [recommendedResources, setRecommendedResources] = useState<
@@ -69,11 +69,18 @@ const Home = (props: { loggedIn: boolean }) => {
 
       <CardCollection
         title={"Learning resources we appreciated"}
-        widgets={<SearchBar onSearch={onSearch} className="mb-3" query={query}/>}
+        widgets={
+          <SearchBar onSearch={onSearch} className="mb-3" query={query} />
+        }
       >
         {recommendedResources.map((r) => {
           return (
-            <RecommendedCard rr={r} key={r.id} onViewDetails={viewDetails} />
+            <RecommendedCard
+              rr={r}
+              key={r.id}
+              onViewDetails={viewDetails}
+              onClickBookmark={() => console.log("Bookmark")}
+            />
           );
         })}
       </CardCollection>

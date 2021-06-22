@@ -35,7 +35,7 @@ const UpvoteButton: React.FC<{ resourceList: ResourceList }> = ({ resourceList }
       }}
       aria-label="Upvote button"
       className={classNames(
-        "flex justify-center my-auto p-2 border bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-green-800 rounded flex-col justify-center z-5 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50",
+        "flex justify-center my-auto p-2 border bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-850 rounded flex-col justify-center z-5 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50",
         isUpvoted
           ? "border-green-500 text-green-500"
           : "border-gray-300 dark:border-gray-500 text-gray-500  dark:text-gray-400"
@@ -91,7 +91,7 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-t md:border border-gray-300 dark:border-gray-600"
+        className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-850 border-b border-t md:border border-gray-300 dark:border-gray-600"
         onClick={goToList}
         role="button"
       >

@@ -10,6 +10,9 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         body: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      colors : {
+        'gray-850': '#18212F'
+      }
     },
     borderWidth: {
       DEFAULT: "1px",

@@ -8,14 +8,42 @@ import Icon from "../../Icon/Icon";
 import LevelPill from "./LevelPill";
 import TagPill from "./TagPill";
 
+const BookmarkButton = (props: {
+  isBookmarked: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      className="focus:outline-none text-yellow-500 hover:text-yellow-600 focus:text-yellow-600 dark:hover:text-yellow-400 dark:focus:text-yellow-400"
+      onClick={props.onClick}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 inline absolute top-0 right-1"
+        fill={`${props.isBookmarked ? "currentColor" : "none"}`}
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M4 0V17.8824L12 14.5294L20 17.8824V0"
+        />
+      </svg>
+    </button>
+  );
+};
+
 const RecommendedCard = React.memo(
   (props: {
     rr: ResourceRec;
     key: string;
     onViewDetails: (r: ResourceRec) => void;
+    onClickBookmark: (r: ResourceRec) => void;
   }) => {
     return (
-      <div className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-start border-gray-300 dark:border-gray-500 flex-col border-t border-b md:border">
+      <div className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-start border-gray-300 dark:border-gray-500 flex-col border-t border-b md:border relative">
         <div className="text-gray-900  dark:text-white font-semibold leading-tight flex">
           <Icon
             mediaType={mediaTypeFromApiType(props.rr.type)}
@@ -44,6 +72,12 @@ const RecommendedCard = React.memo(
             text="Access resource"
           />
         </div>
+        <BookmarkButton
+          isBookmarked={false}
+          onClick={() => {
+            props.onClickBookmark(props.rr);
+          }}
+        />
       </div>
     );
   }
