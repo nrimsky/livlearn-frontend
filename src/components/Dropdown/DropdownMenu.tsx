@@ -28,7 +28,7 @@ export default function DropdownMenu(props: {
             <Menu.Items
               static
               as="div"
-              className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg p-1 bg-white dark:bg-gray-900 focus:outline-none border border-gray-300 dark:border-gray-600 focus:ring focus:ring-green-200 focus:ring-opacity-50 ring-inset"
+              className="origin-top-right absolute right-0 mt-2 rounded-md bg-white dark:bg-gray-900 focus:outline-none ring ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 w-48 px-1"
             >
               {props.children}
             </Menu.Items>

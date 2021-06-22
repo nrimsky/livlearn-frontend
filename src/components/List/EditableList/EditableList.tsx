@@ -167,21 +167,21 @@ const EditableList = ({
           {rl.id && (
             <DropdownMenuItem
               menuAction={shareAction}
-              icon={<ShareIcon className="w-4 h-4 mr-2" aria-hidden="true" />}
+              icon={<ShareIcon className="w-4 h-4 mr-2 inline" aria-hidden="true" />}
             />
           )}
           <DropdownMenuItem
             menuAction={uploadAction}
-            icon={<UploadIcon className="w-4 h-4 mr-2" aria-hidden="true" />}
+            icon={<UploadIcon className="w-4 h-4 mr-2 inline" aria-hidden="true" />}
           />
           <DropdownMenuItem
             menuAction={downloadAction}
-            icon={<DownloadIcon className="w-4 h-4 mr-2" aria-hidden="true" />}
+            icon={<DownloadIcon className="w-4 h-4 mr-2 inline" aria-hidden="true" />}
           />
           {rl.id && (
             <DropdownMenuItem
               menuAction={delListAction}
-              icon={<TrashIcon className="w-4 h-4 mr-2" aria-hidden="true" />}
+              icon={<TrashIcon className="w-4 h-4 mr-2 inline" aria-hidden="true" />}
             />
           )}
         </DropdownMenu>

@@ -20,7 +20,7 @@ export default function TypePicker(props: {
     <div>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex justify-center appearance-none border rounded border-gray-200 dark:border-gray-500 w-full py-2 px-3 text-gray-900 dark:text-white leading-tight focus:outline-none focus:shadow-outline font-medium">
+          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 dark:text-white bg-gray-200 dark:bg-gray-800 rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 border border-gray-300 dark:border-gray-500">
             <Icon mediaType={props.mType} />
             <span className="ml-2">{props.mType}</span>
             <ChevronDownIcon
@@ -38,19 +38,23 @@ export default function TypePicker(props: {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute mt-2 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg focus:outline-none text-gray-900 dark:text-white focus:ring focus:ring-green-200">
+          <Menu.Items className="absolute right-0 mt-2 origin-top-right rounded-md shadow-lg ring-1 ring-black dark:ring-white ring-opacity-10 dark:ring-opacity-10 focus:outline-none bg-white dark:bg-gray-900">
             <div className="px-1 py-1">
               {Object.keys(MediaType).map((mediaType: string) => {
                 const m = mediaType as keyof typeof MediaType;
                 return (
                   <Menu.Item key={m}>
-                    <button
-                      onClick={(e) => handleClick(e, MediaType[m])}
-                      className="group flex rounded-md items-center w-full pl-2 pr-4 py-2  hover:bg-green-100 dark:hover:bg-green-900 focus:ring focus:ring-green-200 focus:ring-opacity-50"
-                    >
-                      <Icon mediaType={MediaType[m]} />
-                      <span className="ml-2 font-medium">{MediaType[m]}</span>
-                    </button>
+                    {({ active }) => (
+                      <button
+                        onClick={(e) => handleClick(e, MediaType[m])}
+                        className={`${
+                          active ? "bg-green-100 dark:bg-gray-800" : "bg-white dark:bg-gray-900"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm text-gray-900 dark:text-white`}
+                      >
+                        <Icon mediaType={MediaType[m]} className={`${active ? "text-white": ""}`}/>
+                        <span className="ml-2 font-medium">{MediaType[m]}</span>
+                      </button>
+                    )}
                   </Menu.Item>
                 );
               })}

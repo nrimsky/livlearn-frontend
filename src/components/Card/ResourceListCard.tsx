@@ -91,8 +91,9 @@ const ResourceListCard = React.memo(
 
     return (
       <div
-        className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 border-b border-t md:border border-gray-300 dark:border-gray-600"
+        className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-between items-stretch cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-t md:border border-gray-300 dark:border-gray-600"
         onClick={goToList}
+        role="button"
       >
         <button className="sr-only" onClick={goToList}>
           Go to collection

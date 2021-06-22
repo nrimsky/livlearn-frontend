@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from "react";
 import ResourceList from "../../types/ResourceList";
 import CardCollection from "../Card/CardCollection";
 import ResourceListCard from "../Card/ResourceListCard";
-import elephant from "../../img/elephant.svg";
 import ResourceRec from "../../types/ResourceRec";
 import { Query, getResources } from "../../api/LivlearnApi";
 import RecommendedCard from "../Card/RecommendedCard/RecommendedCard";
@@ -53,7 +52,7 @@ const Home = (props: { loggedIn: boolean }) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto">
+    <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto pb-8">
       <h1 className="text-gray-900  dark:text-white px-4 pt-8 text-3xl leading-none font-extrabold tracking-tight">
         livlearn - we <span className="text-red-500">❤️</span> learning cool
         stuff online
@@ -89,8 +88,6 @@ const Home = (props: { loggedIn: boolean }) => {
           <ViewDetailsRec rr={selectedViewDetails} />
         </BasePopup>
       )}
-
-      <img src={elephant} alt="" className="sticky w-12 h-12 bottom-0 ml-auto mr-3" />
     </div>
   );
 };
