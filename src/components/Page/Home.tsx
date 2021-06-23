@@ -1,4 +1,8 @@
-import { streamPublicLists } from "../../firebase/FirestoreService";
+import {
+  bookmarkResource,
+  streamProfile,
+  streamPublicLists,
+} from "../../firebase/FirestoreService";
 import { useEffect, useState, useCallback } from "react";
 import ResourceList from "../../types/ResourceList";
 import CardCollection from "../Card/CardCollection";
@@ -9,8 +13,10 @@ import RecommendedCard from "../Card/RecommendedCard/RecommendedCard";
 import BasePopup from "../Popup/BasePopup";
 import ViewDetailsRec from "../Form/ViewDetailsRec";
 import SearchBar from "../Search/SearchBar";
+import Profile from "../../types/Profile";
+import elephant from "../../img/elephant.svg";
 
-const Home = (props: { loggedIn: boolean }) => {
+const Home = (props: { uid: string | null }) => {
   const [publicLists, setPublicLists] = useState<ResourceList[]>([]);
   const [query, setQuery] = useState<Query>({
     tagIds: [],
@@ -23,6 +29,7 @@ const Home = (props: { loggedIn: boolean }) => {
   >([]);
   const [selectedViewDetails, setSelectedViewDetail] =
     useState<ResourceRec | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
     const unsubscribe = streamPublicLists(
@@ -37,6 +44,22 @@ const Home = (props: { loggedIn: boolean }) => {
   }, []);
 
   useEffect(() => {
+    if (props.uid === null) {
+      return;
+    }
+    const unsubscribe = streamProfile(
+      props.uid,
+      (p) => {
+        setProfile(p);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+    return unsubscribe;
+  }, [props.uid]);
+
+  useEffect(() => {
     getResources(query)
       .then((r) => setRecommendedResources(r))
       .catch((e) => console.error(e));
@@ -47,16 +70,28 @@ const Home = (props: { loggedIn: boolean }) => {
     []
   );
 
+  const bookmark = useCallback((rId: number) => {
+    try {
+      bookmarkResource(rId);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   const onSearch = useCallback((query: Query) => {
     setQuery(query);
   }, []);
 
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto pb-8">
-      <h1 className="text-gray-900  dark:text-white px-4 pt-8 text-3xl leading-none font-extrabold tracking-tight">
-        livlearn - we <span className="text-red-500">❤️</span> learning cool
-        stuff online
-      </h1>
+      <div className="flex px-4 py-10 items-center text-gray-900 dark:text-white flex-col tracking-tight leading-tight sm:px-10">
+        <img src={elephant} className="h-10 w-10" alt=""/>
+        <h1 className="text-4xl font-extrabold">livlearn</h1>
+        <p className="text-center text-lg">
+          💡 organise and curate resources 🚀 track progress 🔎 discover new topics 🎓 make lifelong learning your habit
+        </p>
+      </div>
+
       <CardCollection
         title={"Resource collections recently shared with the community"}
       >
@@ -79,7 +114,8 @@ const Home = (props: { loggedIn: boolean }) => {
               rr={r}
               key={r.id}
               onViewDetails={viewDetails}
-              onClickBookmark={() => console.log("Bookmark")}
+              onClickBookmark={bookmark}
+              isBookmarked={profile?.bookmarks?.includes(r.id) ?? false}
             />
           );
         })}

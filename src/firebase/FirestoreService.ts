@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import Profile from "../types/Profile";
 import ResourceList from "../types/ResourceList";
 import ResourceListItem from "../types/ResourceListItem";
 import { getCurrentUserId } from "./AuthService";
@@ -57,6 +58,28 @@ export async function saveNewListForUser(
       lastChanged: new Date(),
     });
   return docref.id;
+}
+
+export async function bookmarkResource(rId: number): Promise<void> {
+  const userId = getCurrentUserId();
+  if (!userId) {
+    throw Error("No signed in user");
+  }
+  const doc = firebase.firestore().collection("profiles").doc(userId);
+  const profile = await doc.get();
+  if (profile.exists && profile.data()?.bookmarks) {
+    if (profile.data()?.bookmarks.includes(rId)) {
+      await doc.update({
+        bookmarks: firebase.firestore.FieldValue.arrayRemove(rId),
+      });
+    } else {
+      await doc.update({
+        bookmarks: firebase.firestore.FieldValue.arrayUnion(rId),
+      });
+    }
+  } else {
+    doc.set({ bookmarks: rId }, { merge: true });
+  }
 }
 
 export async function editExitingList(updated: ResourceList): Promise<void> {
@@ -127,12 +150,12 @@ export function streamPublicLists(
   return query.onSnapshot({
     next: (querySnapshot) => {
       const updatedData = querySnapshot.docs.map(docToList);
-      onRlRecieved(updatedData)
+      onRlRecieved(updatedData);
     },
     error: (error) => {
       onError(error);
     },
-  })
+  });
 }
 
 export async function getAllListsForUser(): Promise<ResourceList[]> {
@@ -160,4 +183,23 @@ export async function deleteList(id: string) {
   } catch (error) {
     throw Error(`Delete unsuccessful - error: ${error}`);
   }
+}
+
+export function streamProfile(
+  uid: string,
+  onProfileRecieved: (profile: Profile) => void,
+  onError: (error: Error) => void
+): () => void {
+  const listsRef = firebase.firestore().collection("profiles").doc(uid);
+  return listsRef.onSnapshot({
+    next: (querySnapshot) => {
+      const updatedData = querySnapshot.data()?.bookmarks
+        ? (querySnapshot.data()?.bookmarks as number[])
+        : [];
+      onProfileRecieved({ bookmarks: updatedData });
+    },
+    error: (error) => {
+      onError(error);
+    },
+  });
 }

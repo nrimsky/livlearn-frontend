@@ -28,7 +28,7 @@ export function typeFromMediaType(mt: MediaType) {
 export type Type = "PO" | "BO" | "AB" | "BL" | "AR" | "CO" | "VI" | "TO" | "OT";
 
 type ResourceRec = {
-  id: string;
+  id: number;
   tags: string[];
   created_at: string;
   level: Level;

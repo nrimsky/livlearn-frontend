@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/Nav/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignInPage from "./components/Page/SignInPage";
-import { onAuthStateChanged } from "./firebase/AuthService";
+import { getCurrentUserId, onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
 import MyPage from "./components/Page/MyPage";
@@ -22,11 +22,17 @@ export const ThemeContext = React.createContext<{
 });
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [uid, setUid] = useState<string|null>(null);
   const [darkMode, setDarkMode] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const unregisterAuthObserver = onAuthStateChanged((l) => setLoggedIn(l));
+    const unregisterAuthObserver = onAuthStateChanged((l) => {
+      if (l) {
+        setUid(getCurrentUserId());
+      } else {
+        setUid(null);
+      }
+    });
     return () => unregisterAuthObserver();
   }, []);
 
@@ -51,16 +57,16 @@ export default function App() {
       <Router>
         <div className={darkMode}>
           <div className="min-h-screen flex flex-col w-full bg-gray-100 dark:bg-gray-800">
-            <NavBar loggedIn={loggedIn} />
+            <NavBar uid={uid} />
             <Switch>
               <Route exact path="/">
-                <Home loggedIn={loggedIn} />
+                <Home uid={uid} />
               </Route>
               <Route exact path="/roadmap">
                 <Roadmap />
               </Route>
               <Route exact path="/u">
-                {loggedIn ? (
+                {uid ? (
                   <MyPage />
                 ) : (
                   <h1 className="p-5 text-gray-900 dark:text-white">
@@ -69,7 +75,7 @@ export default function App() {
                 )}
               </Route>
               <Route path="/auth">
-                {loggedIn ? (
+                {uid ? (
                   <h1 className="p-5 text-gray-900 dark:text-white">
                     You are already logged in
                   </h1>
@@ -78,7 +84,7 @@ export default function App() {
                 )}
               </Route>
               <Route path="/finishSignIn">
-                {loggedIn ? (
+                {uid ? (
                   <h1 className="p-5 text-gray-900 dark:text-white">
                     You are already logged in
                   </h1>
@@ -89,7 +95,7 @@ export default function App() {
               <Route exact path="/list">
                 <ListPage />
               </Route>
-              <Route path="/profile/:uid" children={<ProfilePage />} />
+              <Route path="/profile/:uid" children={<ProfilePage currentUserId={uid}/>} />
               <Route path="/list/:id" children={<ListPage />} />
               <Route path="*">
                 <h1 className="p-5 text-gray-900 dark:text-white">

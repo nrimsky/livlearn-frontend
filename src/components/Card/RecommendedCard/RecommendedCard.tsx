@@ -38,9 +38,10 @@ const BookmarkButton = (props: {
 const RecommendedCard = React.memo(
   (props: {
     rr: ResourceRec;
-    key: string;
+    key: string|number;
     onViewDetails: (r: ResourceRec) => void;
-    onClickBookmark: (r: ResourceRec) => void;
+    onClickBookmark: (rId: number) => void;
+    isBookmarked: boolean;
   }) => {
     return (
       <div className="max-w max-h py-3 px-4 bg-white dark:bg-gray-900 sm:rounded sm:w-auto flex justify-start border-gray-300 dark:border-gray-500 flex-col border-t border-b md:border relative">
@@ -73,10 +74,8 @@ const RecommendedCard = React.memo(
           />
         </div>
         <BookmarkButton
-          isBookmarked={false}
-          onClick={() => {
-            props.onClickBookmark(props.rr);
-          }}
+          isBookmarked={props.isBookmarked}
+          onClick={() => props.onClickBookmark(props.rr.id)}
         />
       </div>
     );

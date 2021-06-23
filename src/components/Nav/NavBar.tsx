@@ -13,7 +13,7 @@ import DropdownMenuItem from "../Dropdown/DropdownMenuItem";
 import SmallOutlineButton from "../Button/SmallOutlineButton";
 import { ThemeContext } from "../../App";
 
-export default function NavBar(props: { loggedIn: boolean }) {
+export default function NavBar(props: { uid: string|null }) {
   const { mode, onChange } = useContext(ThemeContext);
   const history = useHistory();
   const id = getCurrentUserId();
@@ -123,14 +123,14 @@ export default function NavBar(props: { loggedIn: boolean }) {
                 <div className="hidden sm:block sm:ml-8">
                   <DesktopNav
                     navigation={
-                      props.loggedIn
+                      props.uid
                         ? navigationLoggedInActions
                         : navigationLoggedOutActions
                     }
                   />
                 </div>
               </div>
-              {props.loggedIn ? (
+              {props.uid ? (
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   {toggleDarkModeButton}
                   <DropdownMenu
@@ -158,7 +158,7 @@ export default function NavBar(props: { loggedIn: boolean }) {
           <Disclosure.Panel className="sm:hidden">
             <MobileNav
               navigation={
-                props.loggedIn
+                props.uid
                   ? navigationLoggedInActions
                   : navigationLoggedOutActions
               }
