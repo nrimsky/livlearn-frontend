@@ -5,6 +5,30 @@ import ResourceList from "../types/ResourceList";
 import ResourceListItem from "../types/ResourceListItem";
 import { getCurrentUserId } from "./AuthService";
 
+// Resource List
+
+function docToList(
+  docSnapshot:
+    | firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+    | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
+): ResourceList {
+  const docData = docSnapshot.data();
+  const id = docSnapshot.id;
+  if (docData) {
+    return {
+      ...docData,
+      upvotes: docData.upvotes ?? [],
+      id: id,
+      shareSettings: docData.shareSettings ?? "ONLYLINK",
+      data: docData.data.sort((a: ResourceListItem, b: ResourceListItem) => {
+        return a.index && b.index && a.index < b.index ? -1 : 1;
+      }),
+    } as ResourceList;
+  } else {
+    throw Error("No data in document snapshot");
+  }
+}
+
 export async function getResourceList(id: string): Promise<ResourceList> {
   const docRef = firebase.firestore().collection("lists").doc(id);
   const docSnapShot = await docRef.get();
@@ -13,28 +37,6 @@ export async function getResourceList(id: string): Promise<ResourceList> {
   } else {
     throw Error("No such document");
   }
-}
-
-export async function upvoteResourceList(rl: ResourceList, userId: string) {
-  if (!rl.id) {
-    return;
-  }
-  await firebase
-    .firestore()
-    .collection("lists")
-    .doc(rl.id)
-    .update({ upvotes: [...rl.upvotes, userId] });
-}
-
-export async function downvoteResourceList(rl: ResourceList, userId: string) {
-  if (!rl.id) {
-    return;
-  }
-  await firebase
-    .firestore()
-    .collection("lists")
-    .doc(rl.id)
-    .update({ upvotes: rl.upvotes.filter((u) => u !== userId) });
 }
 
 export async function saveNewListForUser(
@@ -60,28 +62,6 @@ export async function saveNewListForUser(
   return docref.id;
 }
 
-export async function bookmarkResource(rId: number): Promise<void> {
-  const userId = getCurrentUserId();
-  if (!userId) {
-    throw Error("No signed in user");
-  }
-  const doc = firebase.firestore().collection("profiles").doc(userId);
-  const profile = await doc.get();
-  if (profile.exists && profile.data()?.bookmarks) {
-    if (profile.data()?.bookmarks.includes(rId)) {
-      await doc.update({
-        bookmarks: firebase.firestore.FieldValue.arrayRemove(rId),
-      });
-    } else {
-      await doc.update({
-        bookmarks: firebase.firestore.FieldValue.arrayUnion(rId),
-      });
-    }
-  } else {
-    doc.set({ bookmarks: rId }, { merge: true });
-  }
-}
-
 export async function editExitingList(updated: ResourceList): Promise<void> {
   const { id, data, ...rest } = updated;
   if (!id) {
@@ -100,43 +80,6 @@ export async function editExitingList(updated: ResourceList): Promise<void> {
       data: dataWithIndices,
     });
 }
-
-function docToList(
-  docSnapshot:
-    | firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
-    | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
-): ResourceList {
-  const docData = docSnapshot.data();
-  const id = docSnapshot.id;
-  if (docData) {
-    return {
-      ...docData,
-      upvotes: docData.upvotes ?? [],
-      id: id,
-      shareSettings: docData.shareSettings ?? "ONLYLINK",
-      data: docData.data.sort((a: ResourceListItem, b: ResourceListItem) => {
-        return a.index && b.index && a.index < b.index ? -1 : 1;
-      }),
-    } as ResourceList;
-  } else {
-    throw Error("No data in document snapshot");
-  }
-}
-
-// export async function getPublicListsFromFirebase(): Promise<ResourceList[]> {
-//   const listsRef = firebase.firestore().collection("lists");
-//   const query = listsRef
-//     .where("shareSettings", "==", "HOMEPAGE")
-//     .orderBy("lastChanged", "desc")
-//     .limit(10);
-//   try {
-//     const snapshot = await query.get();
-//     return snapshot.docs.map(docToList);
-//   } catch (error) {
-//     console.error(error);
-//     return [];
-//   }
-// }
 
 export function streamPublicLists(
   onRlRecieved: (rls: ResourceList[]) => void,
@@ -185,6 +128,76 @@ export async function deleteList(id: string) {
   }
 }
 
+// Resource list upvote
+
+export async function upvoteResourceList(rl: ResourceList, userId: string) {
+  if (!rl.id) {
+    return;
+  }
+  await firebase
+    .firestore()
+    .collection("lists")
+    .doc(rl.id)
+    .update({ upvotes: [...rl.upvotes, userId] });
+}
+
+export async function downvoteResourceList(rl: ResourceList, userId: string) {
+  if (!rl.id) {
+    return;
+  }
+  await firebase
+    .firestore()
+    .collection("lists")
+    .doc(rl.id)
+    .update({ upvotes: rl.upvotes.filter((u) => u !== userId) });
+}
+
+// Bookmarks
+
+export async function bookmarkResource(rId: number): Promise<void> {
+  const userId = getCurrentUserId();
+  if (!userId) {
+    throw Error("No signed in user");
+  }
+  const doc = firebase.firestore().collection("profiles").doc(userId);
+  const profile = await doc.get();
+  if (profile.exists && profile.data()?.bookmarks) {
+    if (profile.data()?.bookmarks.includes(rId)) {
+      await doc.update({
+        bookmarks: firebase.firestore.FieldValue.arrayRemove(rId),
+      });
+    } else {
+      await doc.update({
+        bookmarks: firebase.firestore.FieldValue.arrayUnion(rId),
+      });
+    }
+  } else {
+    doc.set({ bookmarks: rId }, { merge: true });
+  }
+}
+
+// Profile
+
+function docToProfile(
+  docSnapshot:
+    | firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+    | firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>
+): Profile {
+  const docData = docSnapshot.data();
+  if (docData) {
+    return {
+      ...docData,
+      username: docData.username,
+      isPrivate: docData.isPrivate,
+      tagline: docData.tagline,
+      body: docData.body,
+      bookmarks: docData.bookmarks
+    } as Profile;
+  } else {
+    throw Error("No data in document snapshot");
+  }
+}
+
 export function streamProfile(
   uid: string,
   onProfileRecieved: (profile: Profile) => void,
@@ -193,13 +206,25 @@ export function streamProfile(
   const listsRef = firebase.firestore().collection("profiles").doc(uid);
   return listsRef.onSnapshot({
     next: (querySnapshot) => {
-      const updatedData = querySnapshot.data()?.bookmarks
-        ? (querySnapshot.data()?.bookmarks as number[])
-        : [];
-      onProfileRecieved({ bookmarks: updatedData });
+      onProfileRecieved(docToProfile(querySnapshot));
     },
     error: (error) => {
       onError(error);
     },
   });
+}
+
+const delUndefinedFields = (o: any) => {
+  const obj = {...o};
+  Object.keys(obj).forEach(key => obj[key] === undefined ? delete obj[key] : {});
+  return obj;
+}
+
+export async function editProfile(edited: Profile) {
+  const userId = getCurrentUserId();
+  if (!userId) {
+    throw Error("No signed in user");
+  }
+  const doc = firebase.firestore().collection("profiles").doc(userId);
+  await doc.update(delUndefinedFields(edited));
 }
