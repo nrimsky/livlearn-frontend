@@ -146,15 +146,6 @@ const EditableList = ({
     setItemEditing(null);
   };
 
-  // TODO
-  // Stream upvotes
-  // Improve upvote process
-  // Individual recommendations from editors
-  // Search lists and search recommended resources
-  // Comments
-  // Tags
-  // Add more emojis
-
   return (
     <div className="sm:mx-5 my-5 w-100">
       <div className="flex flex-row mx-3 sm:mx-0 w-100">

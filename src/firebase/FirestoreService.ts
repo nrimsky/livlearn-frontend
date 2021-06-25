@@ -191,7 +191,7 @@ function docToProfile(
       isPrivate: docData.isPrivate,
       tagline: docData.tagline,
       body: docData.body,
-      bookmarks: docData.bookmarks
+      bookmarks: docData.bookmarks,
     } as Profile;
   } else {
     throw Error("No data in document snapshot");
@@ -214,11 +214,25 @@ export function streamProfile(
   });
 }
 
-const delUndefinedFields = (o: any) => {
-  const obj = {...o};
-  Object.keys(obj).forEach(key => obj[key] === undefined ? delete obj[key] : {});
-  return obj;
+export async function getProfile(uid: string): Promise<Profile> {
+  const listsRef = firebase.firestore().collection("profiles").doc(uid);
+  const d = await listsRef.get();
+  if (d.exists) {
+    const prof = docToProfile(d);
+    return prof;
+  } else {
+    throw Error("This document does not exit")
+  }
+
 }
+
+const delUndefinedFields = (o: any) => {
+  const obj = { ...o };
+  Object.keys(obj).forEach((key) =>
+    obj[key] === undefined ? delete obj[key] : {}
+  );
+  return obj;
+};
 
 export async function editProfile(edited: Profile) {
   const userId = getCurrentUserId();

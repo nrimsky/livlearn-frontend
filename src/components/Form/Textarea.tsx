@@ -5,6 +5,7 @@ export default function Textarea(props: {
   placeholder: string;
   onChange: (newValue: string) => void;
   value: string;
+  rows?: number;
 }) {
   return (
     <div className="mb-4">
@@ -13,7 +14,7 @@ export default function Textarea(props: {
           {props.name}
         </span>
         <textarea
-          rows={2}
+          rows={props.rows ?? 2}
           className="resize-y overflow-hidden appearance-none border border-gray-300 dark:border-gray-500 rounded w-full py-2 px-3 text-gray-900  dark:text-white leading-tight focus:outline-none bg-white dark:bg-gray-800 focus:ring focus:ring-green-200"
           placeholder={props.placeholder}
           value={props.value}
