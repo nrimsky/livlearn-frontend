@@ -48,7 +48,7 @@ export default function EditForm(props: {
           name="Title"
           placeholder="What is the resource name"
           onChange={(newValue: string) =>
-            onChange({ ...item, title: newValue })
+            onChange({ ...item, title: newValue.substring(0, 500) })
           }
           value={item.title}
         />
@@ -56,14 +56,14 @@ export default function EditForm(props: {
           name="Detail"
           placeholder="Any additional detail"
           onChange={(newValue: string) =>
-            onChange({ ...item, detail: newValue })
+            onChange({ ...item, detail: newValue.substring(0, 3000) })
           }
           value={item.detail}
         />
         <Input
           name="URL"
           placeholder="Paste in the URL"
-          onChange={(newValue: string) => onChange({ ...item, url: newValue })}
+          onChange={(newValue: string) => onChange({ ...item, url: newValue.substring(0, 1000) })}
           value={item.url}
         />
       </form>

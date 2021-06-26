@@ -58,10 +58,12 @@ const EditableList = ({
   const [shareOpen, setShareOpen] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [itemEditing, setItemEditing] = useState<IndexedItem | null>(null);
+  const [changesMade, setChangesMade] = useState(false);
   const history = useHistory();
 
   const closeAdd = () => {
     setAddOpen(false);
+    setChangesMade(true);
   };
 
   const openAdd = () => {
@@ -89,6 +91,7 @@ const EditableList = ({
         return;
       }
       reorder(result.source.index, result.destination.index);
+      setChangesMade(true);
     },
     [reorder]
   );
@@ -138,18 +141,26 @@ const EditableList = ({
     (items: ResourceListItem[], name: string) => {
       loadFromFile(items, name);
       setUploadOpen(false);
+      setChangesMade(true);
     },
     [loadFromFile]
   );
 
   const closeEdit = () => {
     setItemEditing(null);
+    setChangesMade(true);
+  };
+
+  const renameList = (n: string) => {
+    const sub = n.substring(0, 500);
+    rename(sub);
+    setChangesMade(true);
   };
 
   return (
     <div className="sm:mx-5 my-5 w-100">
       <div className="flex flex-row mx-3 sm:mx-0 w-100">
-        <ListTitleInput value={rl.title} onChange={rename} />
+        <ListTitleInput value={rl.title} onChange={renameList} />
         <DropdownMenu
           icon={<DotsHorizontalIcon className="h-6 w-6 mt-1" />}
           aria-hidden="true"
@@ -203,7 +214,7 @@ const EditableList = ({
         onClickClose={closeSave}
         title={rl.id ? "🚀 Publish Changes" : "🚀 Publish New collection"}
       >
-        <DeployForm onClose={closeSave} state={rl} />
+        <DeployForm onClose={closeSave} state={rl} setChangesSaved={() => {setChangesMade(false)}}/>
       </BasePopup>
       {itemEditing && (
         <BasePopup
@@ -236,7 +247,7 @@ const EditableList = ({
         <Button
           text={rl.id ? "Publish changes" : "Publish new collection"}
           onClick={openSave}
-          className="shadow text-sm bg-green-500 text-white dark:bg-green-600"
+          className={`shadow text-sm text-white bg-green-500 dark:bg-green-600 ${changesMade ? "ring-4 ring-yellow-500 ring-opacity-75" : ""}`}
           color=""
         />
         <AddButton onClick={openAdd} />

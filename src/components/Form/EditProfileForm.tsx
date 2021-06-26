@@ -27,7 +27,7 @@ export default function EditProfileForm(props: {
           name="Username"
           placeholder="Your username on livlearn"
           onChange={(newValue: string) =>
-            onChange({ ...profile, username: newValue })
+            onChange({ ...profile, username: newValue.substring(0,100) })
           }
           value={profile.username ?? ""}
         />
@@ -35,7 +35,7 @@ export default function EditProfileForm(props: {
           name="Tagline"
           placeholder="Describe yourself is once sentence"
           onChange={(newValue: string) =>
-            onChange({ ...profile, tagline: newValue })
+            onChange({ ...profile, tagline: newValue.substring(0,500) })
           }
           value={profile.tagline ?? ""}
         />
@@ -43,7 +43,7 @@ export default function EditProfileForm(props: {
           name="About"
           placeholder="About you - what are you currently learning, what are your goals, where do you see yourself in 5 years time?"
           onChange={(newValue: string) =>
-            onChange({ ...profile, body: newValue })
+            onChange({ ...profile, body: newValue.substring(0,2000) })
           }
           value={profile.body ?? ""}
           rows={5}

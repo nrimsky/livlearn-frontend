@@ -3,6 +3,8 @@ import "firebase/firestore";
 import Profile from "../types/Profile";
 import ResourceList from "../types/ResourceList";
 import ResourceListItem from "../types/ResourceListItem";
+import validateProfile from "../validation/validateProfile";
+import validateRlItem from "../validation/validateRlItem";
 import { getCurrentUserId } from "./AuthService";
 
 // Resource List
@@ -42,6 +44,7 @@ export async function getResourceList(id: string): Promise<ResourceList> {
 export async function saveNewListForUser(
   newList: ResourceList
 ): Promise<string> {
+  newList.data.forEach((i) => validateRlItem(i));
   const userId = getCurrentUserId();
   if (!userId) {
     throw Error("No signed in user");
@@ -63,6 +66,7 @@ export async function saveNewListForUser(
 }
 
 export async function editExitingList(updated: ResourceList): Promise<void> {
+  updated.data.forEach((i) => validateRlItem(i));
   const { id, data, ...rest } = updated;
   if (!id) {
     throw Error("Item has no id");
@@ -221,9 +225,8 @@ export async function getProfile(uid: string): Promise<Profile> {
     const prof = docToProfile(d);
     return prof;
   } else {
-    throw Error("This document does not exit")
+    throw Error("This document does not exit");
   }
-
 }
 
 const delUndefinedFields = (o: any) => {
@@ -239,6 +242,7 @@ export async function editProfile(edited: Profile) {
   if (!userId) {
     throw Error("No signed in user");
   }
+  validateProfile(edited);
   const doc = firebase.firestore().collection("profiles").doc(userId);
   await doc.update(delUndefinedFields(edited));
 }

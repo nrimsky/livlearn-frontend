@@ -18,6 +18,9 @@ export default function MyProfile(props: { profile: Profile }) {
   const finishEditing = () => {
     setIsEditing(false);
   };
+  const changeProfile = (p: Profile) => {
+    editProfile(p).catch((e) => console.error(e));
+  };
   return (
     <div className="text-gray-600 dark:text-gray-300">
       <div className="container px-5 py-16 mx-auto flex flex-col">
@@ -120,7 +123,7 @@ export default function MyProfile(props: { profile: Profile }) {
       >
         <EditProfileForm
           initial={props.profile}
-          onChange={(p: Profile) => editProfile(p)}
+          onChange={changeProfile}
           onClose={finishEditing}
         />
       </BasePopup>

@@ -11,6 +11,7 @@ import ResourceList from "../../types/ResourceList";
 export default function DeployForm(props: {
   state: ResourceList;
   onClose: () => void;
+  setChangesSaved: () => void;
 }) {
   let history = useHistory();
 
@@ -18,6 +19,7 @@ export default function DeployForm(props: {
     try {
       const id = await saveNewListForUser(props.state);
       history.push(`/list/${id}`);
+      props.setChangesSaved();
       props.onClose();
     } catch (error) {
       console.error(error);
@@ -25,9 +27,10 @@ export default function DeployForm(props: {
     }
   };
 
-  const edit = () => {
+  const edit = async () => {
     try {
-      editExitingList(props.state);
+      await editExitingList(props.state);
+      props.setChangesSaved();
       props.onClose();
     } catch (error) {
       console.error(error);
@@ -35,11 +38,11 @@ export default function DeployForm(props: {
     }
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (props.state.id) {
-      edit();
+      await edit();
     } else {
-      saveNewList();
+      await saveNewList();
     }
   };
 
