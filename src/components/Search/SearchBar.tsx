@@ -50,13 +50,13 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
   return (
     <div
       className={classNames(
-        "text-gray-500  dark:text-gray-400 flex-none flex flex-col md:flex-row px-4 md:px-0 w-100 flex-wrap",
+        "text-gray-900  dark:text-white flex-none flex flex-col md:flex-row px-4 md:px-0 w-100 flex-wrap",
         className ?? ""
       )}
     >
       <form className="relative max-w-sm">
         <input
-          className="border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:outline-none focus:ring-4 focus:ring-green-200 focus:ring-opacity-50 focus:outline-none focus:bg-white dark:bg-gray-900 bg-white dark:bg-gray-900"
+          className="border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:ring-4 focus:ring-green-200 focus:ring-opacity-50"
           name="search"
           onChange={onSearchChange}
           value={searchQuery}
