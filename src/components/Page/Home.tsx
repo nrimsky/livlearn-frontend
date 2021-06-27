@@ -100,7 +100,7 @@ const Home = (props: { uid: string | null }) => {
       </CardCollection>
 
       <CardCollection
-        title={"Learning resources we appreciated"}
+        title={"Our curated list of learning resources"}
         widgets={
           <SearchBar onSearch={onSearch} className="mb-3" query={query} />
         }
