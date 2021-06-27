@@ -7,18 +7,13 @@ import Input from "../Form/Input";
 import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
-
   const history = useHistory();
 
-  let url = "";
+  const url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000/finishSignIn"
+      : "https://howshouldilearn.com/finishSignIn";
 
-  if (window.location.hostname === "localhost") {
-    url = "http://localhost:3000/finishSignIn";
-  } else if (window.location.hostname[0] === "l") {
-    url = "https://livlearn.web.app/finishSignIn";
-  } else {
-    url = "https://howshouldilearn.com/finishSignIn";
-  }
   var actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
@@ -69,7 +64,15 @@ const SignIn = () => {
             onChange={(n: string) => setEmail(n)}
             name={"Get access with passwordless login"}
           />
-          <Button color="green" className="mr-1 mt-2 sm:mt-0" onClick={login} text="Login / Sign up" /> <span className="text-gray-500  dark:text-gray-400 font-medium">or</span>
+          <Button
+            color="green"
+            className="mr-1 mt-2 sm:mt-0"
+            onClick={login}
+            text="Login / Sign up"
+          />{" "}
+          <span className="text-gray-500  dark:text-gray-400 font-medium">
+            or
+          </span>
           <Button
             color="yellow"
             onClick={loginTest}
