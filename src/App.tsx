@@ -10,6 +10,7 @@ import FinishSignIn from "./components/Auth/FinishSignIn";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Page/Profile";
 import Roadmap from "./components/Page/Roadmap";
+import { createProfileIfNoneExists } from "./firebase/FirestoreService";
 
 export const ThemeContext = React.createContext<{
   mode: "dark" | "light";
@@ -22,13 +23,16 @@ export const ThemeContext = React.createContext<{
 });
 
 export default function App() {
-  const [uid, setUid] = useState<string|null>(null);
+  const [uid, setUid] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const unregisterAuthObserver = onAuthStateChanged((l) => {
       if (l) {
-        setUid(getCurrentUserId());
+        const uid = getCurrentUserId();
+        if (uid) {
+          createProfileIfNoneExists(uid).then(() => setUid(uid));
+        }
       } else {
         setUid(null);
       }
@@ -95,7 +99,10 @@ export default function App() {
               <Route exact path="/list">
                 <ListPage />
               </Route>
-              <Route path="/profile/:uid" children={<ProfilePage currentUserId={uid}/>} />
+              <Route
+                path="/profile/:uid"
+                children={<ProfilePage currentUserId={uid} />}
+              />
               <Route path="/list/:id" children={<ListPage />} />
               <Route path="*">
                 <h1 className="p-5 text-gray-900 dark:text-white">

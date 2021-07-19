@@ -10,7 +10,7 @@ import EditProfileForm from "../Form/EditProfileForm";
 
 // "https://source.unsplash.com/4csdTPXTM1A/1600x900"
 
-export default function MyProfile(props: { profile: Profile }) {
+export default function MyProfile(props: { profile: Profile, uid: string }) {
   const toggleProfilePrivate = () => {
     editProfile({ ...props.profile, isPrivate: !props.profile.isPrivate });
   };
@@ -23,8 +23,8 @@ export default function MyProfile(props: { profile: Profile }) {
   };
   return (
     <div className="text-gray-600 dark:text-gray-300">
-      <div className="container px-5 py-16 mx-auto flex flex-col">
-        <div className="lg:w-4/6 mx-auto">
+      <div className="container px-8 py-16 mx-auto flex flex-col">
+        <div className="lg:w-5/6 mx-auto">
           <div className="rounded-lg h-72 overflow-hidden">
             <img
               alt="content"
@@ -38,9 +38,9 @@ export default function MyProfile(props: { profile: Profile }) {
                 <UserIcon className="w-12 h-12 text-gray-400 rounded-full font-thin" />
               </div>
               <div className="flex flex-col items-center text-center justify-center">
-                <h2 className="font-medium title-font mt-4 text-gray-900  dark:text-white text-lg">
-                  {props.profile.username ?? "No username"}
-                </h2>
+                <p className="font-medium font-semibold mt-4 text-gray-900 dark:text-white text-md overflow-ellipsis break-all">
+                  {props.profile.username}
+                </p>
                 <div className="mt-2">
                   <p className="text-gray-600  dark:text-gray-300 text-sm p-1">
                     {!props.profile.isPrivate
@@ -70,48 +70,27 @@ export default function MyProfile(props: { profile: Profile }) {
                 </div>
                 <div className="w-12 h-1 bg-green-500 rounded mt-2 mb-4"></div>
                 <p className="text-base">
-                  {props.profile.tagline ?? (
-                    <>
-                      LivLearn learner profiles are coming soon! We are
-                      developing a super cool learner profile system that will
-                      help you track goals, share your achievements and share
-                      knowledge with others.
-                    </>
-                  )}
+                  {props.profile.tagline}
                 </p>
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-300 dark:border-gray-500 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
               <p className="leading-relaxed text-lg mb-4">
-                {props.profile.body ?? (
-                  <>
-                    LivLearn learner profiles are coming soon! We are developing
-                    a super cool learner profile system that will help you track
-                    goals, share your achievements and share knowledge with
-                    others.
-                    <br />
-                    <br />
-                    Your livlearn profile will be a place where you can share
-                    what you are currently learning, show people your public
-                    resource collections and stay accountable with your goals.
-                    You can also keep your profile private and just use it to
-                    keep personal notes.
-                  </>
-                )}
+                {props.profile.body}
               </p>
-              <Link
-                to="/u"
-                className="text-green-500 flex items-center underline"
-              >
-                Your collections
-                <ArrowRightIcon className="w-4 h-4 ml-2" />
-              </Link>
               <Button
                 color="green"
                 text="Edit Profile"
                 onClick={() => setIsEditing(true)}
-                className="mt-4"
+                className="mt-2"
               />
+              <Link
+                to="/u"
+                className="text-green-500 flex items-center underline mt-4"
+              >
+                Go to your collections
+                <ArrowRightIcon className="w-4 h-4 ml-2" />
+              </Link>
             </div>
           </div>
         </div>

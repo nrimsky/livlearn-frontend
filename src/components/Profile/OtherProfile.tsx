@@ -3,9 +3,9 @@ import Profile from "../../types/Profile";
 
 export default function OtherProfile(props: { profile: Profile }) {
   return (
-    <div className="text-gray-600 dark:text-gray-300 body-font">
-      <div className="container px-5 py-16 mx-auto flex flex-col">
-        <div className="lg:w-4/6 mx-auto">
+    <div className="text-gray-600 dark:text-gray-300">
+      <div className="container px-8 py-16 mx-auto flex flex-col">
+        <div className="lg:w-5/6 mx-auto">
           <div className="rounded-lg h-72 overflow-hidden">
             <img
               alt="content"
@@ -19,7 +19,7 @@ export default function OtherProfile(props: { profile: Profile }) {
                 <UserIcon className="w-12 h-12 text-gray-400 rounded-full font-thin" />
               </div>
               <div className="flex flex-col items-center text-center justify-center">
-                <h2 className="font-medium title-font mt-4 text-gray-900  dark:text-white text-lg">
+                <h2 className="font-medium font-semibold mt-4 text-gray-900 dark:text-white text-md overflow-ellipsis break-all">
                   {props.profile.username ?? "No username"}
                 </h2>
                 <div className="w-12 h-1 bg-green-500 rounded mt-2 mb-4"></div>

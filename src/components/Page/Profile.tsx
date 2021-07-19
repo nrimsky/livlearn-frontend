@@ -41,10 +41,10 @@ const ProfilePage = (props: { currentUserId: string | null }) => {
     }
   });
 
-  if (ownsProfile && profile) {
+  if (ownsProfile && profile && uid) {
     return (
       <div className="w-full max-w-screen-2xl mx-auto">
-        <MyProfile profile={profile} />
+        <MyProfile profile={profile} uid={uid}/>
       </div>
     );
   }

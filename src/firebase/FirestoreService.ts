@@ -176,7 +176,7 @@ export async function bookmarkResource(rId: number): Promise<void> {
       });
     }
   } else {
-    doc.set({ bookmarks: rId }, { merge: true });
+    doc.set({ bookmarks: [rId,] }, { merge: true });
   }
 }
 
@@ -210,7 +210,11 @@ export function streamProfile(
   const listsRef = firebase.firestore().collection("profiles").doc(uid);
   return listsRef.onSnapshot({
     next: (querySnapshot) => {
-      onProfileRecieved(docToProfile(querySnapshot));
+      try {
+        onProfileRecieved(docToProfile(querySnapshot));
+      } catch (error) {
+        onError(error);
+      }
     },
     error: (error) => {
       onError(error);
@@ -226,6 +230,20 @@ export async function getProfile(uid: string): Promise<Profile> {
     return prof;
   } else {
     throw Error("This document does not exit");
+  }
+}
+
+export async function createProfileIfNoneExists(uid: string) {
+  const listsRef = firebase.firestore().collection("profiles").doc(uid);
+  const d = await listsRef.get();
+  if (!(d && d.exists)) {
+    listsRef.set({
+      username: `user${uid}`,
+      isPrivate: true,
+      tagline: "",
+      body: "",
+      bookmarks: []
+    })
   }
 }
 

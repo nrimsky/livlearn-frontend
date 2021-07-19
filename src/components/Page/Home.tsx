@@ -71,8 +71,11 @@ const Home = (props: { uid: string | null }) => {
   );
 
   const bookmark = useCallback((rId: number) => {
+    if (props.uid === null) {
+      return;
+    }
     bookmarkResource(rId).catch((e) => console.error(e));
-  }, []);
+  }, [props.uid]);
 
   const onSearch = useCallback((query: Query) => {
     setQuery(query);
