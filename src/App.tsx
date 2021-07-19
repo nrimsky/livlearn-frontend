@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/Nav/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SignInPage from "./components/Page/SignInPage";
-import { getCurrentUserId, onAuthStateChanged } from "./firebase/AuthService";
 import Home from "./components/Page/Home";
 import ListPage from "./components/Page/ListPage";
 import MyPage from "./components/Page/MyPage";
@@ -10,7 +9,8 @@ import FinishSignIn from "./components/Auth/FinishSignIn";
 import Footer from "./components/Footer/Footer";
 import ProfilePage from "./components/Page/Profile";
 import Roadmap from "./components/Page/Roadmap";
-import { createProfileIfNoneExists } from "./firebase/FirestoreService";
+import useMyUserProfile from "./hooks/useMyUserProfile";
+import NotFound from "./components/Errors/NotFound";
 
 export const ThemeContext = React.createContext<{
   mode: "dark" | "light";
@@ -23,22 +23,9 @@ export const ThemeContext = React.createContext<{
 });
 
 export default function App() {
-  const [uid, setUid] = useState<string | null>(null);
-  const [darkMode, setDarkMode] = useState<"dark" | "light">("dark");
+  const { uid, profile } = useMyUserProfile();
 
-  useEffect(() => {
-    const unregisterAuthObserver = onAuthStateChanged((l) => {
-      if (l) {
-        const uid = getCurrentUserId();
-        if (uid) {
-          createProfileIfNoneExists(uid).then(() => setUid(uid));
-        }
-      } else {
-        setUid(null);
-      }
-    });
-    return () => unregisterAuthObserver();
-  }, []);
+  const [darkMode, setDarkMode] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     let matched = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -64,7 +51,7 @@ export default function App() {
             <NavBar uid={uid} />
             <Switch>
               <Route exact path="/">
-                <Home uid={uid} />
+                <Home profile={profile} />
               </Route>
               <Route exact path="/roadmap">
                 <Roadmap />
@@ -73,25 +60,19 @@ export default function App() {
                 {uid ? (
                   <MyPage />
                 ) : (
-                  <h1 className="p-5 text-gray-900 dark:text-white">
-                    You must be logged in to view this page
-                  </h1>
+                  <NotFound text="You must be logged in to view this page" />
                 )}
               </Route>
               <Route path="/auth">
                 {uid ? (
-                  <h1 className="p-5 text-gray-900 dark:text-white">
-                    You are already logged in
-                  </h1>
+                  <NotFound text="You are already logged in" />
                 ) : (
                   <SignInPage />
                 )}
               </Route>
               <Route path="/finishSignIn">
                 {uid ? (
-                  <h1 className="p-5 text-gray-900 dark:text-white">
-                    You are already logged in
-                  </h1>
+                  <NotFound text="You are already logged in" />
                 ) : (
                   <FinishSignIn />
                 )}
@@ -100,14 +81,17 @@ export default function App() {
                 <ListPage />
               </Route>
               <Route
-                path="/profile/:uid"
-                children={<ProfilePage currentUserId={uid} />}
+                path="/profile/:profileOwnerUid"
+                children={
+                  <ProfilePage
+                    currentUserId={uid}
+                    currentUserProfile={profile}
+                  />
+                }
               />
               <Route path="/list/:id" children={<ListPage />} />
               <Route path="*">
-                <h1 className="p-5 text-gray-900 dark:text-white">
-                  Sorry this page was not found
-                </h1>
+                <NotFound text="Sorry, this page was not found" />
               </Route>
             </Switch>
           </div>

@@ -1,7 +1,12 @@
 import { UserIcon } from "@heroicons/react/solid";
-import Profile from "../../types/Profile";
+import useOtherUserProfile from "../../hooks/useOtherUserProfile";
+import NotFound from "../Errors/NotFound";
 
-export default function OtherProfile(props: { profile: Profile }) {
+export default function OtherProfile(props: { profileOwnerId: string }) {
+  const { profile } = useOtherUserProfile(props.profileOwnerId);
+  if (!profile) {
+    return <NotFound text="Sorry, this profile was not found" />;
+  }
   return (
     <div className="text-gray-600 dark:text-gray-300">
       <div className="container px-8 py-16 mx-auto flex flex-col">
@@ -20,17 +25,17 @@ export default function OtherProfile(props: { profile: Profile }) {
               </div>
               <div className="flex flex-col items-center text-center justify-center">
                 <h2 className="font-medium font-semibold mt-4 text-gray-900 dark:text-white text-md overflow-ellipsis break-all">
-                  {props.profile.username ?? "No username"}
+                  {profile.username}
                 </h2>
                 <div className="w-12 h-1 bg-green-500 rounded mt-2 mb-4"></div>
                 <p className="text-base">
-                  {props.profile.tagline ?? "No tagline"}
+                  {profile.tagline}
                 </p>
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 dark:border-gray-500 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
               <p className="leading-relaxed text-lg mb-4">
-                {props.profile.body ?? "No about section"}
+                {profile.body}
               </p>
             </div>
           </div>

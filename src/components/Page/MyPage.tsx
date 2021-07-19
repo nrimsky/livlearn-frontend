@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ResourceList from "../../types/ResourceList";
 import ResourceListCard from "../Card/ResourceListCard";
-import { getAllListsForUser } from "../../firebase/FirestoreService";
 import CardCollection from "../Card/CardCollection";
 import Button from "../Button/Button";
+import useMyResourceLists from "../../hooks/useMyResourceLists";
 
 const MyPage = () => {
   const history = useHistory();
-  const [myLists, setMyLists] = useState<ResourceList[]>([]);
-
-  useEffect(() => {
-    getAllListsForUser().then((lists) => {
-      setMyLists(lists);
-    });
-  }, []);
+  const { myLists } = useMyResourceLists();
 
   return (
     <div className="flex w-full flex-grow items-center flex-col md:items-start max-w-screen-2xl mx-auto">
@@ -23,7 +15,7 @@ const MyPage = () => {
           <CardCollection title={`Your collections (${myLists.length})`}>
             {myLists
               .filter((l) => !!l.id)
-              .map((l, i) => {
+              .map((l) => {
                 return <ResourceListCard rl={l} key={l.id!} hideUpvotes />;
               })}
           </CardCollection>
