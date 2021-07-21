@@ -17,5 +17,20 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "emulators": {
+    "firestore": {
+      "host": "localhost",
+      "port": "8000"
+    },
+    "ui": {
+      "host": "localhost",
+      "enabled": true,      
+      "port": 1234          
+    },
+    "auth": {
+      "host": "localhost",
+      "port": "9099"
+    }
   }
 }

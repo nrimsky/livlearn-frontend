@@ -12,7 +12,7 @@ const DragDropList = (props: {
       <Droppable droppableId={"list"}>
         {(provided) => (
           <ul
-            className="rounded border-t border-b sm:border border-gray-300 dark:border-gray-500 divide-y divide-gray-300 dark:divide-gray-300"
+            className="border-t border-b sm:border border-gray-300 dark:border-gray-500 divide-y divide-gray-300 dark:divide-gray-500"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

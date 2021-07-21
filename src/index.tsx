@@ -26,6 +26,12 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// If running locally, use emulator
+// if (window.location.hostname === "localhost") {
+//   firebase.firestore().useEmulator("localhost", 8000);
+//   firebase.auth().useEmulator("http://localhost:9099");
+// }
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
