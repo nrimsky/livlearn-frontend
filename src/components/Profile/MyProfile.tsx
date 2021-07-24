@@ -1,5 +1,4 @@
-import { UserIcon, ArrowRightIcon } from "@heroicons/react/solid";
-import { Link } from "react-router-dom";
+import { UserIcon } from "@heroicons/react/solid";
 import { Switch } from "@headlessui/react";
 import Profile from "../../types/Profile";
 import { editProfile } from "../../firebase/FirestoreService";
@@ -7,10 +6,11 @@ import Button from "../Button/Button";
 import BasePopup from "../Popup/BasePopup";
 import { useState } from "react";
 import EditProfileForm from "../Form/EditProfileForm";
+import ArrowLink from "../Button/ArrowLink";
 
 // "https://source.unsplash.com/4csdTPXTM1A/1600x900"
 
-export default function MyProfile(props: { profile: Profile, uid: string }) {
+export default function MyProfile(props: { profile: Profile; uid: string }) {
   const toggleProfilePrivate = () => {
     editProfile({ ...props.profile, isPrivate: !props.profile.isPrivate });
   };
@@ -69,9 +69,7 @@ export default function MyProfile(props: { profile: Profile, uid: string }) {
                   </Switch>
                 </div>
                 <div className="w-12 h-1 bg-green-500 rounded mt-2 mb-4"></div>
-                <p className="text-base">
-                  {props.profile.tagline}
-                </p>
+                <p className="text-base">{props.profile.tagline}</p>
               </div>
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-300 dark:border-gray-500 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
@@ -84,13 +82,11 @@ export default function MyProfile(props: { profile: Profile, uid: string }) {
                 onClick={() => setIsEditing(true)}
                 className="mt-2"
               />
-              <Link
+              <ArrowLink
                 to="/u"
-                className="text-green-500 flex items-center underline mt-4"
-              >
-                Go to your collections
-                <ArrowRightIcon className="w-4 h-4 ml-2" />
-              </Link>
+                text="Go to your collections"
+                className="mt-4"
+              />
             </div>
           </div>
         </div>

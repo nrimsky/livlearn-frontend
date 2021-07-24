@@ -26,6 +26,12 @@ export default function NavBar(props: { uid: string|null }) {
       },
     },
     {
+      name: "Resources",
+      action: () => {
+        history.push("/curatedresources");
+      }
+    },
+    {
       name: "Collections",
       action: () => {
         history.push("/u");
@@ -45,6 +51,12 @@ export default function NavBar(props: { uid: string|null }) {
       action: () => {
         history.push("/");
       },
+    },
+    {
+      name: "Resources",
+      action: () => {
+        history.push("/curatedresources");
+      }
     },
     {
       name: "Our roadmap",

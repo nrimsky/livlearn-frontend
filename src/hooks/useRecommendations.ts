@@ -4,12 +4,13 @@ import { getCurrentUserId } from "../firebase/AuthService";
 import { bookmarkResource } from "../firebase/FirestoreService";
 import ResourceRec from "../types/ResourceRec";
 
-export default function useRecommendations() {
+export default function useRecommendations(pageSize?: number) {
   const [query, setQuery] = useState<Query>({
     tagIds: [],
     level: "AN",
     types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO", "VI"],
     search: "",
+    pageSize: pageSize
   });
   const [recommendedResources, setRecommendedResources] = useState<
     ResourceRec[]

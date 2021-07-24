@@ -1,4 +1,4 @@
-import { AcademicCapIcon, ClipboardListIcon, MapIcon, UserGroupIcon} from "@heroicons/react/outline";
+import { AcademicCapIcon, ClipboardListIcon, MapIcon, UserGroupIcon, ChatAlt2Icon } from "@heroicons/react/outline";
 import React from "react";
 
 const RoadmapItem = (props: {
@@ -56,7 +56,7 @@ const Roadmap = () => {
         />
         <RoadmapItem
           title="Learner profiles"
-          status="Next up"
+          status="In progress"
           text="Build your learner profile on LivLearn - share what you're currently learning, what resources you benefitted from and stay accountable with your goals. Receive daily prompts and tips personalised especially for your learning style and interests."
           num={3}
           icon={<UserGroupIcon className="h-12 w-12" />}
@@ -67,6 +67,13 @@ const Roadmap = () => {
           text="Explore topic maps of various areas of knowledge, to help you decide what to learn next in your lifelong learning journey. Discover things you didn't know that you didn't know and earn learner points by overcoming boundaries."
           num={4}
           icon={<MapIcon className="h-12 w-12" />}
+        />
+        <RoadmapItem
+          title="Mentoring groups"
+          status="Next up"
+          text="Join a group of motivated learners at your level and tackle a knowledge domain with access to expert mentors that will help and guide you."
+          num={5}
+          icon={<ChatAlt2Icon className="h-12 w-12" />}
         />
       </div>
     </div>

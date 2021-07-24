@@ -19,9 +19,10 @@ export type Query = {
   types: Type[];
   level: Level;
   search?: string;
+  pageSize?: number;
 };
 
-const queryString = ({ tagIds, types, level, search }: Query) => {
+const queryString = ({ tagIds, types, level, search, pageSize }: Query) => {
   let lq = "";
   if (level !== "AN") {
     lq = `${level},AN`;
@@ -29,7 +30,7 @@ const queryString = ({ tagIds, types, level, search }: Query) => {
   let tq = (types.length === 9) ? [] : types;
   return `?tags=${tagIds.map(toString).join(",")}&type=${tq.join(
     ","
-  )}&level=${lq}&search=${search}&ordering=-created_at&page_size=30`;
+  )}&level=${lq}&search=${search}&ordering=-created_at&page_size=${pageSize??6}`;
 };
 
 const isResourceRec = (resourceRec: any) => {

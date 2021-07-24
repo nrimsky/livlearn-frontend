@@ -5,17 +5,16 @@ import ResourceRec from "../../types/ResourceRec";
 import RecommendedCard from "../Card/RecommendedCard/RecommendedCard";
 import BasePopup from "../Popup/BasePopup";
 import ViewDetailsRec from "../Form/ViewDetailsRec";
-import SearchBar from "../Search/SearchBar";
 import Profile from "../../types/Profile";
 import elephant from "../../img/elephant.svg";
 import useRecommendations from "../../hooks/useRecommendations";
 import usePublicResourceLists from "../../hooks/usePublicResourceLists";
+import ArrowLink from "../Button/ArrowLink";
 
 type Props = { profile: Profile | null };
 
 const Home = ({ profile }: Props) => {
-  const { query, recommendedResources, onSearch, onBookmark } =
-    useRecommendations();
+  const { recommendedResources, onBookmark } = useRecommendations();
   const { publicLists } = usePublicResourceLists();
 
   const [selectedViewDetails, setSelectedViewDetail] =
@@ -36,22 +35,9 @@ const Home = ({ profile }: Props) => {
           topics 🎓 make lifelong learning your habit
         </p>
       </div>
-
       <CardCollection
-        title={"Resource collections recently shared with the community"}
-      >
-        {publicLists
-          .filter((l) => !!l.id)
-          .map((l) => {
-            return <ResourceListCard rl={l} key={l.id!} hideLock />;
-          })}
-      </CardCollection>
-
-      <CardCollection
-        title={"Our curated list of learning resources"}
-        widgets={
-          <SearchBar onSearch={onSearch} className="mb-3" query={query} />
-        }
+        title={"Recently curated free learning resources"}
+        subtitle={"These are resources we ourselves have tried and enjoyed"}
       >
         {recommendedResources.map((r) => {
           return (
@@ -64,6 +50,17 @@ const Home = ({ profile }: Props) => {
             />
           );
         })}
+        <ArrowLink to="/curatedresources" text="See more" className="mt-1" />
+      </CardCollection>
+      <CardCollection
+        title={"Community shared resource collections"}
+        subtitle="Anyone can share a resource collection publicly - check out some lists our users have made"
+      >
+        {publicLists
+          .filter((l) => !!l.id)
+          .map((l) => {
+            return <ResourceListCard rl={l} key={l.id!} hideLock />;
+          })}
       </CardCollection>
       {selectedViewDetails !== null && (
         <BasePopup

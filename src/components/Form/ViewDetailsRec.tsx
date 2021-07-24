@@ -31,7 +31,7 @@ const ViewDetailsRec: React.FC<{ rr: ResourceRec }> = ({ rr }) => {
         {rr.description}
       </p>
       <SmallLinkButton
-        className="text-white border-green-500 bg-green-500 dark:bg-green-700 text-sm"
+        className="text-white border-green-500 bg-green-500 bg-gradient-to-b dark:from-green-500 dark:to-green-600 dark:border-green-600 text-sm"
         href={rr.url}
         text="Access resource"
       />
