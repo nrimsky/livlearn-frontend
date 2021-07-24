@@ -68,7 +68,7 @@ const RecommendedCard = React.memo(
             onClick={() => props.onViewDetails(props.rr)}
           />
           <SmallLinkButton
-            className="text-white border-green-500 bg-green-500 dark:bg-green-700"
+            className="text-white border-green-500 bg-green-500 bg-gradient-to-b dark:from-green-500 dark:to-green-600 dark:border-green-600"
             href={props.rr.url}
             text="Access resource"
           />

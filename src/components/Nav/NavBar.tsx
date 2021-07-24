@@ -78,7 +78,7 @@ export default function NavBar(props: { uid: string|null }) {
 
   const toggleDarkModeButton = (
     <button
-      className="mr-2 sm:mr-3"
+      className="mr-2 sm:mr-3 focus:outline-none"
       name="toggle dark mode"
       id="dark-mode-button"
       onClick={() => onChange(mode === "dark" ? "light" : "dark")}
