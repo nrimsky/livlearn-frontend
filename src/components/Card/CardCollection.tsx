@@ -10,11 +10,11 @@ type Props = {
 const CardCollection = ({ title, children, widgets, subtitle }: Props) => {
   return (
     <div className="md:px-5 w-full mt-5">
-      <div className="my-3">
-        <h2 className="w-100 text-gray-900 dark:text-white text-xl font-medium px-4 md:pl-0 leading-tight tracking-tight">
+      <div className="my-3 px-4 md:pl-0 w-100">
+        <h2 className="w-100 text-gray-900 dark:text-white text-xl font-medium leading-tight tracking-tight">
           {title}
         </h2>
-        {subtitle && <p className="dark:text-gray-400 text-gray-500 text-sm">{subtitle}</p>}
+        {subtitle && <p className="w-100 dark:text-gray-400 text-gray-500 text-sm leading-tight">{subtitle}</p>}
       </div>
       {!!widgets && widgets}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 auto-rows-max w-100">
