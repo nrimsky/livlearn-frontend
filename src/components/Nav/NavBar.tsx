@@ -114,6 +114,8 @@ export default function NavBar(props: { uid: string|null }) {
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:flex flex-shrink-0 items-center">
                   <img
+                    width="40px" 
+                    height="40px"
                     className="h-10 w-10 rounded-full cursor-pointer"
                     src={logo}
                     alt=""
