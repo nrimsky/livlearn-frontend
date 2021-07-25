@@ -8,7 +8,7 @@ export default function validateProfile(profile: Profile) {
     if ( tagline && tagline.length > 500 ) {
         throw Error("Tagline too long");
     }
-    if ( body && body.length > 2000 ) {
+    if ( body && body.length > 3000 ) {
         throw Error("Body too long");
     }
 }

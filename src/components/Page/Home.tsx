@@ -27,7 +27,7 @@ const Home = ({ profile }: Props) => {
 
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto pb-8">
-      <div className="flex px-4 py-10 items-center text-gray-900 dark:text-white flex-col tracking-tight leading-tight sm:px-10">
+      <div className="flex px-4 pt-10 pb-5 items-center text-gray-900 dark:text-white flex-col tracking-tight leading-tight sm:px-10">
         <img src={elephant} className="h-10 w-10" alt="" width="40px" height="40px"/>
         <h1 className="text-4xl font-extrabold">livlearn</h1>
         <p className="text-center text-lg">
