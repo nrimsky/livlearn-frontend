@@ -10,19 +10,31 @@ export default function useRecommendations(pageSize?: number) {
     level: "AN",
     types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO", "VI"],
     search: "",
-    pageSize: pageSize
+    pageSize: pageSize,
+    id: [],
   });
+  const [error, setError] = useState<string | null>(null);
+
   const [recommendedResources, setRecommendedResources] = useState<
     ResourceRec[]
   >([]);
+
   useEffect(() => {
+    if (query.pageSize === 0) { return; }
     getResources(query)
       .then((r) => setRecommendedResources(r))
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e);
+        setError(e.message);
+      });
   }, [query]);
-  const onSearch = useCallback((query: Query) => {
-    setQuery(query);
+
+  const onSearch = useCallback((updated: Query) => {
+    setQuery((prev) => {
+      return { ...prev, ...updated };
+    });
   }, []);
+
   const onBookmark = useCallback((rId: number) => {
     const uid = getCurrentUserId();
     if (uid === null) {
@@ -31,5 +43,5 @@ export default function useRecommendations(pageSize?: number) {
     bookmarkResource(rId).catch((e) => console.error(e));
   }, []);
 
-  return { query, recommendedResources, onSearch, onBookmark };
+  return { query, recommendedResources, onSearch, onBookmark, error };
 }

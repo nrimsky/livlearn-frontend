@@ -16,31 +16,33 @@ type Props = {
   className?: string;
 };
 
-const SearchBar = ({ query, onSearch, className}: Props) => {
+const SearchBar = ({ query, onSearch, className }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onCheckMediaType = useCallback(
     (m: Type) => {
       const mts = query.types;
-      if (mts.includes(m)) {
-        onSearch({ ...query, types: mts.filter((i) => i !== m) });
+      if (mts && mts.includes(m)) {
+        onSearch({ types: mts.filter((i) => i !== m) });
       } else {
-        onSearch({ ...query, types: [...mts, m] });
+        onSearch({ types: [...(mts ?? []), m] });
       }
     },
     [onSearch, query]
   );
 
-  const onSelectLevel = useCallback((level: Level) => {
-    onSearch({
-      ...query,
-      level: level,
-    });
-  }, [onSearch, query]);
+  const onSelectLevel = useCallback(
+    (level: Level) => {
+      onSearch({
+        level: level,
+      });
+    },
+    [onSearch]
+  );
 
   const onPressSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onSearch({ ...query, search: searchQuery });
+    onSearch({ search: searchQuery });
   };
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,11 +88,14 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
                     onCheckMediaType(typeFromMediaType(MediaType[v]))
                   }
                   type="checkbox"
-                  checked={query.types.includes(
+                  checked={query.types?.includes(
                     typeFromMediaType(MediaType[v])
                   )}
                 />
-                <label htmlFor={MediaType[v]} className="ml-1 text-gray-900  dark:text-white">
+                <label
+                  htmlFor={MediaType[v]}
+                  className="ml-1 text-gray-900  dark:text-white"
+                >
                   {MediaType[v]}s
                 </label>
               </div>
@@ -99,7 +104,7 @@ const SearchBar = ({ query, onSearch, className}: Props) => {
         </fieldset>
       </form>
       <form className="pt-1">
-        <LevelMenu selected={query.level} onSelect={onSelectLevel} />
+        <LevelMenu selected={query.level ?? "AN"} onSelect={onSelectLevel} />
       </form>
     </div>
   );

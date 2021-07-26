@@ -13,6 +13,6 @@ export default function useOtherUserProfile(uid: string) {
         setProfile(p);
       })
       .catch((e) => setError(e.message));
-  });
+  },[uid]);
   return { profile, error };
 }

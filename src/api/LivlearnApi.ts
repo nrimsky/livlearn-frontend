@@ -15,22 +15,29 @@ const API_ROOT = "https://api.livlearn.howshouldilearn.com/";
 // highlight publish changes when publish changes is needed
 
 export type Query = {
-  tagIds: number[];
-  types: Type[];
-  level: Level;
+  tagIds?: number[];
+  types?: Type[];
+  level?: Level;
   search?: string;
   pageSize?: number;
+  id?: number[];
 };
 
-const queryString = ({ tagIds, types, level, search, pageSize }: Query) => {
+const numsToStrList = (arr: number[]) => {
+  return arr.map((i) => (i as number).toString()).join(",");
+};
+
+const queryString = ({ tagIds, types, level, search, pageSize, id }: Query) => {
   let lq = "";
-  if (level !== "AN") {
+  if (level && level !== "AN") {
     lq = `${level},AN`;
   }
-  let tq = (types.length === 9) ? [] : types;
-  return `?tags=${tagIds.map(toString).join(",")}&type=${tq.join(
-    ","
-  )}&level=${lq}&search=${search}&ordering=-created_at&page_size=${pageSize??6}`;
+  let tq = types ? (types.length === 9 ? [] : types) : [];
+  return `?id=${numsToStrList(id ?? [])}&tags=${numsToStrList(
+    tagIds ?? []
+  )}&type=${tq.join(",")}&level=${lq}&search=${
+    search ?? ""
+  }&ordering=-created_at&page_size=${pageSize ?? 6}`;
 };
 
 const isResourceRec = (resourceRec: any) => {

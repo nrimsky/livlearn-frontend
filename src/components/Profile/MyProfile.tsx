@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { UserIcon } from "@heroicons/react/solid";
 import { Switch } from "@headlessui/react";
 import Profile from "../../types/Profile";
@@ -7,6 +8,8 @@ import BasePopup from "../Popup/BasePopup";
 import { useState } from "react";
 import EditProfileForm from "../Form/EditProfileForm";
 import ArrowLink from "../Button/ArrowLink";
+import useRecommendations from "../../hooks/useRecommendations";
+import CuratedResourceCollection from "../Card/CuratedResourceCollection";
 
 // "https://source.unsplash.com/4csdTPXTM1A/1600x900"
 
@@ -21,9 +24,17 @@ export default function MyProfile(props: { profile: Profile; uid: string }) {
   const changeProfile = (p: Profile) => {
     editProfile(p).catch((e) => console.error(e));
   };
+  const { recommendedResources, onSearch, onBookmark } = useRecommendations(0);
+
+  useEffect(() => {
+    if (props.profile.bookmarks) {
+      onSearch({ id: props.profile.bookmarks, pageSize: 30 });
+    }
+  }, [props.profile.bookmarks, onSearch]);
+
   return (
-    <div className="text-gray-600 dark:text-gray-300">
-      <div className="container px-8 py-16 mx-auto flex flex-col">
+    <div className="text-gray-600 dark:text-gray-300 pb-8">
+      <div className="container px-8 pt-16 mx-auto flex flex-col pb-8">
         <div className="lg:w-5/6 mx-auto">
           <div className="rounded-lg h-72 overflow-hidden">
             <img
@@ -91,6 +102,12 @@ export default function MyProfile(props: { profile: Profile; uid: string }) {
           </div>
         </div>
       </div>
+      <CuratedResourceCollection
+        resources={recommendedResources}
+        bookmarks={props.profile.bookmarks ?? []}
+        onBookmark={onBookmark}
+        title={"Your bookmarks"}
+      />
       <BasePopup
         isOpen={isEditing}
         onClickClose={finishEditing}
