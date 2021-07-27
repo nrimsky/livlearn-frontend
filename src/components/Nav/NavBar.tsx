@@ -107,7 +107,7 @@ export default function NavBar(props: { uid: string|null }) {
             <div className="relative flex items-center justify-between h-14 max-w-screen-2xl mx-auto">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500  dark:text-gray-400 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50">
+                <Disclosure.Button className="inline-flex items-center justify-center p-1 ml-1 rounded-md text-gray-500  dark:text-gray-400 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50">
                   <MobileMenuButton open={open} />
                 </Disclosure.Button>
               </div>

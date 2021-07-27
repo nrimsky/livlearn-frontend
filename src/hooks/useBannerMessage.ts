@@ -1,11 +1,15 @@
 import { useCallback, useState } from "react";
+import { BannerButtonParams } from "../components/Banner/Banner";
 
-type Message = {
+export type Message = {
   long: string;
   short?: string;
 };
 
-export default function useBannerMessage(defaultMessage: string | null) {
+export default function useBannerMessage(
+  defaultMessage: Message | null,
+  defaultButton: BannerButtonParams | null
+) {
   const setErrorMessage = useCallback((message: string) => {
     setIsError(true);
     setMessage({
@@ -13,20 +17,31 @@ export default function useBannerMessage(defaultMessage: string | null) {
       short: `${message}`,
     });
   }, []);
-  const setBannerMessage = useCallback((message: string) => {
-    setIsError(false);
-    setMessage({
-      long: message,
-    });
-  }, []);
+  const setBannerMessage = useCallback(
+    (message: Message, buttonParams: BannerButtonParams | null) => {
+      setIsError(false);
+      setMessage(message);
+      setButtonParams(buttonParams);
+    },
+    []
+  );
   const clearBanner = useCallback(() => {
     setIsError(false);
     setMessage(null);
+    setButtonParams(null);
   }, []);
-  const [message, setMessage] = useState<Message | null>(
-    defaultMessage ? { long: defaultMessage } : null
+  const [message, setMessage] = useState<Message | null>(defaultMessage);
+  const [buttonParams, setButtonParams] = useState<BannerButtonParams | null>(
+    defaultButton
   );
   const [isError, setIsError] = useState(false);
 
-  return { isError, message, setErrorMessage, setBannerMessage, clearBanner };
+  return {
+    isError,
+    message,
+    setErrorMessage,
+    setBannerMessage,
+    clearBanner,
+    buttonParams,
+  };
 }

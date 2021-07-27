@@ -6,8 +6,8 @@ import Footer from "./components/Footer/Footer";
 import useMyUserProfile from "./hooks/useMyUserProfile";
 import NotFound from "./components/Errors/NotFound";
 import Home from "./components/Page/Home";
-import Banner from "./components/Banner/Banner";
-import useBannerMessage from "./hooks/useBannerMessage";
+import Banner, { BannerButtonParams } from "./components/Banner/Banner";
+import useBannerMessage, { Message } from "./hooks/useBannerMessage";
 
 const SignInPage = lazy(() => import("./components/Page/SignInPage"));
 const ListPage = lazy(() => import("./components/Page/ListPage"));
@@ -16,6 +16,9 @@ const ProfilePage = lazy(() => import("./components/Page/Profile"));
 const Roadmap = lazy(() => import("./components/Page/Roadmap"));
 const CuratedResources = lazy(
   () => import("./components/Page/CuratedResources")
+);
+const PrivacyPolicy = lazy(
+  () => import("./helpers/privacyPolicy")
 );
 
 export const ThemeContext = React.createContext<{
@@ -30,7 +33,10 @@ export const ThemeContext = React.createContext<{
 
 export const BannerContext = React.createContext<{
   setErrorMessage: (msg: string) => void;
-  setBannerMessage: (msg: string) => void;
+  setBannerMessage: (
+    message: Message,
+    buttonParams: BannerButtonParams | null
+  ) => void;
 }>({
   setErrorMessage: () => {
     return;
@@ -54,8 +60,20 @@ export default function App() {
     }
   }, []);
 
-  const { isError, message, setErrorMessage, setBannerMessage, clearBanner } =
-    useBannerMessage("Welcome to LivLearn Beta. We're excited to get your feedback!");
+  const {
+    isError,
+    message,
+    setErrorMessage,
+    setBannerMessage,
+    clearBanner,
+    buttonParams,
+  } = useBannerMessage(
+    {
+      long: "Welcome to livlearn beta. We're excited to have you onboard!",
+      short: "Welcome to livlearn beta!",
+    },
+    null
+  );
 
   return (
     <ThemeContext.Provider
@@ -75,6 +93,7 @@ export default function App() {
                 isError={isError}
                 longText={message.long}
                 shortText={message.short}
+                buttonParams={buttonParams ?? undefined}
               />
             )}
             <NavBar uid={uid} />
@@ -118,6 +137,9 @@ export default function App() {
                   </Route>
                   <Route exact path="/list">
                     <ListPage />
+                  </Route>
+                  <Route exact path="/privacy">
+                    <PrivacyPolicy />
                   </Route>
                   <Route
                     path="/profile/:profileOwnerUid"
