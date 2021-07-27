@@ -3,10 +3,13 @@ import ResourceListCard from "../Card/ResourceListCard";
 import CardCollection from "../Card/CardCollection";
 import Button from "../Button/Button";
 import useMyResourceLists from "../../hooks/useMyResourceLists";
+import { useContext } from "react";
+import { BannerContext } from "../../App";
 
 const MyPage = () => {
+  const { setErrorMessage } = useContext(BannerContext);
   const history = useHistory();
-  const { myLists } = useMyResourceLists();
+  const { myLists } = useMyResourceLists(setErrorMessage);
 
   return (
     <div className="flex w-full flex-grow items-center flex-col md:items-start max-w-screen-2xl mx-auto">

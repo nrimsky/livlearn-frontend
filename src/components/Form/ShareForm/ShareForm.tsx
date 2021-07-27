@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import ResourceList from "../../../types/ResourceList";
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
 import { editExitingList } from "../../../firebase/FirestoreService";
 import ShareSettings from "../../../types/ShareSettings";
 import ChangePermissionsWidget from "./ChangePermissionsWidget";
+import { BannerContext } from "../../../App";
 
 const ShareForm = (props: {
   state: ResourceList;
@@ -11,6 +12,7 @@ const ShareForm = (props: {
   changeShareSettings: (shareSettings: ShareSettings) => void;
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const { setErrorMessage } = useContext(BannerContext);
 
   function copyToClipboard(e: React.MouseEvent) {
     if (textAreaRef.current) {
@@ -28,6 +30,7 @@ const ShareForm = (props: {
       await editExitingList({ ...props.state, shareSettings: newSettings });
     } catch (error) {
       console.error(error);
+      setErrorMessage(error.message);
     }
   };
 

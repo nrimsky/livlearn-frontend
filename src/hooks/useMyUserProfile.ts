@@ -6,7 +6,7 @@ import {
 } from "../firebase/FirestoreService";
 import Profile from "../types/Profile";
 
-export default function useMyUserProfile() {
+export default function useMyUserProfile(onError?: (msg: string) => void) {
   const [uid, setUid] = useState<string | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
 
@@ -20,14 +20,21 @@ export default function useMyUserProfile() {
       if (l) {
         const uid = getCurrentUserId();
         if (uid) {
-          createProfileIfNoneExists(uid).then(() => setUid(uid));
+          createProfileIfNoneExists(uid)
+            .then(() => setUid(uid))
+            .catch((error) => {
+              console.error(error);
+              if (onError) {
+                onError(error);
+              }
+            });
         }
       } else {
         setUid(null);
       }
     });
     return () => unregisterAuthObserver();
-  }, []);
+  }, [onError]);
 
   useEffect(() => {
     if (uid === null) {
@@ -41,10 +48,13 @@ export default function useMyUserProfile() {
       },
       (error) => {
         console.error(error);
+        if (onError) {
+          onError(error.message);
+        }
       }
     );
     return unsubscribe;
-  }, [uid]);
-  
+  }, [uid, onError]);
+
   return { uid, profile };
 }

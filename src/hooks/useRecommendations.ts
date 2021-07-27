@@ -4,7 +4,10 @@ import { getCurrentUserId } from "../firebase/AuthService";
 import { bookmarkResource } from "../firebase/FirestoreService";
 import ResourceRec from "../types/ResourceRec";
 
-export default function useRecommendations(pageSize?: number) {
+export default function useRecommendations(
+  pageSize?: number,
+  onError?: (msg: string) => void
+) {
   const [query, setQuery] = useState<Query>({
     tagIds: [],
     level: "AN",
@@ -20,14 +23,19 @@ export default function useRecommendations(pageSize?: number) {
   >([]);
 
   useEffect(() => {
-    if (query.pageSize === 0) { return; }
+    if (query.pageSize === 0) {
+      return;
+    }
     getResources(query)
       .then((r) => setRecommendedResources(r))
       .catch((e) => {
         console.error(e);
         setError(e.message);
+        if (onError) {
+          onError(e.message);
+        }
       });
-  }, [query]);
+  }, [query, onError]);
 
   const onSearch = useCallback((updated: Query) => {
     setQuery((prev) => {
@@ -35,13 +43,22 @@ export default function useRecommendations(pageSize?: number) {
     });
   }, []);
 
-  const onBookmark = useCallback((rId: number) => {
-    const uid = getCurrentUserId();
-    if (uid === null) {
-      return;
-    }
-    bookmarkResource(rId).catch((e) => console.error(e));
-  }, []);
+  const onBookmark = useCallback(
+    (rId: number) => {
+      const uid = getCurrentUserId();
+      if (uid === null) {
+        return;
+      }
+      bookmarkResource(rId).catch((e) => {
+        console.error(e);
+        setError(e.message);
+        if (onError) {
+          onError(e.message);
+        }
+      });
+    },
+    [onError]
+  );
 
   return { query, recommendedResources, onSearch, onBookmark, error };
 }

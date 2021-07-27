@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { UserIcon } from "@heroicons/react/solid";
 import { Switch } from "@headlessui/react";
 import Profile from "../../types/Profile";
@@ -10,10 +10,12 @@ import EditProfileForm from "../Form/EditProfileForm";
 import ArrowLink from "../Button/ArrowLink";
 import useRecommendations from "../../hooks/useRecommendations";
 import CuratedResourceCollection from "../Card/CuratedResourceCollection";
+import { BannerContext } from "../../App";
 
 // "https://source.unsplash.com/4csdTPXTM1A/1600x900"
 
 export default function MyProfile(props: { profile: Profile; uid: string }) {
+  const { setErrorMessage } = useContext(BannerContext);
   const toggleProfilePrivate = () => {
     editProfile({ ...props.profile, isPrivate: !props.profile.isPrivate });
   };
@@ -22,9 +24,11 @@ export default function MyProfile(props: { profile: Profile; uid: string }) {
     setIsEditing(false);
   };
   const changeProfile = (p: Profile) => {
-    editProfile(p).catch((e) => console.error(e));
+    editProfile(p).catch((e) => {
+      setErrorMessage(e.message);
+    });
   };
-  const { recommendedResources, onSearch, onBookmark } = useRecommendations(0);
+  const { recommendedResources, onSearch, onBookmark } = useRecommendations(0, setErrorMessage);
 
   useEffect(() => {
     if (props.profile.bookmarks) {

@@ -1,5 +1,6 @@
 // tailwind.config.js
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
@@ -10,9 +11,10 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
         body: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
-      colors : {
-        'gray-850': '#18212F'
-      }
+      colors: {
+        gray: colors.blueGray,
+        "gray-850": "#172033",
+      },
     },
     borderWidth: {
       DEFAULT: "1px",
@@ -23,8 +25,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['checked'],
-      borderColor: ['checked'],
+      backgroundColor: ["checked"],
+      borderColor: ["checked"],
     },
   },
   plugins: [],

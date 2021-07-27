@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../Button/Button";
 
 import { useHistory } from "react-router-dom";
@@ -7,6 +7,7 @@ import {
   editExitingList,
 } from "../../firebase/FirestoreService";
 import ResourceList from "../../types/ResourceList";
+import { BannerContext } from "../../App";
 
 export default function DeployForm(props: {
   state: ResourceList;
@@ -14,6 +15,7 @@ export default function DeployForm(props: {
   setChangesSaved: () => void;
 }) {
   let history = useHistory();
+  const { setErrorMessage } = useContext(BannerContext);
 
   const saveNewList = async () => {
     try {
@@ -23,6 +25,7 @@ export default function DeployForm(props: {
       props.onClose();
     } catch (error) {
       console.error(error);
+      setErrorMessage(error);
       props.onClose();
     }
   };
@@ -34,6 +37,7 @@ export default function DeployForm(props: {
       props.onClose();
     } catch (error) {
       console.error(error);
+      setErrorMessage(error);
       props.onClose();
     }
   };

@@ -4,7 +4,7 @@ import {
 } from "../firebase/FirestoreService";
 import Profile from "../types/Profile";
 
-export default function useOtherUserProfile(uid: string) {
+export default function useOtherUserProfile(uid: string, onError?: (msg: string) => void) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState<string|null>(null);
   useEffect(() => {
@@ -12,7 +12,12 @@ export default function useOtherUserProfile(uid: string) {
       .then((p) => {
         setProfile(p);
       })
-      .catch((e) => setError(e.message));
-  },[uid]);
+      .catch((e) => {
+        setError(e.message);
+        if (onError) {
+          onError(e.message);
+        }
+      });
+  },[uid, onError]);
   return { profile, error };
 }

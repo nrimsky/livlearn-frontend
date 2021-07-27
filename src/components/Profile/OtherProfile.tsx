@@ -1,9 +1,12 @@
 import { UserIcon } from "@heroicons/react/solid";
+import { useContext } from "react";
+import { BannerContext } from "../../App";
 import useOtherUserProfile from "../../hooks/useOtherUserProfile";
 import NotFound from "../Errors/NotFound";
 
 export default function OtherProfile(props: { profileOwnerId: string }) {
-  const { profile } = useOtherUserProfile(props.profileOwnerId);
+  const { setErrorMessage } = useContext(BannerContext);
+  const { profile } = useOtherUserProfile(props.profileOwnerId, setErrorMessage);
   if (!profile) {
     return <NotFound text="Sorry, this profile was not found" />;
   }

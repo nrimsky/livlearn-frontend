@@ -6,13 +6,19 @@ import useRecommendations from "../../hooks/useRecommendations";
 import usePublicResourceLists from "../../hooks/usePublicResourceLists";
 import ArrowLink from "../Button/ArrowLink";
 import CuratedResourceCollection from "../Card/CuratedResourceCollection";
+import { BannerContext } from "../../App";
+import { useContext } from "react";
 
 type Props = { profile: Profile | null };
 
 const Home = ({ profile }: Props) => {
+  const { setErrorMessage } = useContext(BannerContext);
 
-  const { recommendedResources, onBookmark } = useRecommendations();
-  const { publicLists } = usePublicResourceLists();
+  const { recommendedResources, onBookmark } = useRecommendations(
+    6,
+    setErrorMessage
+  );
+  const { publicLists } = usePublicResourceLists(setErrorMessage);
 
   return (
     <div className="flex flex-col w-100 max-w-screen-2xl md:mx-auto pb-8">
