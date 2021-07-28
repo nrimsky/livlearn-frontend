@@ -50,36 +50,43 @@ const SignIn = () => {
   const [done, setDone] = useState(false);
 
   return (
-    <div className="text-center p-5 max-w-md mb-12 bg-white dark:bg-gray-900 rounded border border-gray-300 dark:border-gray-500 shadow-sm">
-      {done ? (
-        <p className="text-gray-900  dark:text-white">
-          🎉 An email has been sent to {email}! Check your inbox for a link to
-          sign in!
-        </p>
-      ) : (
-        <>
-          <Input
-            value={email}
-            placeholder={"Enter your email"}
-            onChange={(n: string) => setEmail(n)}
-            name={"Get access with passwordless login"}
-          />
-          <Button
-            color="green"
-            className="mr-1 mt-2 sm:mt-0"
-            onClick={login}
-            text="Login / Sign up"
-          />{" "}
-          <span className="text-gray-500  dark:text-gray-400 font-medium">
-            or
-          </span>
-          <Button
-            color="yellow"
-            onClick={loginTest}
-            text="Try a test account"
-            className="ml-2 mt-2 sm:mt-0"
-          />
-        </>
+    <div className="text-center max-w-md mb-12 px-5 pb-12">
+      <div className="text-center p-5 max-w-md mb-3 bg-white dark:bg-gray-900 rounded border border-gray-300 dark:border-gray-500 shadow-sm">
+        {done ? (
+          <>
+            <p className="text-gray-900 dark:text-white">
+              🎉 An email has been sent to {email}! Check your inbox for a link
+              to sign in!
+            </p>
+            <p className="text-sm mt-1 text-gray-900 dark:text-white">
+              Please note that you must open the email link on the same device
+              and browser.
+            </p>
+          </>
+        ) : (
+          <>
+            <Input
+              value={email}
+              placeholder={"Enter your email"}
+              onChange={(n: string) => setEmail(n)}
+              name={"Get access with passwordless login"}
+            />
+            <Button
+              color="green"
+              className="mx-auto mt-2"
+              onClick={login}
+              text="Login / Sign up"
+            />
+          </>
+        )}
+      </div>
+      {!done && (
+        <Button
+          color="yellow"
+          onClick={loginTest}
+          text="Try a test account"
+          className="mx-auto"
+        />
       )}
     </div>
   );

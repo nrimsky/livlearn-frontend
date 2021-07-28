@@ -26,6 +26,7 @@ import FileUploadPage from "../../Form/FileUploadForm";
 import DragDropList from "./DragDropList";
 import ShareSettings from "../../../types/ShareSettings";
 import Button from "../../Button/Button";
+import classNames from "../../../helpers/classNames";
 
 type Props = {
   add: (item: ResourceListItem) => void;
@@ -158,8 +159,8 @@ const EditableList = ({
   };
 
   return (
-    <div className="sm:mx-5 my-5 w-100">
-      <div className="flex flex-row mx-3 sm:mx-0 w-100">
+    <div className="sm:mx-5 my-5 min-h-full relative">
+      <div className="flex flex-row mx-3 sm:mx-0 w-100 relative min-h-full">
         <ListTitleInput value={rl.title} onChange={renameList} />
         <DropdownMenu
           icon={<DotsHorizontalIcon className="h-6 w-6 mt-1" />}
@@ -239,19 +240,19 @@ const EditableList = ({
           data={rl.data}
         />
       ) : (
-        <p className="text-gray-500 dark:text-gray-400 mx-3 sm:mx-0">
+        <p className="text-gray-500 dark:text-gray-400 mx-3 sm:mx-0 min-h-full">
           Use the <span className="font-bold">+</span> button to add new items
         </p>
       )}
-      <div className="flex fixed bottom-0 w-full justify-between left-0 px-5 pb-5">
+        <AddButton onClick={openAdd} className="flex fixed right-6 bottom-6" />
         <Button
           text={rl.id ? "Publish changes" : "Publish new collection"}
           onClick={openSave}
-          className={`shadow text-sm text-white bg-green-500 dark:bg-green-600 ${changesMade ? "ring-4 ring-yellow-500 ring-opacity-75" : ""}`}
-          color=""
+          className={classNames(`${changesMade ? "ring-4 dark:ring-opacity-75 ring-green-500 dark:ring-white" : ""}`, "fixed left-6 bottom-6")}
+          color="green"
         />
-        <AddButton onClick={openAdd} />
-      </div>
+        
+
     </div>
   );
 };
