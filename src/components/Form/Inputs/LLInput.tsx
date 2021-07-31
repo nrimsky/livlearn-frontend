@@ -20,7 +20,7 @@ export default function LLInput(
         text-gray-900 dark:text-white 
         leading-tight 
         focus:outline-none focus:ring focus:ring-green-200
-        bg-white dark:bg-gray-800 ${props.className}`,
+        dark:bg-gray-800 ${props.className}`,
       }}
     />
   );

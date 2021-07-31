@@ -21,6 +21,14 @@ const FancyText = (props: { children: React.ReactNode }) => {
   );
 };
 
+const Section = (props: {children: React.ReactNode; label: string;}) => {
+  return (<div className="mt-4 md:mt-6 w-full">
+  <label className="w-full mb-2 block leading-tight font-normal">
+    { props.label}
+  </label>
+  { props.children }
+</div>);
+}
 export default function FormPage() {
   const initialState = {
     email: "",
@@ -53,10 +61,10 @@ export default function FormPage() {
   const { state, bind } = useForm(initialState);
   const { q1, q2, q3, q4, email } = state;
   return (
-    <div className="w-full px-4 sm:px-8 md:px-12 py-12 text-gray-900 dark:text-white">
+    <div className="w-full sm:px-8 md:px-12 py-8 sm:py-12 text-gray-900 dark:text-white">
       <form
         onSubmit={submitHandler}
-        className="w-100 flex flex-col max-w-2xl mx-auto justify-center items-center bg-white dark:bg-gray-900 px-8 py-10 rounded border border-gray-300 dark:border-gray-500 shadow-sm"
+        className="w-100 flex flex-col max-w-2xl mx-auto justify-center items-center bg-white dark:bg-gray-900 px-6 py-6 sm:px-8 sm:py-10 sm:rounded sm:border border-gray-300 dark:border-gray-500 shadow-sm"
       >
         <h1
           className={`text-5xl 
@@ -79,58 +87,54 @@ export default function FormPage() {
             {msg.msg}
           </h2>
         )}
-        <label className="w-full mt-4 md:mt-6">
-          If you'd like us to reply to you, please put your email below:
-          <LLInput
+        <Section label="If you'd like us to reply to you, please put your email below:">
+        <LLInput
             readOnly={loading}
             name="email"
             {...bind}
             value={email}
             placeholder="cat@whiskers.com"
           />
-        </label>
-        <label className="w-full mt-2 md:mt-4">
-          What types of resources do you use most when learning new tech topics?
-          <LLInput
+        </Section>
+        <Section label="What types of resources do you use most when learning new tech topics?">
+        <LLInput
             readOnly={loading}
             name="q1"
             {...bind}
             value={q1}
-            placeholder="eg: tech blogs, courses, yt, books, open source repos, documentation..."
+            placeholder="eg: blogs, moocs, yt, books, formus"
           />
-        </label>
-        <label className="w-full mt-2 md:mt-4">
-          What topics would you like more curated recommendatioms on?
-          <LLInput
+        </Section>
+        <Section label=" What topics would you like more curated recommendatioms on?">
+        <LLInput
             readOnly={loading}
             name="q2"
             {...bind}
             value={q2}
-            placeholder="eg: machine learning, blockchain, system design, web dev..."
+            placeholder="eg: ML, blockchain, web dev"
           />
-        </label>
-        <label className="w-full mt-2 md:mt-4">
-          Feature suggestions:
-          <LLTextArea
+        </Section>
+
+        <Section label="Feature suggestions:">
+        <LLTextArea
             readOnly={loading}
-            rows={2}
+            rows={3}
             name="q3"
             {...bind}
             value={q3}
-            placeholder="eg: every website visitor should get a free Tesla and a holiday to the Maldives (jks, don't suggest this please)"
+            placeholder="eg: every website visitor should get a free Tesla and a holiday to the Maldives"
           />
-        </label>
-        <label className="w-full mt-2 md:mt-4">
-          I just want to say hi or write some general feedback:
-          <LLTextArea
+        </Section>
+        <Section label="I just want to say hi or write some general feedback:">
+        <LLTextArea
             readOnly={loading}
-            rows={2}
+            rows={3}
             name="q4"
             {...bind}
             value={q4}
-            placeholder="eg: hi there, my cat wants to invest all his savings into livlearn - we're talking 5 dead mice, one live robin and half a packet of cat food"
+            placeholder="eg: my cat wants to invest all his savings into livlearn - 5 dead mice, one robin and half a packet of cat food"
           />
-        </label>
+        </Section>
         <Button
           type="submit"
           content={
