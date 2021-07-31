@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ResourceListItem from "../../types/ResourceListItem";
 import MediaType from "../../types/MediaType";
-import Input from "./Input";
+import LabelledInput from "./LabelledInputs/LabelledInput";
 import TypePicker from "./TypePicker";
 import Button from "../Button/Button";
-import Textarea from "./Textarea";
+import LabelledTextarea from "./LabelledInputs/LabelledTextarea";
 
 export default function AddForm(props: {
   onClose: () => void;
@@ -37,7 +37,7 @@ export default function AddForm(props: {
             />
           </label>
         </div>
-        <Input
+        <LabelledInput
           name="Title"
           placeholder="What is the resource name"
           onChange={(newValue: string) =>
@@ -45,7 +45,7 @@ export default function AddForm(props: {
           }
           value={item.title}
         />
-        <Textarea
+        <LabelledTextarea
           name="Detail"
           placeholder="Any additional detail"
           onChange={(newValue: string) =>
@@ -53,7 +53,7 @@ export default function AddForm(props: {
           }
           value={item.detail}
         />
-        <Input
+        <LabelledInput
           name="URL"
           placeholder="Paste in the URL"
           onChange={(newValue: string) => onChange({ ...item, url: newValue })}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Input from "./Input";
+import LabelledInput from "./LabelledInputs/LabelledInput";
 import Button from "../Button/Button";
-import Textarea from "./Textarea";
+import LabelledTextarea from "./LabelledInputs/LabelledTextarea";
 import Profile from "../../types/Profile";
 
 export default function EditProfileForm(props: {
@@ -23,7 +23,7 @@ export default function EditProfileForm(props: {
   return (
     <div className="w-full">
       <form className="my-6">
-        <Input
+        <LabelledInput
           name="Username"
           placeholder="Your username on livlearn"
           onChange={(newValue: string) =>
@@ -31,7 +31,7 @@ export default function EditProfileForm(props: {
           }
           value={profile.username ?? ""}
         />
-        <Input
+        <LabelledInput
           name="Tagline"
           placeholder="Describe yourself is once sentence"
           onChange={(newValue: string) =>
@@ -39,7 +39,7 @@ export default function EditProfileForm(props: {
           }
           value={profile.tagline ?? ""}
         />
-        <Textarea
+        <LabelledTextarea
           name="About"
           placeholder="About you - what are you currently learning, what are your goals, where do you see yourself in 5 years time?"
           onChange={(newValue: string) =>

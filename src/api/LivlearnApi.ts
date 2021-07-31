@@ -79,3 +79,17 @@ export async function getTags(): Promise<Tag[]> {
     throw Error("No results");
   }
 }
+
+export async function submitForm(
+  content: string,
+  formName: string
+): Promise<void> {
+  const url = API_ROOT + "submit-a-form/";
+  const response = await axios.post(url, {
+    content: content,
+    form_name: formName,
+  });
+  if (response.status !== 201) {
+    throw Error("Error submitting form");
+  }
+}

@@ -16,6 +16,7 @@ export default function useBannerMessage(
       long: `${message}. 🐞 We'd love it if you could us a bug report at info@howshouldilearn.com.`,
       short: `${message}`,
     });
+    setButtonParams(null);
   }, []);
   const setBannerMessage = useCallback(
     (message: Message, buttonParams: BannerButtonParams | null) => {

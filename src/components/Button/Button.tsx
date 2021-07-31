@@ -2,15 +2,16 @@ import React from "react";
 import classNames from "../../helpers/classNames";
 
 export default function Button(props: {
-  onClick: () => void;
-  color: string;
+  onClick?: () => void;
+  color?: "green" | "yellow" | "red";
   text?: string;
   content?: React.ReactNode;
   className?: string;
+  type?: "button" | "submit" | "reset";
 }) {
   return (
     <button
-      type="button"
+      type={props.type ?? "button"}
       className={classNames(
         props.color === "green"
           ? `text-green-900 

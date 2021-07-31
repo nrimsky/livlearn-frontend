@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import NavBar from "./components/Nav/NavBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FinishSignIn from "./components/Auth/FinishSignIn";
 import Footer from "./components/Footer/Footer";
 import useMyUserProfile from "./hooks/useMyUserProfile";
@@ -8,6 +8,7 @@ import NotFound from "./components/Errors/NotFound";
 import Home from "./components/Page/Home";
 import Banner, { BannerButtonParams } from "./components/Banner/Banner";
 import useBannerMessage, { Message } from "./hooks/useBannerMessage";
+import FormPage from "./components/Page/FormPage";
 
 const SignInPage = lazy(() => import("./components/Page/SignInPage"));
 const ListPage = lazy(() => import("./components/Page/ListPage"));
@@ -17,9 +18,7 @@ const Roadmap = lazy(() => import("./components/Page/Roadmap"));
 const CuratedResources = lazy(
   () => import("./components/Page/CuratedResources")
 );
-const PrivacyPolicy = lazy(
-  () => import("./helpers/privacyPolicy")
-);
+const PrivacyPolicy = lazy(() => import("./helpers/privacyPolicy"));
 
 export const ThemeContext = React.createContext<{
   mode: "dark" | "light";
@@ -70,9 +69,11 @@ export default function App() {
   } = useBannerMessage(
     {
       long: "Welcome to livlearn beta. We're excited to have you onboard!",
-      short: "Welcome to livlearn beta!",
+      short: "livlearn beta is here!",
     },
-    null
+    {
+      content: <Link to="/feedback">Say hi</Link>,
+    }
   );
 
   return (
@@ -140,6 +141,9 @@ export default function App() {
                   </Route>
                   <Route exact path="/privacy">
                     <PrivacyPolicy />
+                  </Route>
+                  <Route exact path="/feedback">
+                    <FormPage />
                   </Route>
                   <Route
                     path="/profile/:profileOwnerUid"

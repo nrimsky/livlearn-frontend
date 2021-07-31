@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import firebase from "firebase/app";
 import "firebase/auth";
-import Input from "../Form/Input";
+import LabelledInput from "../Form/LabelledInputs/LabelledInput";
 import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
@@ -65,7 +65,7 @@ const SignIn = () => {
           </>
         ) : (
           <>
-            <Input
+            <LabelledInput
               value={email}
               placeholder={"Enter your email"}
               onChange={(n: string) => setEmail(n)}

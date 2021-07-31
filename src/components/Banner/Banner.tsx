@@ -2,13 +2,14 @@ import {
   SpeakerphoneIcon,
   XIcon,
   ExclamationCircleIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
 } from "@heroicons/react/outline";
+import React from "react";
 import classNames from "../../helpers/classNames";
 
 export type BannerButtonParams = {
-  text: string;
-  action: () => void;
+  action?: () => void;
+  content?: React.ReactNode;
 };
 
 type BannerProps = {
@@ -36,9 +37,9 @@ export default function Banner({
       )}
     >
       {isError ? (
-        <ExclamationCircleIcon className="h-6 w-6" aria-hidden="true" />
+        <ExclamationCircleIcon className="h-5 w-5" aria-hidden="true" />
       ) : (
-        <SpeakerphoneIcon className="h-6 w-6" aria-hidden="true" />
+        <SpeakerphoneIcon className="h-5 w-5" aria-hidden="true" />
       )}
       <div>
         <p className="truncate inline">
@@ -47,10 +48,14 @@ export default function Banner({
         </p>
         {buttonParams && (
           <button
-            className="inline-flex items-center px-2 py-1 border border-transparent rounded-md shadow-sm bg-white text-white focus:outline-none focus:ring-2 focus:ring-white bg-opacity-20 ml-4 hover:bg-opacity-30"
+            className="inline-flex items-center px-2 py-1 border border-transparent rounded-md shadow-sm bg-white text-white focus:outline-none focus:ring-2 focus:ring-white bg-opacity-20 ml-2 sm:ml-4 hover:bg-opacity-30"
             onClick={buttonParams.action}
           >
-            {buttonParams.action} <ArrowRightIcon className="h-3 w-3 inline ml-1" aria-hidden="true" />
+            {buttonParams.content}
+            <ArrowRightIcon
+              className="h-3 w-3 inline ml-1"
+              aria-hidden="true"
+            />
           </button>
         )}
       </div>
@@ -60,7 +65,7 @@ export default function Banner({
         onClick={clearBanner}
       >
         <span className="sr-only">Dismiss</span>
-        <XIcon className="h-6 w-6" aria-hidden="true" />
+        <XIcon className="h-5 w-5" aria-hidden="true" />
       </button>
     </div>
   );

@@ -1,10 +1,12 @@
 import React from "react";
+import LLInput from "../Inputs/LLInput";
 
-export default function Input(props: {
+export default function LabelledInput(props: {
   name: string;
   placeholder: string;
   onChange: (newValue: string) => void;
   value: string;
+  maxLen?: number;
 }) {
   return (
     <div className="mb-4">
@@ -12,16 +14,14 @@ export default function Input(props: {
         <span className="text-gray-900  dark:text-white  font-semibold mb-2 block">
           {props.name}
         </span>
-        <input
-          className="appearance-none border border-gray-300 dark:border-gray-500 rounded w-full py-2 px-3 text-gray-900  dark:text-white leading-tight focus:outline-none bg-white dark:bg-gray-800 focus:ring focus:ring-green-200"
+        <LLInput
           type="text"
           placeholder={props.placeholder}
           value={props.value}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             let str = event.target.value;
             if (str) {
-              // Avoid entries larger than 250
-              str = str.slice(0, 250);
+              str = str.slice(0, props.maxLen ? props.maxLen : 250);
             }
             props.onChange(str);
           }}

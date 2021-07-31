@@ -13,6 +13,7 @@ type Props = {
 }
 
 const ProfilePage = ({currentUserId, currentUserProfile}: Props) => {
+  console.log("Render");
   const { profileOwnerUid } = useParams<ParamTypes>();
   const ownsProfile = currentUserId ? currentUserId === profileOwnerUid : false;
 
