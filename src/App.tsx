@@ -111,8 +111,8 @@ export default function App() {
                     <Home profile={profile} />
                   </Route>
                   <Route exact path="/list" component={ListPage} />
-                  <Route exact path="/about" component={AboutPage}/>
-                  <Route exact path="/privacy" component={PrivacyPolicy}/>
+                  <Route exact path="/about" component={AboutPage} />
+                  <Route exact path="/privacy" component={PrivacyPolicy} />
                   <Route exact path="/feedback" component={FormPage} />
                   <Route exact path="/roadmap" component={Roadmap} />
                   <Route exact path="/curatedresources">

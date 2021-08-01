@@ -4,8 +4,8 @@ import logo from "../../img/logo.svg";
 export default function Footer() {
   return (
     <footer className="footer bg-white dark:bg-gray-900 text-sm relative text-gray-500 dark:text-gray-400">
-      <div className="container px-5 py-5 mx-auto flex items-center md:flex-row md:flex-nowrap flex-wrap flex-col">
-        <div className="w-48 flex items-center justify-center flex-col mt-6 md:mt-0 text-gray-900 dark:text-white">
+      <div className="container px-6 py-4 mx-auto flex items-center md:flex-row md:flex-nowrap flex-wrap flex-col">
+        <div className="w-48 flex items-center justify-center flex-col mt-2 md:mt-0 text-gray-900 dark:text-white">
           <img
             width="40px"
             height="40px"
@@ -16,8 +16,10 @@ export default function Footer() {
           <span className="text-xl font-extrabold tracking-tight ">
             livlearn
           </span>
-          <p className="text-center leading-tight">
-            built by lifelong learners,<br/>for lifelong learners
+          <p className="text-center leading-tight hidden md:block">
+            built by lifelong learners,
+            <br />
+            for lifelong learners
           </p>
         </div>
         <div className="flex-grow flex flex-wrap md:pr-20 md:text-left text-center order-first font-semibold text-gray-500 dark:text-gray-400">
@@ -71,13 +73,13 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="footer bg-gray-100 dark:bg-gray-800 text-xs relative text-gray-900 dark:text-white">
-        <div className="container mx-auto py-2 px-5 flex flex-wrap items-center">
-          <p className="text-sm text-left font-medium inline-flex">
+      <div className="footer bg-gray-100 dark:bg-gray-800 text-xs relative">
+        <div className="container mx-auto py-2 px-6 flex flex-wrap items-center">
+          <p className="text-sm text-left font-semibold inline-flex px-4">
             © 2021 livlearn
           </p>
           <span className="inline-flex ml-auto">
-            <a className="ml-2" href="https://www.instagram.com/livlearn.app/">
+            <a className="px-4" href="https://www.instagram.com/livlearn.app/">
               <svg
                 fill="none"
                 stroke="currentColor"
