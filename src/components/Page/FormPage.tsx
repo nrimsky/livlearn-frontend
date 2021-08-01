@@ -7,7 +7,7 @@ import LLInput from "../Form/Inputs/LLInput";
 import LLTextArea from "../Form/Inputs/LLTextArea";
 import StarRating from "../Form/StarRating";
 
-const FancyText = (props: { children: React.ReactNode }) => {
+export const FancyText = (props: { children: React.ReactNode }) => {
   return (
     <span
       className={`

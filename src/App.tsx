@@ -9,6 +9,7 @@ import Home from "./components/Page/Home";
 import Banner, { BannerButtonParams } from "./components/Banner/Banner";
 import useBannerMessage, { Message } from "./hooks/useBannerMessage";
 
+const AboutPage = lazy(() => import("./components/Page/About"));
 const FormPage = lazy(() => import("./components/Page/FormPage"));
 const SignInPage = lazy(() => import("./components/Page/SignInPage"));
 const ListPage = lazy(() => import("./components/Page/ListPage"));
@@ -109,9 +110,11 @@ export default function App() {
                   <Route exact path="/">
                     <Home profile={profile} />
                   </Route>
-                  <Route exact path="/roadmap">
-                    <Roadmap />
-                  </Route>
+                  <Route exact path="/list" component={ListPage} />
+                  <Route exact path="/about" component={AboutPage}/>
+                  <Route exact path="/privacy" component={PrivacyPolicy}/>
+                  <Route exact path="/feedback" component={FormPage} />
+                  <Route exact path="/roadmap" component={Roadmap} />
                   <Route exact path="/curatedresources">
                     <CuratedResources profile={profile} />
                   </Route>
@@ -135,15 +138,6 @@ export default function App() {
                     ) : (
                       <FinishSignIn />
                     )}
-                  </Route>
-                  <Route exact path="/list">
-                    <ListPage />
-                  </Route>
-                  <Route exact path="/privacy">
-                    <PrivacyPolicy />
-                  </Route>
-                  <Route exact path="/feedback">
-                    <FormPage />
                   </Route>
                   <Route
                     path="/profile/:profileOwnerUid"
