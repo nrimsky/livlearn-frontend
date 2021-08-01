@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="footer bg-white dark:bg-gray-900 text-sm relative text-gray-500 dark:text-gray-400">
       <div className="container px-5 py-5 mx-auto flex items-center md:flex-row md:flex-nowrap flex-wrap flex-col">
-        <div className="w-64 flex items-center justify-center flex-col mt-6 md:mt-0 text-gray-900 dark:text-white">
+        <div className="w-48 flex items-center justify-center flex-col mt-6 md:mt-0 text-gray-900 dark:text-white">
           <img
             width="40px"
             height="40px"
@@ -17,7 +17,7 @@ export default function Footer() {
             livlearn
           </span>
           <p className="text-center leading-tight">
-            built by lifelong learners, for lifelong learners
+            built by lifelong learners,<br/>for lifelong learners
           </p>
         </div>
         <div className="flex-grow flex flex-wrap md:pr-20 md:text-left text-center order-first font-semibold text-gray-500 dark:text-gray-400">

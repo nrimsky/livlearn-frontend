@@ -8,8 +8,8 @@ import NotFound from "./components/Errors/NotFound";
 import Home from "./components/Page/Home";
 import Banner, { BannerButtonParams } from "./components/Banner/Banner";
 import useBannerMessage, { Message } from "./hooks/useBannerMessage";
-import FormPage from "./components/Page/FormPage";
 
+const FormPage = lazy(() => import("./components/Page/FormPage"));
 const SignInPage = lazy(() => import("./components/Page/SignInPage"));
 const ListPage = lazy(() => import("./components/Page/ListPage"));
 const MyPage = lazy(() => import("./components/Page/MyPage"));
