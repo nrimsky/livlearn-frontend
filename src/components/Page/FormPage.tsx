@@ -102,7 +102,7 @@ export default function FormPage() {
             name="q1"
             {...bind}
             value={q1}
-            placeholder="eg: blogs, moocs, yt, books, formus"
+            placeholder="eg: blogs, moocs, yt, books, forums"
           />
         </Section>
         <Section label=" What topics would you like more curated recommendatioms on?">
