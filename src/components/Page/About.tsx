@@ -62,6 +62,16 @@ const About = () => {
               </div>
             </div>
           </div>
+          <h2 className="text-3xl font-extrabold leading-none mb-6 mt-6 text-center w-full">
+            Why sign up
+          </h2>
+          <p className="text-center w-full leading-relaxed text-base sm:px-12 text-gray-600 dark:text-gray-300">
+            With a livlearn account you can bookmark resources to refer back to,
+            create and share resource collections (both private and public),
+            create a learner profile, and upvote other people's resource
+            collections. There are more member-only features to come. It's 100%
+            free and all you need is an email.
+          </p>
         </div>
       </div>
     </div>
