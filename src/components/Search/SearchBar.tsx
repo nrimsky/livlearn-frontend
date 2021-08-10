@@ -56,7 +56,7 @@ const SearchBar = ({ query, onSearch, className }: Props) => {
         className ?? ""
       )}
     >
-      <form className="relative max-w-sm">
+      <form className="relative max-w-sm mb-2 mr-2">
         <input
           className="border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:ring-4 focus:ring-green-200 focus:ring-opacity-50"
           name="search"
@@ -74,7 +74,7 @@ const SearchBar = ({ query, onSearch, className }: Props) => {
         </button>
       </form>
       <form>
-        <fieldset className="grid grid-rows-3 md:grid-rows-2 pt-3 md:pt-0 max-w-sm grid-flow-col gap-x-2 gap-y-1 md:px-5">
+        <fieldset className="grid grid-rows-3 md:grid-rows-2 pt-3 md:pt-0 max-w-sm grid-flow-col gap-x-2 gap-y-1 mr-4">
           {enumKeys(MediaType).map((v) => {
             return (
               <div

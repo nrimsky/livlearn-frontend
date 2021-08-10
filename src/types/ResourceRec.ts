@@ -40,7 +40,7 @@ type ResourceRec = {
 };
 
 export type Tag = {
-  id: string;
+  id: number;
   name: string;
 };
 

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { getResources, Query } from "../api/LivlearnApi";
+import { getResources, getTags, Query } from "../api/LivlearnApi";
 import { getCurrentUserId } from "../firebase/AuthService";
 import { bookmarkResource } from "../firebase/FirestoreService";
-import ResourceRec from "../types/ResourceRec";
+import ResourceRec, { Tag } from "../types/ResourceRec";
 
 export default function useRecommendations(
   pageSize?: number,
@@ -21,6 +21,13 @@ export default function useRecommendations(
   const [recommendedResources, setRecommendedResources] = useState<
     ResourceRec[]
   >([]);
+  const [allTags, setAllTags] = useState<Tag[]>([]);
+
+  useEffect(() => {
+    getTags()
+      .then((tags) => setAllTags(tags))
+      .catch((e) => setError(e.message));
+  }, []);
 
   useEffect(() => {
     if (query.pageSize === 0) {
@@ -37,11 +44,11 @@ export default function useRecommendations(
       });
   }, [query, onError]);
 
-  const onSearch = useCallback((updated: Query) => {
+  const onSearch = (updated: Query) => {
     setQuery((prev) => {
       return { ...prev, ...updated };
     });
-  }, []);
+  };
 
   const onBookmark = useCallback(
     (rId: number) => {
@@ -60,5 +67,5 @@ export default function useRecommendations(
     [onError]
   );
 
-  return { query, recommendedResources, onSearch, onBookmark, error };
+  return { query, recommendedResources, onSearch, onBookmark, error, allTags };
 }
