@@ -23,13 +23,13 @@ const Tags = (props: {
       {props.tags.map((tag) => {
         const isSelected = props.query.tagIds?.includes(tag.id);
         return (
-          <li key={tag.id} className="block mb-1.5 w-full">
+          <li key={tag.id} className="block w-full">
             <button
               className={`${
                 isSelected
                   ? "text-gray-900 dark:text-white"
                   : "text-gray-400 dark:text-gray-500"
-              } text-left leading-none font-medium`}
+              } text-left leading-tight font-medium py-1`}
               onClick={(e) => {
                 if (!isSelected) {
                   props.onSearch({
