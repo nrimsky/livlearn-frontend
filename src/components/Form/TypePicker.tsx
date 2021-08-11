@@ -21,7 +21,7 @@ export default function TypePicker(props: {
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 dark:text-white bg-gray-200 dark:bg-gray-800 rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 border border-gray-300 dark:border-gray-500">
-            <Icon mediaType={props.mType} />
+            <Icon mediaType={props.mType} className="text-green-500"/>
             <span className="ml-2">{props.mType}</span>
             <ChevronDownIcon
               className="w-5 h-5 ml-2 -mr-1 text-green-500"
@@ -51,7 +51,7 @@ export default function TypePicker(props: {
                           active ? "bg-green-100 dark:bg-gray-800" : "bg-white dark:bg-gray-900"
                         } group flex rounded-md items-center w-full px-2 py-2 text-sm text-gray-900 dark:text-white`}
                       >
-                        <Icon mediaType={MediaType[m]} className={`${active ? "text-white": ""}`}/>
+                        <Icon mediaType={MediaType[m]} className={`${active ? "text-white": "text-green-500"}`}/>
                         <span className="ml-2 font-medium">{MediaType[m]}</span>
                       </button>
                     )}

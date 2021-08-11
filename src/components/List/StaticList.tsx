@@ -22,7 +22,7 @@ const StaticList = ({ resourceList }: Props) => {
             key={i}
           >
             <div className="inline-flex">
-              <Icon mediaType={d.type} />
+              <Icon mediaType={d.type} className="text-green-500"/>
               <p className="font-semibold ml-2">{d.title}</p>
             </div>
             <p className="">{d.detail}</p>

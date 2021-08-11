@@ -1,44 +1,15 @@
-import { SearchIcon } from "@heroicons/react/outline";
-import React, { useState, useCallback } from "react";
+import { FilterIcon, SearchIcon } from "@heroicons/react/outline";
+import React, { useState } from "react";
 import { Query } from "../../api/LivlearnApi";
-import classNames from "../../helpers/classNames";
-import MediaType from "../../types/MediaType";
-import { Level, Type, typeFromMediaType } from "../../types/ResourceRec";
-import LevelMenu from "./LevelMenu";
-
-function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
-  return Object.keys(obj).filter((k) => Number.isNaN(+k)) as K[];
-}
 
 type Props = {
-  query: Query;
   onSearch: (q: Query) => void;
+  onClickFilter: () => void;
   className?: string;
 };
 
-const SearchBar = ({ query, onSearch, className }: Props) => {
+const SearchBar = ({ onSearch, className, onClickFilter }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const onCheckMediaType = useCallback(
-    (m: Type) => {
-      const mts = query.types;
-      if (mts && mts.includes(m)) {
-        onSearch({ types: mts.filter((i) => i !== m) });
-      } else {
-        onSearch({ types: [...(mts ?? []), m] });
-      }
-    },
-    [onSearch, query]
-  );
-
-  const onSelectLevel = useCallback(
-    (level: Level) => {
-      onSearch({
-        level: level,
-      });
-    },
-    [onSearch]
-  );
 
   const onPressSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,15 +21,10 @@ const SearchBar = ({ query, onSearch, className }: Props) => {
   };
 
   return (
-    <div
-      className={classNames(
-        "text-gray-900  dark:text-white flex-none flex flex-col md:flex-row px-4 md:px-0 w-100 flex-wrap",
-        className ?? ""
-      )}
-    >
-      <form className="relative max-w-sm mb-2 mr-2">
+    <div className={"flex flex-row mb-3 mx-4 md:mx-0 items-center " + className}>
+      <form className="relative max-w-2xl text-gray-900 dark:text-white inline-flex mr-4 w-full">
         <input
-          className="border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:ring-4 focus:ring-green-200 focus:ring-opacity-50"
+          className="bg-white dark:bg-gray-900 h-10 px-3 pr-16 rounded focus:outline-none w-full focus:ring-4"
           name="search"
           onChange={onSearchChange}
           value={searchQuery}
@@ -73,39 +39,13 @@ const SearchBar = ({ query, onSearch, className }: Props) => {
           <SearchIcon className="text-gray-500  dark:text-gray-400 h-4 w-4 gap-1" />
         </button>
       </form>
-      <form>
-        <fieldset className="grid grid-rows-3 md:grid-rows-2 pt-3 md:pt-0 max-w-sm grid-flow-col gap-x-2 gap-y-1 mr-4">
-          {enumKeys(MediaType).map((v) => {
-            return (
-              <div
-                className="text-xs inline-flex items-center tracking-tight align-center"
-                key={v}
-              >
-                <input
-                  id={MediaType[v]}
-                  name={MediaType[v]}
-                  onChange={() =>
-                    onCheckMediaType(typeFromMediaType(MediaType[v]))
-                  }
-                  type="checkbox"
-                  checked={query.types?.includes(
-                    typeFromMediaType(MediaType[v])
-                  )}
-                />
-                <label
-                  htmlFor={MediaType[v]}
-                  className="ml-1 text-gray-900  dark:text-white"
-                >
-                  {MediaType[v]}s
-                </label>
-              </div>
-            );
-          })}
-        </fieldset>
-      </form>
-      <form className="pt-1">
-        <LevelMenu selected={query.level ?? "AN"} onSelect={onSelectLevel} />
-      </form>
+
+      <button
+        className="text-white bg-green-500 bg-gradient-to-b dark:from-green-500 dark:to-green-600 dark:border-green-600 rounded-full w-9 h-9 md:hidden"
+        onClick={onClickFilter}
+      >
+        <FilterIcon className="w-5 h-5 m-2"/>
+      </button>
     </div>
   );
 };

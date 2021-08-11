@@ -1,6 +1,20 @@
 import MediaType from "./MediaType";
 
 export type Level = "AD" | "IN" | "BE" | "AN";
+export const allLevels: Level[] = ["AD", "IN", "BE", "AN"];
+
+export function levelFromAbbr(abbr: Level) {
+  switch (abbr) {
+    case "AD":
+      return "Advanced";
+    case "IN":
+      return "Intermediate";
+    case "BE":
+      return "Beginner";
+    case "AN":
+      return "Any level";
+  }
+}
 
 export function typeFromMediaType(mt: MediaType) {
   switch (mt) {
@@ -26,6 +40,17 @@ export function typeFromMediaType(mt: MediaType) {
 }
 
 export type Type = "PO" | "BO" | "AB" | "BL" | "AR" | "CO" | "VI" | "TO" | "OT";
+export const allTypes: Type[] = [
+  "PO",
+  "BO",
+  "AB",
+  "BL",
+  "AR",
+  "CO",
+  "VI",
+  "TO",
+  "OT",
+];
 
 type ResourceRec = {
   id: number;

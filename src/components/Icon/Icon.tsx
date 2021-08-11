@@ -19,7 +19,7 @@ const Icon = React.memo(
         return (
           <NewspaperIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -28,7 +28,7 @@ const Icon = React.memo(
         return (
           <MicrophoneIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -37,7 +37,7 @@ const Icon = React.memo(
         return (
           <GlobeAltIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -46,7 +46,7 @@ const Icon = React.memo(
         return (
           <VolumeUpIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -55,7 +55,7 @@ const Icon = React.memo(
         return (
           <BookOpenIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -64,7 +64,7 @@ const Icon = React.memo(
         return (
           <VideoCameraIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -73,7 +73,7 @@ const Icon = React.memo(
         return (
           <AcademicCapIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -82,7 +82,7 @@ const Icon = React.memo(
         return (
           <ExternalLinkIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />
@@ -91,7 +91,7 @@ const Icon = React.memo(
         return (
           <LightBulbIcon
             className={
-              "flex-shrink-0 h-5 w-5 text-green-500 " + props.className
+              "flex-shrink-0 h-5 w-5" + props.className
             }
             aria-hidden="true"
           />

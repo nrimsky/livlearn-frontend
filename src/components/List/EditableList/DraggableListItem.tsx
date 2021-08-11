@@ -36,7 +36,7 @@ const DraggableListItem = React.memo(
               className="inline-flex"
               onClick={() => props.openEdit(props.item, props.idx)}
             >
-              <Icon mediaType={props.item.type} />
+              <Icon mediaType={props.item.type} className="text-green-500"/>
               <p className="font-semibold ml-2">{props.item.title}</p>
             </div>
             <p

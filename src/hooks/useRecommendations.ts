@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getResources, getTags, Query } from "../api/LivlearnApi";
 import { getCurrentUserId } from "../firebase/AuthService";
 import { bookmarkResource } from "../firebase/FirestoreService";
-import ResourceRec, { Tag } from "../types/ResourceRec";
+import ResourceRec, { Level, Tag, Type } from "../types/ResourceRec";
 
 export default function useRecommendations(
   pageSize?: number,
@@ -11,7 +11,7 @@ export default function useRecommendations(
   const [query, setQuery] = useState<Query>({
     tagIds: [],
     level: "AN",
-    types: ["AB", "AR", "BL", "BO", "CO", "OT", "PO", "TO", "VI"],
+    types: [],
     search: "",
     pageSize: pageSize,
     id: [],
@@ -44,11 +44,11 @@ export default function useRecommendations(
       });
   }, [query, onError]);
 
-  const onSearch = (updated: Query) => {
+  const onSearch = useCallback((updated: Query) => {
     setQuery((prev) => {
       return { ...prev, ...updated };
     });
-  };
+  }, []);
 
   const onBookmark = useCallback(
     (rId: number) => {
@@ -67,5 +67,54 @@ export default function useRecommendations(
     [onError]
   );
 
-  return { query, recommendedResources, onSearch, onBookmark, error, allTags };
+  const onClickTag = useCallback(
+    (tag: Tag) => {
+      setQuery((oldQuery) => {
+        const isSelected = oldQuery.tagIds?.includes(tag.id) ?? false;
+        if (!isSelected) {
+          return { ...oldQuery, tagIds: [...(oldQuery.tagIds ?? []), tag.id] };
+        } else {
+          return {
+            ...oldQuery,
+            tagIds: oldQuery.tagIds?.filter((id) => id !== tag.id) ?? [],
+          };
+        }
+      });
+    },
+    []
+  );
+
+  const onClickMediaType = useCallback(
+    (type: Type) => {
+      setQuery((oldQuery) => {
+        const isSelected =
+          (oldQuery.types && oldQuery.types.includes(type)) ?? false;
+        if (isSelected) {
+          return {
+            ...oldQuery,
+            types: (oldQuery.types ?? []).filter((i) => i !== type),
+          };
+        } else {
+          return { ...oldQuery, types: [...(oldQuery.types ?? []), type] };
+        }
+      });
+    },
+    []
+  );
+
+  const onClickLevel = useCallback(
+    (level: Level) => {
+      setQuery((oldQuery) => {
+        const isSelected = oldQuery.level === level;
+        if (isSelected) {
+          return { ...oldQuery, level: "AN" };
+        } else {
+          return { ...oldQuery, level: level };
+        }
+      });
+    },
+    []
+  );
+
+  return { query, recommendedResources, onSearch, onBookmark, error, allTags, onClickLevel, onClickMediaType, onClickTag };
 }

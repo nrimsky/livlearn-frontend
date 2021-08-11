@@ -48,7 +48,7 @@ const RecommendedCard = React.memo(
         <div className="text-gray-900  dark:text-white font-semibold leading-tight flex">
           <Icon
             mediaType={mediaTypeFromApiType(props.rr.type)}
-            className="inline mr-2 mb-1"
+            className="inline mr-2 mb-1 text-green-500"
           />
           <h3 className="truncate tracking-tight">{props.rr.name}</h3>
         </div>
