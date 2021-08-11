@@ -38,7 +38,7 @@ const MediaFilterButton = React.memo((props: {
     >
       <Icon
         mediaType={mediaTypeFromApiType(props.type)}
-        className="h-4 w-4 inline-block mr-1 text-blue-600 dark:text-blue-500"
+        className="py-0.5 inline-block mr-1 text-blue-600 dark:text-blue-500"
       />
       {mediaTypeFromApiType(props.type)}
     </FilterButton>
