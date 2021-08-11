@@ -10,6 +10,8 @@ import {
   NewspaperIcon,
   ExternalLinkIcon,
   LightBulbIcon,
+  ChatAlt2Icon,
+  DocumentTextIcon,
 } from "@heroicons/react/outline";
 
 const Icon = React.memo(
@@ -90,6 +92,24 @@ const Icon = React.memo(
       case MediaType.Tool:
         return (
           <LightBulbIcon
+            className={
+              "flex-shrink-0 h-5 w-5" + props.className
+            }
+            aria-hidden="true"
+          />
+        );
+      case MediaType.Documentation:
+        return (
+          <DocumentTextIcon
+            className={
+              "flex-shrink-0 h-5 w-5" + props.className
+            }
+            aria-hidden="true"
+          />
+        );
+      case MediaType.Forum:
+        return (
+          <ChatAlt2Icon
             className={
               "flex-shrink-0 h-5 w-5" + props.className
             }

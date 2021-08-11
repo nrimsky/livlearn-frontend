@@ -10,6 +10,8 @@ enum MediaType {
   FreeVideo = "Video",
   Tool = "Tool",
   Other = "Other",
+  Documentation = "Documentation",
+  Forum = "Forum"
 }
 
 export function mediaTypeFromApiType(apiType: Type) {
@@ -32,6 +34,10 @@ export function mediaTypeFromApiType(apiType: Type) {
       return MediaType.Tool;
     case "OT":
       return MediaType.Other;
+    case "DO":
+      return MediaType.Documentation;
+    case "FO":
+      return MediaType.Forum;
   }
 }
 

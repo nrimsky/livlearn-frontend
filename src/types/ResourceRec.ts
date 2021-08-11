@@ -36,10 +36,14 @@ export function typeFromMediaType(mt: MediaType) {
       return "TO";
     case MediaType.Other:
       return "OT";
+    case MediaType.Documentation:
+      return "DO";
+    case MediaType.Forum:
+      return "FO";
   }
 }
 
-export type Type = "PO" | "BO" | "AB" | "BL" | "AR" | "CO" | "VI" | "TO" | "OT";
+export type Type = "PO" | "BO" | "AB" | "BL" | "AR" | "CO" | "VI" | "TO" | "OT" | "DO" | "FO";
 export const allTypes: Type[] = [
   "PO",
   "BO",
@@ -50,6 +54,8 @@ export const allTypes: Type[] = [
   "VI",
   "TO",
   "OT",
+  "DO",
+  "FO"
 ];
 
 type ResourceRec = {
