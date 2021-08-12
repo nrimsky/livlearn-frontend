@@ -41,7 +41,7 @@ const Home = ({ profile }: Props) => {
         bookmarks={profile?.bookmarks ?? []}
         onBookmark={onBookmark}
         title={"Recently curated free learning resources"}
-        subtitle={"These are resources we ourselves have tried and enjoyed"}
+        subtitle={"These are resources we or our trusted curators have tried and enjoyed"}
       />
       <ArrowLink
         to="/curatedresources"
