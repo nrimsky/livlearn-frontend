@@ -70,7 +70,7 @@ export async function getResources(query: Query): Promise<ResourceRec[]> {
 }
 
 export async function getTags(): Promise<Tag[]> {
-  const url = API_ROOT + "tags";
+  const url = API_ROOT + "tags/?page_size=300";
   const response = await axios.get(url);
   const results = response.data.results;
   if (results) {
